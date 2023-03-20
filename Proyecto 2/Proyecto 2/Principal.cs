@@ -17,7 +17,7 @@ namespace Proyecto_2
             }
             else {
                 panelMenu.Width = 210;
-                tituloPic.Visible = true;
+                tituloPic.Visible = true;//Hola chaval
                 hamburguerPic.Dock = DockStyle.None;
             }
         }
