@@ -1,3 +1,5 @@
+using Proyecto_2.Modelos;
+
 namespace Proyecto_2
 {
     public partial class Principal : Form
@@ -64,11 +66,12 @@ namespace Proyecto_2
         {
             if (!subMenu.Visible)
             {
+                
                 ocultarSubMenus();
                 subMenu.Visible = true;
             }
             else
-            {
+            {   
                 subMenu.Visible = false;
             }
         }
