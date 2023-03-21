@@ -9,8 +9,7 @@ namespace Proyecto_2.Modelos
     internal class ListaEspera
     {
         private List<Servicio> serviciosEspera { set; get; }
-        private List<Cliente> clientesEspera { set; get; }
-
+        private List<Cliente> clientesEspera;
         public ListaEspera()
         {
         }
@@ -20,12 +19,22 @@ namespace Proyecto_2.Modelos
             this.serviciosEspera = serviciosEspera;
             this.clientesEspera = clientesEspera;
         }
-        public void agregarCliente(Cliente cliente) { 
+        public void agregarCliente(Cliente cliente) {
             //Agrega a la lista y reordena
+            clientesEspera.Add(cliente);
         }
         public Cliente obtenerCliente() {
             //Obtiene el siguiente cliente de la cola
             return new Cliente();
+        }
+        public void agregarServicio(Servicio servicio)
+        {
+            //Agrega a la lista y reordena
+            serviciosEspera.Add(servicio);
+        }
+        public Servicio obtenerServicio() {
+            //Agrega a la lista y reordena
+            return new Servicio();
         }
     }
 }

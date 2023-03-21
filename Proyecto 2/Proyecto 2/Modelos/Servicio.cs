@@ -21,5 +21,8 @@ namespace Proyecto_2.Modelos
             this.tipoServicio = tipoServicio;
         }
 
+        public Servicio()
+        {
+        }
     }
 }
