@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <property name="spacing">
+     <number>20</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QFrame" name="Carpeta">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QLabel" name="lblNombreCarpeta">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>130</y>
+         <width>71</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Nombre:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="txtNombreCarpeta">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>130</y>
+         <width>113</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnCrearCarpeta">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>490</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Crear</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTituloCarpeta">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>40</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Carpeta</string>
+       </property>
+      </widget>
+      <widget class="QTreeWidget" name="twUbicacion">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>190</y>
+         <width>301</width>
+         <height>281</height>
+        </rect>
+       </property>
+       <property name="columnCount">
+        <number>1</number>
+       </property>
+       <attribute name="headerVisible">
+        <bool>true</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Carpeta</string>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>a</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>b</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>c</string>
+          </property>
+         </item>
+        </item>
+       </item>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="Permisos">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <widget class="QRadioButton" name="rbtnEjecucion">
+       <property name="geometry">
+        <rect>
+         <x>250</x>
+         <y>130</y>
+         <width>91</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ejecucion</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTituloListView">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>170</y>
+         <width>151</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tabla de usuarios</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnEliminarUsuario">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>540</y>
+         <width>70</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Eliminar</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblTituloPermisos">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>30</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>14</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Permisos</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnAgregarUsuario">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>80</y>
+         <width>70</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Agregar</string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnLectura">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>130</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Lectura</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QListView" name="listPermisosUsuarios">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>210</y>
+         <width>301</width>
+         <height>311</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lblNombreUsuario">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>80</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <underline>false</underline>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string>Nombre usuario: </string>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnEscritura">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>130</y>
+         <width>82</width>
+         <height>17</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Escritura</string>
+       </property>
+       <property name="autoExclusive">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="cbNombreUsuario">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>80</y>
+         <width>120</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="currentText">
+        <string/>
+       </property>
+       <property name="currentIndex">
+        <number>-1</number>
+       </property>
+       <property name="maxVisibleItems">
+        <number>5</number>
+       </property>
+       <property name="maxCount">
+        <number>10</number>
+       </property>
+       <property name="insertPolicy">
+        <enum>QComboBox::NoInsert</enum>
+       </property>
+       <property name="duplicatesEnabled">
+        <bool>false</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>Prueba1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Prueba 2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Prueba 3</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
