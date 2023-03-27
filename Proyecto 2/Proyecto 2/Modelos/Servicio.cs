@@ -8,10 +8,10 @@ namespace Proyecto_2.Modelos
 {
     internal class Servicio
     {
-        private string nombre { get; set; }//Nombre del Servicio
-        private int prioridad { get; set; }//Prioridad del servicio(1-5)
-        private int tiempoEjecucion { get; set; }//Tiempo de ejecucion del servicio
-        private string tipoServicio { get; set; }//Caja,Plataforma,Servicio al cliente;
+        private string nombre;//Nombre del Servicio
+        private int prioridad;//Prioridad del servicio(1-5)
+        private int tiempoEjecucion;//Tiempo de ejecucion del servicio
+        private string tipoServicio;//Caja,Plataforma,Servicio al cliente;
 
         public Servicio(string nombre, int prioridad, int tiempoEjecucion, string tipoServicio)
         {
@@ -23,6 +23,38 @@ namespace Proyecto_2.Modelos
 
         public Servicio()
         {
+        }
+        public string getNombre()
+        {
+            return this.nombre;
+        }
+        public void setNombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
+        public int getPrioridad()
+        {
+            return this.prioridad;
+        }
+        public void setPrioridad(int prioridad)
+        {
+            this.prioridad = prioridad;
+        }
+        public int getTiempoEjecucion()
+        {
+            return this.tiempoEjecucion;
+        }
+        public void setTiempoEjecucion(int tiempoEjecucion)
+        {
+            this.tiempoEjecucion = tiempoEjecucion;
+        }
+        public string getTipoServicio()
+        {
+            return this.nombre;
+        }
+        public void setTipoServicio(string tipoServicio)
+        {
+            this.tipoServicio = tipoServicio;
         }
     }
 }
