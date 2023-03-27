@@ -232,7 +232,7 @@ namespace Proyecto_2
             controlador.registrarPeticion(cliente);
             //controlador.getListaEspera().getClientesEspera();
 
-            tablaClientes.DataSource = controlador.getListaEspera().getClientesEspera();
+           
             btnCaja.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
 
 

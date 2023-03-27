@@ -57,7 +57,6 @@
             this.tituloPic = new System.Windows.Forms.PictureBox();
             this.panelNavegador = new System.Windows.Forms.Panel();
             this.panelPrincipal = new System.Windows.Forms.Panel();
-            this.tablaClientes = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panelServicioCliente3 = new System.Windows.Forms.Panel();
             this.picServicioCliente1 = new System.Windows.Forms.PictureBox();
@@ -110,7 +109,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hamburguerPic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tituloPic)).BeginInit();
             this.panelPrincipal.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tablaClientes)).BeginInit();
             this.tableLayoutPanel3.SuspendLayout();
             this.panelServicioCliente3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picServicioCliente1)).BeginInit();
@@ -535,7 +533,6 @@
             // panelPrincipal
             // 
             this.panelPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(200)))), ((int)(((byte)(123)))));
-            this.panelPrincipal.Controls.Add(this.tablaClientes);
             this.panelPrincipal.Controls.Add(this.tableLayoutPanel3);
             this.panelPrincipal.Controls.Add(this.tableLayoutPanel1);
             this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -544,16 +541,6 @@
             this.panelPrincipal.Name = "panelPrincipal";
             this.panelPrincipal.Size = new System.Drawing.Size(745, 520);
             this.panelPrincipal.TabIndex = 2;
-            // 
-            // tablaClientes
-            // 
-            this.tablaClientes.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(244)))), ((int)(((byte)(202)))), ((int)(((byte)(126)))));
-            this.tablaClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.tablaClientes.Location = new System.Drawing.Point(6, 341);
-            this.tablaClientes.Name = "tablaClientes";
-            this.tablaClientes.RowTemplate.Height = 25;
-            this.tablaClientes.Size = new System.Drawing.Size(336, 176);
-            this.tablaClientes.TabIndex = 4;
             // 
             // tableLayoutPanel3
             // 
@@ -981,7 +968,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.hamburguerPic)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tituloPic)).EndInit();
             this.panelPrincipal.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.tablaClientes)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panelServicioCliente3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picServicioCliente1)).EndInit();
@@ -1081,6 +1067,5 @@
         private Panel panelMenuPlataforma;
         internal Button btnPlataforma;
         private PictureBox picIconPlataforma;
-        private DataGridView tablaClientes;
     }
 }
