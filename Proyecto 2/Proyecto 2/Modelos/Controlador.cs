@@ -31,6 +31,9 @@ namespace Proyecto_2.Modelos
             this.listaEsperas = new ListaEspera();
             this.tiempoIntervalo = 0;
         }
+        public ListaEspera getListaEspera() {
+            return this.listaEsperas;
+        }
         public void registrarPeticion(Cliente cliente) {
             //Registra en la lista indicada
             listaEsperas.agregarCliente(cliente);

@@ -126,7 +126,7 @@ namespace Proyecto_2
         private void btnRetiros_Click(object sender, EventArgs e)
         {
             //Codigo aqui
-
+            generarPeticion("retiro");
             ocultarSubMenus();
         }
 
@@ -202,27 +202,40 @@ namespace Proyecto_2
         }
         public void generarPeticion(string nombreServicio)
         {
-
-            if (alerta.ShowDialog() == DialogResult.OK)
+            bool bucle = false;
+            do
             {
-                string check = alerta.getCheckOpcion(), nombre = alerta.getTxtNombre();
-                if (check != "" && nombre != "")
+                if (alerta.ShowDialog() == DialogResult.OK)
                 {
-                    MessageBox.Show("Querid@ " + alerta.getTxtNombre() + " espere a ser atendido", "Confirmacion");
-                    registrarPeticion(new Cliente(nombre, nombreServicio, check == "preferencial" ? true : false));
-                    check = "";
-                    nombre = "";
-
+                    string check = alerta.getCheckOpcion(), nombre = alerta.getTxtNombre();
+                    if (check != "" && nombre != "")
+                    {
+                        MessageBox.Show("Querid@ " + alerta.getTxtNombre() + " espere a ser atendido", "Confirmacion");
+                        registrarPeticion(new Cliente(nombre, nombreServicio, check == "preferencial" ? true : false));
+                        alerta.limpiarAlerta();
+                        bucle = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Debe llenar todos los campos", "Error");
+                        bucle = true;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Debe llenar todos los campos", "Error");
+                    bucle = false;
                 }
-            }
+            } while (bucle);
         }
         private void registrarPeticion(Cliente cliente)
         {
             controlador.registrarPeticion(cliente);
+            //controlador.getListaEspera().getClientesEspera();
+
+            tablaClientes.DataSource = controlador.getListaEspera().getClientesEspera();
+            btnCaja.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
+
+
 
         }
 
