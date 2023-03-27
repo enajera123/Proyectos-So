@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelSubMenu3 = new System.Windows.Forms.Panel();
             this.btnServicio11 = new System.Windows.Forms.Button();
@@ -56,18 +57,18 @@
             this.tituloPic = new System.Windows.Forms.PictureBox();
             this.panelBoton = new System.Windows.Forms.Panel();
             this.buttonAceptar = new System.Windows.Forms.Button();
-            this.panelSuperior = new System.Windows.Forms.Panel();
-            this.panelIzquierdoSuperior = new System.Windows.Forms.Panel();
             this.btnHabilitado = new System.Windows.Forms.CheckBox();
-            this.btnActualizar = new System.Windows.Forms.Button();
-            this.txtNombre = new System.Windows.Forms.TextBox();
-            this.lblNombre = new System.Windows.Forms.Label();
-            this.panelInferior = new System.Windows.Forms.Panel();
             this.panelIzquierdoInferior = new System.Windows.Forms.Panel();
             this.btnMas = new System.Windows.Forms.Button();
             this.btnMenos = new System.Windows.Forms.Button();
             this.txtCantidad = new System.Windows.Forms.TextBox();
             this.labelCantidad = new System.Windows.Forms.Label();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.lblNombre = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelDerecho = new System.Windows.Forms.Panel();
+            this.picIcon = new System.Windows.Forms.PictureBox();
+            this.lblInformacion = new System.Windows.Forms.Label();
             this.panelMenu.SuspendLayout();
             this.panelSubMenu3.SuspendLayout();
             this.panelMenuServicioCliente.SuspendLayout();
@@ -81,10 +82,10 @@
             this.panelMenuSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tituloPic)).BeginInit();
             this.panelBoton.SuspendLayout();
-            this.panelSuperior.SuspendLayout();
-            this.panelIzquierdoSuperior.SuspendLayout();
-            this.panelInferior.SuspendLayout();
             this.panelIzquierdoInferior.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panelDerecho.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).BeginInit();
             this.SuspendLayout();
             // 
             // panelMenu
@@ -484,35 +485,14 @@
             this.buttonAceptar.TabIndex = 0;
             this.buttonAceptar.Text = "Aceptar";
             this.buttonAceptar.UseVisualStyleBackColor = false;
-            // 
-            // panelSuperior
-            // 
-            this.panelSuperior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panelSuperior.Controls.Add(this.panelIzquierdoSuperior);
-            this.panelSuperior.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSuperior.Location = new System.Drawing.Point(237, 0);
-            this.panelSuperior.Name = "panelSuperior";
-            this.panelSuperior.Size = new System.Drawing.Size(745, 226);
-            this.panelSuperior.TabIndex = 3;
-            // 
-            // panelIzquierdoSuperior
-            // 
-            this.panelIzquierdoSuperior.Controls.Add(this.btnHabilitado);
-            this.panelIzquierdoSuperior.Controls.Add(this.btnActualizar);
-            this.panelIzquierdoSuperior.Controls.Add(this.txtNombre);
-            this.panelIzquierdoSuperior.Controls.Add(this.lblNombre);
-            this.panelIzquierdoSuperior.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelIzquierdoSuperior.Location = new System.Drawing.Point(0, 0);
-            this.panelIzquierdoSuperior.Name = "panelIzquierdoSuperior";
-            this.panelIzquierdoSuperior.Size = new System.Drawing.Size(392, 226);
-            this.panelIzquierdoSuperior.TabIndex = 0;
+            this.buttonAceptar.Click += new System.EventHandler(this.buttonAceptar_Click);
             // 
             // btnHabilitado
             // 
             this.btnHabilitado.AutoSize = true;
             this.btnHabilitado.Checked = true;
             this.btnHabilitado.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnHabilitado.Location = new System.Drawing.Point(6, 77);
+            this.btnHabilitado.Location = new System.Drawing.Point(3, 67);
             this.btnHabilitado.Name = "btnHabilitado";
             this.btnHabilitado.Size = new System.Drawing.Size(81, 19);
             this.btnHabilitado.TabIndex = 3;
@@ -520,57 +500,17 @@
             this.btnHabilitado.UseVisualStyleBackColor = true;
             this.btnHabilitado.CheckedChanged += new System.EventHandler(this.btnHabilitado_CheckedChanged);
             // 
-            // btnActualizar
-            // 
-            this.btnActualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(178)))), ((int)(((byte)(112)))));
-            this.btnActualizar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(178)))), ((int)(((byte)(112)))));
-            this.btnActualizar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnActualizar.Location = new System.Drawing.Point(223, 48);
-            this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(76, 23);
-            this.btnActualizar.TabIndex = 2;
-            this.btnActualizar.Text = "Actualizar";
-            this.btnActualizar.UseVisualStyleBackColor = false;
-            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
-            // 
-            // txtNombre
-            // 
-            this.txtNombre.Location = new System.Drawing.Point(6, 48);
-            this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(211, 23);
-            this.txtNombre.TabIndex = 1;
-            // 
-            // lblNombre
-            // 
-            this.lblNombre.AutoSize = true;
-            this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblNombre.Location = new System.Drawing.Point(6, 17);
-            this.lblNombre.Name = "lblNombre";
-            this.lblNombre.Size = new System.Drawing.Size(89, 28);
-            this.lblNombre.TabIndex = 0;
-            this.lblNombre.Text = "Nombre:";
-            // 
-            // panelInferior
-            // 
-            this.panelInferior.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.panelInferior.Controls.Add(this.panelIzquierdoInferior);
-            this.panelInferior.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelInferior.Location = new System.Drawing.Point(237, 226);
-            this.panelInferior.Name = "panelInferior";
-            this.panelInferior.Size = new System.Drawing.Size(745, 278);
-            this.panelInferior.TabIndex = 4;
-            // 
             // panelIzquierdoInferior
             // 
             this.panelIzquierdoInferior.Controls.Add(this.btnMas);
             this.panelIzquierdoInferior.Controls.Add(this.btnMenos);
             this.panelIzquierdoInferior.Controls.Add(this.txtCantidad);
             this.panelIzquierdoInferior.Controls.Add(this.labelCantidad);
-            this.panelIzquierdoInferior.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelIzquierdoInferior.Location = new System.Drawing.Point(0, 0);
+            this.panelIzquierdoInferior.Location = new System.Drawing.Point(0, 199);
             this.panelIzquierdoInferior.Name = "panelIzquierdoInferior";
-            this.panelIzquierdoInferior.Size = new System.Drawing.Size(392, 278);
+            this.panelIzquierdoInferior.Size = new System.Drawing.Size(247, 132);
             this.panelIzquierdoInferior.TabIndex = 0;
+            this.panelIzquierdoInferior.Visible = false;
             // 
             // btnMas
             // 
@@ -584,6 +524,7 @@
             this.btnMas.TabIndex = 3;
             this.btnMas.Text = "+";
             this.btnMas.UseVisualStyleBackColor = false;
+            this.btnMas.Click += new System.EventHandler(this.btnMas_Click);
             // 
             // btnMenos
             // 
@@ -619,14 +560,77 @@
             this.labelCantidad.TabIndex = 0;
             this.labelCantidad.Text = "Cantidad de Cajas:";
             // 
+            // txtNombre
+            // 
+            this.txtNombre.Location = new System.Drawing.Point(3, 38);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(211, 23);
+            this.txtNombre.TabIndex = 1;
+            this.txtNombre.TextChanged += new System.EventHandler(this.txtNombre_TextChanged);
+            // 
+            // lblNombre
+            // 
+            this.lblNombre.AutoSize = true;
+            this.lblNombre.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblNombre.Location = new System.Drawing.Point(3, 7);
+            this.lblNombre.Name = "lblNombre";
+            this.lblNombre.Size = new System.Drawing.Size(89, 28);
+            this.lblNombre.TabIndex = 0;
+            this.lblNombre.Text = "Nombre:";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(220)))), ((int)(((byte)(168)))));
+            this.panel1.Controls.Add(this.txtNombre);
+            this.panel1.Controls.Add(this.panelIzquierdoInferior);
+            this.panel1.Controls.Add(this.btnHabilitado);
+            this.panel1.Controls.Add(this.lblNombre);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(237, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(365, 504);
+            this.panel1.TabIndex = 4;
+            // 
+            // panelDerecho
+            // 
+            this.panelDerecho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(220)))), ((int)(((byte)(168)))));
+            this.panelDerecho.Controls.Add(this.picIcon);
+            this.panelDerecho.Controls.Add(this.lblInformacion);
+            this.panelDerecho.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelDerecho.Location = new System.Drawing.Point(602, 0);
+            this.panelDerecho.Name = "panelDerecho";
+            this.panelDerecho.Size = new System.Drawing.Size(380, 504);
+            this.panelDerecho.TabIndex = 5;
+            // 
+            // picIcon
+            // 
+            this.picIcon.Image = global::Proyecto_2.Properties.Resources.mantenimiento_web;
+            this.picIcon.Location = new System.Drawing.Point(0, 152);
+            this.picIcon.Name = "picIcon";
+            this.picIcon.Size = new System.Drawing.Size(380, 352);
+            this.picIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIcon.TabIndex = 1;
+            this.picIcon.TabStop = false;
+            // 
+            // lblInformacion
+            // 
+            this.lblInformacion.AutoSize = true;
+            this.lblInformacion.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblInformacion.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblInformacion.Location = new System.Drawing.Point(0, 0);
+            this.lblInformacion.Name = "lblInformacion";
+            this.lblInformacion.Size = new System.Drawing.Size(357, 152);
+            this.lblInformacion.TabIndex = 0;
+            this.lblInformacion.Text = resources.GetString("lblInformacion.Text");
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(982, 581);
-            this.Controls.Add(this.panelInferior);
-            this.Controls.Add(this.panelSuperior);
+            this.Controls.Add(this.panelDerecho);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panelBoton);
             this.Controls.Add(this.panelMenu);
             this.Name = "Login";
@@ -646,12 +650,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.tituloPic)).EndInit();
             this.panelBoton.ResumeLayout(false);
             this.panelBoton.PerformLayout();
-            this.panelSuperior.ResumeLayout(false);
-            this.panelIzquierdoSuperior.ResumeLayout(false);
-            this.panelIzquierdoSuperior.PerformLayout();
-            this.panelInferior.ResumeLayout(false);
             this.panelIzquierdoInferior.ResumeLayout(false);
             this.panelIzquierdoInferior.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panelDerecho.ResumeLayout(false);
+            this.panelDerecho.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -686,17 +691,17 @@
         private PictureBox tituloPic;
         private Panel panelBoton;
         private Button buttonAceptar;
-        private Panel panelSuperior;
-        private Panel panelIzquierdoSuperior;
         private CheckBox btnHabilitado;
-        private Button btnActualizar;
         private TextBox txtNombre;
         private Label lblNombre;
-        private Panel panelInferior;
         private Panel panelIzquierdoInferior;
         private Button btnMas;
         private Button btnMenos;
         private TextBox txtCantidad;
         private Label labelCantidad;
+        private Panel panel1;
+        private Panel panelDerecho;
+        private PictureBox picIcon;
+        private Label lblInformacion;
     }
 }
