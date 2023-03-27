@@ -3,6 +3,7 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from controlador.login import LoginView
 from controlador.main import Main
+from controlador.create import Create
 # =======================
 # Main
 # =======================

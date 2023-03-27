@@ -5,18 +5,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 #=======================
 #		Controlador
 #=======================
-class Main(QMainWindow):
+class Create(QMainWindow):
     def __init__(self):#this
-      super(Main,self).__init__()#Inicializa la clase -> Initialize
-      uic.loadUi("Create.ui",self)
+      super(Create,self).__init__()#Inicializa la clase -> Initialize
+      uic.loadUi("vista/create.ui",self)
       self.cbNombreUsuario.setCurrentIndex(-1)
-    
-        
 #Termina la clase
-#=======================
-#		Main
-#=======================
-app = QApplication(sys.argv)
-main = Main()
-main.show()
-sys.exit(app.exec_())
