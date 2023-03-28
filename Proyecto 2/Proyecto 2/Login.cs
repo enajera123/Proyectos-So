@@ -13,13 +13,7 @@ namespace Proyecto_2
     
     public partial class Login : Form
     {        
-        Button botonSeleccionado;
-        Panel? panelSeleccionado;
-        Color colorDeshabilitado = Color.FromArgb(255, 255, 192, 192);
-        Color colorHabilitado = Color.FromArgb(255,17, 121, 174);
-        int cajasGrupo1 = 3;
-        int cajasGrupo2 = 3;
-        int cajasGrupo3 = 3;
+        
 
         public Login()
         {

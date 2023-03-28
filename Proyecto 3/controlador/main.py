@@ -79,18 +79,24 @@ class Main(QMainWindow):
         self.nuevaVentana.show()
 
     def btnEliminar_click(self, event):
-        ManejoArchivo.eliminarCarpeta(Main.obtenerRutaItemSeleccionado(self))
-        Main.enlistarArchivos(self)
-        self.btnCommit.show()
+        ruta = Main.obtenerRutaItemSeleccionado(self)
+        if ruta!="":
+            ManejoArchivo.eliminarCarpeta(ruta)
+            Main.enlistarArchivos(self)
+            self.btnCommit.show()
 
     def arbolPrincipal_itemSelected(self, event):
-        self.txtRuta.setText(Main.obtenerRutaItemSeleccionado(self))  # Obtiene la primera columna
+        # Obtiene la primera columna
+        self.txtRuta.setText(Main.obtenerRutaItemSeleccionado(self))
     # =======================
     # Utilidades
     # =======================
+
     def obtenerRutaItemSeleccionado(self):
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
-        return ManejoArchivo.obtenerRutaCarpeta("bin/"+Data.nombre+"/"+selected_item[0].text(0))
+        if len(selected_item) > 0:
+            return ManejoArchivo.obtenerRutaCarpeta("bin/"+Data.nombre+"/"+selected_item[0].text(0))
+        return ""
 
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""

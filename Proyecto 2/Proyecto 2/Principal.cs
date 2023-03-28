@@ -16,6 +16,7 @@ namespace Proyecto_2
         private void Principal_Load(object sender, EventArgs e)
         {
             ocultarSubMenus();
+            bindServicios();
         }
         /**Menu de hamburguesa**/
         private void hamburguerPic_Click(object sender, EventArgs e)
@@ -27,9 +28,9 @@ namespace Proyecto_2
             if (panelMenu.Width > 200)
             {
                 panelMenu.Width = 70;
-                btnPlataforma.Visible = false;
-                btnCaja.Visible = false;
-                btnServicioCliente.Visible = false;
+                btnGrupo2.Visible = false;
+                btnGrupo1.Visible = false;
+                btnGrupo3.Visible = false;
                 tituloPic.Visible = false;
                 picIconCaja.Dock = DockStyle.Top;
                 picIconPlataforma.Dock = DockStyle.Top;
@@ -44,9 +45,9 @@ namespace Proyecto_2
             {
                 panelMenu.Width = 237;
                 tituloPic.Visible = true;
-                btnCaja.Visible = true;
-                btnPlataforma.Visible = true;
-                btnServicioCliente.Visible = true;
+                btnGrupo1.Visible = true;
+                btnGrupo2.Visible = true;
+                btnGrupo3.Visible = true;
                 picIconCaja.Dock = DockStyle.Left;
                 picIconPlataforma.Dock = DockStyle.Left;
                 picIconServicioCliente.Dock = DockStyle.Left;
@@ -233,7 +234,7 @@ namespace Proyecto_2
             //controlador.getListaEspera().getClientesEspera();
 
            
-            btnCaja.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
+            btnGrupo1.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
 
 
 

@@ -1,4 +1,6 @@
-﻿namespace Proyecto_2
+﻿using System.Runtime.CompilerServices;
+
+namespace Proyecto_2
 {
     partial class Login
     {
@@ -703,5 +705,23 @@
         private Panel panelDerecho;
         private PictureBox picIcon;
         private Label lblInformacion;
+        /**Globals**/
+        private Button botonSeleccionado;
+        private Panel? panelSeleccionado;
+        private Color colorDeshabilitado = Color.FromArgb(255, 255, 192, 192);
+        private Color colorHabilitado = Color.FromArgb(255, 17, 121, 174);
+        private int cajasGrupo1 = 3;
+        private int cajasGrupo2 = 3;
+        private int cajasGrupo3 = 3;
+        public List<Button> getAllButtonsOfPanelMenu() {
+            return Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
+        }
+        public Color getColorDeshabilitado() {
+            return colorDeshabilitado;
+        }
+        public Color getColorHabilitado()
+        {
+            return colorHabilitado;
+        }
     }
 }
