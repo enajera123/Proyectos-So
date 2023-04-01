@@ -30,27 +30,27 @@
         {
             this.panelMenu = new System.Windows.Forms.Panel();
             this.panelSubMenuServicioCliente = new System.Windows.Forms.Panel();
-            this.btnSolicitarInfoCreditos = new System.Windows.Forms.Button();
-            this.btnRetirarTarjeta = new System.Windows.Forms.Button();
+            this.btnServicio11 = new System.Windows.Forms.Button();
+            this.btnServicio10 = new System.Windows.Forms.Button();
             this.panelMenuServicioCliente = new System.Windows.Forms.Panel();
-            this.btnServicioCliente = new System.Windows.Forms.Button();
+            this.btnGrupo3 = new System.Windows.Forms.Button();
             this.picIconServicioCliente = new System.Windows.Forms.PictureBox();
             this.panelSubMenuPlataforma = new System.Windows.Forms.Panel();
-            this.btnCambiarPin = new System.Windows.Forms.Button();
-            this.btnDesbloquearCuenta = new System.Windows.Forms.Button();
-            this.btnCajaSeguridad = new System.Windows.Forms.Button();
-            this.btnFormalizarCredito = new System.Windows.Forms.Button();
-            this.btnSolicitarTarjeta = new System.Windows.Forms.Button();
+            this.btnServicio9 = new System.Windows.Forms.Button();
+            this.btnServicio8 = new System.Windows.Forms.Button();
+            this.btnServicio7 = new System.Windows.Forms.Button();
+            this.btnServicio6 = new System.Windows.Forms.Button();
+            this.btnServicio5 = new System.Windows.Forms.Button();
             this.panelMenuPlataforma = new System.Windows.Forms.Panel();
-            this.btnPlataforma = new System.Windows.Forms.Button();
+            this.btnGrupo2 = new System.Windows.Forms.Button();
             this.picIconPlataforma = new System.Windows.Forms.PictureBox();
             this.panelSubMenuCaja = new System.Windows.Forms.Panel();
-            this.btnPagoCreditos = new System.Windows.Forms.Button();
-            this.btnPagoServiciosPublicos = new System.Windows.Forms.Button();
-            this.btnDepositos = new System.Windows.Forms.Button();
-            this.btnRetiros = new System.Windows.Forms.Button();
+            this.btnServicio4 = new System.Windows.Forms.Button();
+            this.btnServicio3 = new System.Windows.Forms.Button();
+            this.btnServicio2 = new System.Windows.Forms.Button();
+            this.btnServicio1 = new System.Windows.Forms.Button();
             this.panelMenuCaja = new System.Windows.Forms.Panel();
-            this.btnCaja = new System.Windows.Forms.Button();
+            this.btnGrupo1 = new System.Windows.Forms.Button();
             this.picIconCaja = new System.Windows.Forms.PictureBox();
             this.panelMenuSuperior = new System.Windows.Forms.Panel();
             this.hamburguerPic = new System.Windows.Forms.PictureBox();
@@ -156,8 +156,8 @@
             // panelSubMenuServicioCliente
             // 
             this.panelSubMenuServicioCliente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(121)))), ((int)(((byte)(174)))));
-            this.panelSubMenuServicioCliente.Controls.Add(this.btnSolicitarInfoCreditos);
-            this.panelSubMenuServicioCliente.Controls.Add(this.btnRetirarTarjeta);
+            this.panelSubMenuServicioCliente.Controls.Add(this.btnServicio11);
+            this.panelSubMenuServicioCliente.Controls.Add(this.btnServicio10);
             this.panelSubMenuServicioCliente.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubMenuServicioCliente.Location = new System.Drawing.Point(0, 482);
             this.panelSubMenuServicioCliente.Name = "panelSubMenuServicioCliente";
@@ -165,41 +165,41 @@
             this.panelSubMenuServicioCliente.Size = new System.Drawing.Size(237, 70);
             this.panelSubMenuServicioCliente.TabIndex = 8;
             // 
-            // btnSolicitarInfoCreditos
+            // btnServicio11
             // 
-            this.btnSolicitarInfoCreditos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSolicitarInfoCreditos.FlatAppearance.BorderSize = 0;
-            this.btnSolicitarInfoCreditos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSolicitarInfoCreditos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSolicitarInfoCreditos.Location = new System.Drawing.Point(20, 30);
-            this.btnSolicitarInfoCreditos.Name = "btnSolicitarInfoCreditos";
-            this.btnSolicitarInfoCreditos.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnSolicitarInfoCreditos.Size = new System.Drawing.Size(217, 30);
-            this.btnSolicitarInfoCreditos.TabIndex = 5;
-            this.btnSolicitarInfoCreditos.Text = "Solicitar Informacion de Creditos";
-            this.btnSolicitarInfoCreditos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSolicitarInfoCreditos.UseVisualStyleBackColor = true;
-            this.btnSolicitarInfoCreditos.Click += new System.EventHandler(this.btnSolicitarInfoCreditos_Click);
+            this.btnServicio11.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio11.FlatAppearance.BorderSize = 0;
+            this.btnServicio11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio11.Location = new System.Drawing.Point(20, 30);
+            this.btnServicio11.Name = "btnServicio11";
+            this.btnServicio11.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio11.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio11.TabIndex = 5;
+            this.btnServicio11.Text = "Solicitar Informacion de Creditos";
+            this.btnServicio11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio11.UseVisualStyleBackColor = true;
+            this.btnServicio11.Click += new System.EventHandler(this.btnSolicitarInfoCreditos_Click);
             // 
-            // btnRetirarTarjeta
+            // btnServicio10
             // 
-            this.btnRetirarTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnRetirarTarjeta.FlatAppearance.BorderSize = 0;
-            this.btnRetirarTarjeta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRetirarTarjeta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnRetirarTarjeta.Location = new System.Drawing.Point(20, 0);
-            this.btnRetirarTarjeta.Name = "btnRetirarTarjeta";
-            this.btnRetirarTarjeta.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnRetirarTarjeta.Size = new System.Drawing.Size(217, 30);
-            this.btnRetirarTarjeta.TabIndex = 4;
-            this.btnRetirarTarjeta.Text = "Retirar Tarjeta";
-            this.btnRetirarTarjeta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRetirarTarjeta.UseVisualStyleBackColor = true;
-            this.btnRetirarTarjeta.Click += new System.EventHandler(this.btnRetirarTarjeta_Click);
+            this.btnServicio10.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio10.FlatAppearance.BorderSize = 0;
+            this.btnServicio10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio10.Location = new System.Drawing.Point(20, 0);
+            this.btnServicio10.Name = "btnServicio10";
+            this.btnServicio10.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio10.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio10.TabIndex = 4;
+            this.btnServicio10.Text = "Retirar Tarjeta";
+            this.btnServicio10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio10.UseVisualStyleBackColor = true;
+            this.btnServicio10.Click += new System.EventHandler(this.btnRetirarTarjeta_Click);
             // 
             // panelMenuServicioCliente
             // 
-            this.panelMenuServicioCliente.Controls.Add(this.btnServicioCliente);
+            this.panelMenuServicioCliente.Controls.Add(this.btnGrupo3);
             this.panelMenuServicioCliente.Controls.Add(this.picIconServicioCliente);
             this.panelMenuServicioCliente.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMenuServicioCliente.Location = new System.Drawing.Point(0, 437);
@@ -207,22 +207,22 @@
             this.panelMenuServicioCliente.Size = new System.Drawing.Size(237, 45);
             this.panelMenuServicioCliente.TabIndex = 10;
             // 
-            // btnServicioCliente
+            // btnGrupo3
             // 
-            this.btnServicioCliente.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnServicioCliente.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnServicioCliente.FlatAppearance.BorderSize = 0;
-            this.btnServicioCliente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnServicioCliente.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnServicioCliente.Location = new System.Drawing.Point(42, 0);
-            this.btnServicioCliente.Name = "btnServicioCliente";
-            this.btnServicioCliente.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnServicioCliente.Size = new System.Drawing.Size(195, 45);
-            this.btnServicioCliente.TabIndex = 3;
-            this.btnServicioCliente.Text = "Servicio al Cliente";
-            this.btnServicioCliente.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnServicioCliente.UseVisualStyleBackColor = true;
-            this.btnServicioCliente.Click += new System.EventHandler(this.btnServicioCliente_Click);
+            this.btnGrupo3.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGrupo3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGrupo3.FlatAppearance.BorderSize = 0;
+            this.btnGrupo3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGrupo3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnGrupo3.Location = new System.Drawing.Point(42, 0);
+            this.btnGrupo3.Name = "btnGrupo3";
+            this.btnGrupo3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnGrupo3.Size = new System.Drawing.Size(195, 45);
+            this.btnGrupo3.TabIndex = 3;
+            this.btnGrupo3.Text = "Servicio al Cliente";
+            this.btnGrupo3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGrupo3.UseVisualStyleBackColor = true;
+            this.btnGrupo3.Click += new System.EventHandler(this.btnServicioCliente_Click);
             // 
             // picIconServicioCliente
             // 
@@ -239,11 +239,11 @@
             // panelSubMenuPlataforma
             // 
             this.panelSubMenuPlataforma.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(121)))), ((int)(((byte)(174)))));
-            this.panelSubMenuPlataforma.Controls.Add(this.btnCambiarPin);
-            this.panelSubMenuPlataforma.Controls.Add(this.btnDesbloquearCuenta);
-            this.panelSubMenuPlataforma.Controls.Add(this.btnCajaSeguridad);
-            this.panelSubMenuPlataforma.Controls.Add(this.btnFormalizarCredito);
-            this.panelSubMenuPlataforma.Controls.Add(this.btnSolicitarTarjeta);
+            this.panelSubMenuPlataforma.Controls.Add(this.btnServicio9);
+            this.panelSubMenuPlataforma.Controls.Add(this.btnServicio8);
+            this.panelSubMenuPlataforma.Controls.Add(this.btnServicio7);
+            this.panelSubMenuPlataforma.Controls.Add(this.btnServicio6);
+            this.panelSubMenuPlataforma.Controls.Add(this.btnServicio5);
             this.panelSubMenuPlataforma.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubMenuPlataforma.Location = new System.Drawing.Point(0, 279);
             this.panelSubMenuPlataforma.Name = "panelSubMenuPlataforma";
@@ -251,89 +251,89 @@
             this.panelSubMenuPlataforma.Size = new System.Drawing.Size(237, 158);
             this.panelSubMenuPlataforma.TabIndex = 6;
             // 
-            // btnCambiarPin
+            // btnServicio9
             // 
-            this.btnCambiarPin.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCambiarPin.FlatAppearance.BorderSize = 0;
-            this.btnCambiarPin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCambiarPin.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCambiarPin.Location = new System.Drawing.Point(20, 120);
-            this.btnCambiarPin.Name = "btnCambiarPin";
-            this.btnCambiarPin.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnCambiarPin.Size = new System.Drawing.Size(217, 30);
-            this.btnCambiarPin.TabIndex = 8;
-            this.btnCambiarPin.Text = "Cambiar Pin Olvidado";
-            this.btnCambiarPin.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCambiarPin.UseVisualStyleBackColor = true;
-            this.btnCambiarPin.Click += new System.EventHandler(this.btnCambiarPin_Click);
+            this.btnServicio9.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio9.FlatAppearance.BorderSize = 0;
+            this.btnServicio9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio9.Location = new System.Drawing.Point(20, 120);
+            this.btnServicio9.Name = "btnServicio9";
+            this.btnServicio9.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio9.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio9.TabIndex = 8;
+            this.btnServicio9.Text = "Cambiar Pin Olvidado";
+            this.btnServicio9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio9.UseVisualStyleBackColor = true;
+            this.btnServicio9.Click += new System.EventHandler(this.btnCambiarPin_Click);
             // 
-            // btnDesbloquearCuenta
+            // btnServicio8
             // 
-            this.btnDesbloquearCuenta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDesbloquearCuenta.FlatAppearance.BorderSize = 0;
-            this.btnDesbloquearCuenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDesbloquearCuenta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDesbloquearCuenta.Location = new System.Drawing.Point(20, 90);
-            this.btnDesbloquearCuenta.Name = "btnDesbloquearCuenta";
-            this.btnDesbloquearCuenta.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnDesbloquearCuenta.Size = new System.Drawing.Size(217, 30);
-            this.btnDesbloquearCuenta.TabIndex = 7;
-            this.btnDesbloquearCuenta.Text = "Desbloquear Cuenta";
-            this.btnDesbloquearCuenta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDesbloquearCuenta.UseVisualStyleBackColor = true;
-            this.btnDesbloquearCuenta.Click += new System.EventHandler(this.btnDesbloquearCuenta_Click);
+            this.btnServicio8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio8.FlatAppearance.BorderSize = 0;
+            this.btnServicio8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio8.Location = new System.Drawing.Point(20, 90);
+            this.btnServicio8.Name = "btnServicio8";
+            this.btnServicio8.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio8.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio8.TabIndex = 7;
+            this.btnServicio8.Text = "Desbloquear Cuenta";
+            this.btnServicio8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio8.UseVisualStyleBackColor = true;
+            this.btnServicio8.Click += new System.EventHandler(this.btnDesbloquearCuenta_Click);
             // 
-            // btnCajaSeguridad
+            // btnServicio7
             // 
-            this.btnCajaSeguridad.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnCajaSeguridad.FlatAppearance.BorderSize = 0;
-            this.btnCajaSeguridad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCajaSeguridad.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCajaSeguridad.Location = new System.Drawing.Point(20, 60);
-            this.btnCajaSeguridad.Name = "btnCajaSeguridad";
-            this.btnCajaSeguridad.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnCajaSeguridad.Size = new System.Drawing.Size(217, 30);
-            this.btnCajaSeguridad.TabIndex = 6;
-            this.btnCajaSeguridad.Text = "Caja de Seguridad";
-            this.btnCajaSeguridad.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCajaSeguridad.UseVisualStyleBackColor = true;
-            this.btnCajaSeguridad.Click += new System.EventHandler(this.btnCajaSeguridad_Click);
+            this.btnServicio7.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio7.FlatAppearance.BorderSize = 0;
+            this.btnServicio7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio7.Location = new System.Drawing.Point(20, 60);
+            this.btnServicio7.Name = "btnServicio7";
+            this.btnServicio7.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio7.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio7.TabIndex = 6;
+            this.btnServicio7.Text = "Caja de Seguridad";
+            this.btnServicio7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio7.UseVisualStyleBackColor = true;
+            this.btnServicio7.Click += new System.EventHandler(this.btnCajaSeguridad_Click);
             // 
-            // btnFormalizarCredito
+            // btnServicio6
             // 
-            this.btnFormalizarCredito.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnFormalizarCredito.FlatAppearance.BorderSize = 0;
-            this.btnFormalizarCredito.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFormalizarCredito.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnFormalizarCredito.Location = new System.Drawing.Point(20, 30);
-            this.btnFormalizarCredito.Name = "btnFormalizarCredito";
-            this.btnFormalizarCredito.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnFormalizarCredito.Size = new System.Drawing.Size(217, 30);
-            this.btnFormalizarCredito.TabIndex = 5;
-            this.btnFormalizarCredito.Text = "Formalizar Credito";
-            this.btnFormalizarCredito.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnFormalizarCredito.UseVisualStyleBackColor = true;
-            this.btnFormalizarCredito.Click += new System.EventHandler(this.btnFormalizarCredito_Click);
+            this.btnServicio6.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio6.FlatAppearance.BorderSize = 0;
+            this.btnServicio6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio6.Location = new System.Drawing.Point(20, 30);
+            this.btnServicio6.Name = "btnServicio6";
+            this.btnServicio6.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio6.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio6.TabIndex = 5;
+            this.btnServicio6.Text = "Formalizar Credito";
+            this.btnServicio6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio6.UseVisualStyleBackColor = true;
+            this.btnServicio6.Click += new System.EventHandler(this.btnFormalizarCredito_Click);
             // 
-            // btnSolicitarTarjeta
+            // btnServicio5
             // 
-            this.btnSolicitarTarjeta.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSolicitarTarjeta.FlatAppearance.BorderSize = 0;
-            this.btnSolicitarTarjeta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSolicitarTarjeta.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnSolicitarTarjeta.Location = new System.Drawing.Point(20, 0);
-            this.btnSolicitarTarjeta.Name = "btnSolicitarTarjeta";
-            this.btnSolicitarTarjeta.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnSolicitarTarjeta.Size = new System.Drawing.Size(217, 30);
-            this.btnSolicitarTarjeta.TabIndex = 4;
-            this.btnSolicitarTarjeta.Text = "Solicitar Tarjeta";
-            this.btnSolicitarTarjeta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSolicitarTarjeta.UseVisualStyleBackColor = true;
-            this.btnSolicitarTarjeta.Click += new System.EventHandler(this.btnSolicitarTarjeta_Click);
+            this.btnServicio5.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio5.FlatAppearance.BorderSize = 0;
+            this.btnServicio5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio5.Location = new System.Drawing.Point(20, 0);
+            this.btnServicio5.Name = "btnServicio5";
+            this.btnServicio5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio5.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio5.TabIndex = 4;
+            this.btnServicio5.Text = "Solicitar Tarjeta";
+            this.btnServicio5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio5.UseVisualStyleBackColor = true;
+            this.btnServicio5.Click += new System.EventHandler(this.btnSolicitarTarjeta_Click);
             // 
             // panelMenuPlataforma
             // 
-            this.panelMenuPlataforma.Controls.Add(this.btnPlataforma);
+            this.panelMenuPlataforma.Controls.Add(this.btnGrupo2);
             this.panelMenuPlataforma.Controls.Add(this.picIconPlataforma);
             this.panelMenuPlataforma.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMenuPlataforma.Location = new System.Drawing.Point(0, 234);
@@ -341,22 +341,22 @@
             this.panelMenuPlataforma.Size = new System.Drawing.Size(237, 45);
             this.panelMenuPlataforma.TabIndex = 9;
             // 
-            // btnPlataforma
+            // btnGrupo2
             // 
-            this.btnPlataforma.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnPlataforma.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPlataforma.FlatAppearance.BorderSize = 0;
-            this.btnPlataforma.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPlataforma.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnPlataforma.Location = new System.Drawing.Point(42, 0);
-            this.btnPlataforma.Name = "btnPlataforma";
-            this.btnPlataforma.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnPlataforma.Size = new System.Drawing.Size(195, 45);
-            this.btnPlataforma.TabIndex = 3;
-            this.btnPlataforma.Text = "Plataforma";
-            this.btnPlataforma.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPlataforma.UseVisualStyleBackColor = true;
-            this.btnPlataforma.Click += new System.EventHandler(this.btnPlataforma_Click);
+            this.btnGrupo2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGrupo2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGrupo2.FlatAppearance.BorderSize = 0;
+            this.btnGrupo2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGrupo2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnGrupo2.Location = new System.Drawing.Point(42, 0);
+            this.btnGrupo2.Name = "btnGrupo2";
+            this.btnGrupo2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnGrupo2.Size = new System.Drawing.Size(195, 45);
+            this.btnGrupo2.TabIndex = 3;
+            this.btnGrupo2.Text = "Plataforma";
+            this.btnGrupo2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGrupo2.UseVisualStyleBackColor = true;
+            this.btnGrupo2.Click += new System.EventHandler(this.btnPlataforma_Click);
             // 
             // picIconPlataforma
             // 
@@ -373,10 +373,10 @@
             // panelSubMenuCaja
             // 
             this.panelSubMenuCaja.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(121)))), ((int)(((byte)(174)))));
-            this.panelSubMenuCaja.Controls.Add(this.btnPagoCreditos);
-            this.panelSubMenuCaja.Controls.Add(this.btnPagoServiciosPublicos);
-            this.panelSubMenuCaja.Controls.Add(this.btnDepositos);
-            this.panelSubMenuCaja.Controls.Add(this.btnRetiros);
+            this.panelSubMenuCaja.Controls.Add(this.btnServicio4);
+            this.panelSubMenuCaja.Controls.Add(this.btnServicio3);
+            this.panelSubMenuCaja.Controls.Add(this.btnServicio2);
+            this.panelSubMenuCaja.Controls.Add(this.btnServicio1);
             this.panelSubMenuCaja.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubMenuCaja.Location = new System.Drawing.Point(0, 106);
             this.panelSubMenuCaja.Name = "panelSubMenuCaja";
@@ -384,73 +384,73 @@
             this.panelSubMenuCaja.Size = new System.Drawing.Size(237, 128);
             this.panelSubMenuCaja.TabIndex = 4;
             // 
-            // btnPagoCreditos
+            // btnServicio4
             // 
-            this.btnPagoCreditos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnPagoCreditos.FlatAppearance.BorderSize = 0;
-            this.btnPagoCreditos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagoCreditos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnPagoCreditos.Location = new System.Drawing.Point(20, 90);
-            this.btnPagoCreditos.Name = "btnPagoCreditos";
-            this.btnPagoCreditos.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnPagoCreditos.Size = new System.Drawing.Size(217, 30);
-            this.btnPagoCreditos.TabIndex = 7;
-            this.btnPagoCreditos.Text = "Pago de Creditos";
-            this.btnPagoCreditos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPagoCreditos.UseVisualStyleBackColor = true;
-            this.btnPagoCreditos.Click += new System.EventHandler(this.btnPagoCreditos_Click);
+            this.btnServicio4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio4.FlatAppearance.BorderSize = 0;
+            this.btnServicio4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio4.Location = new System.Drawing.Point(20, 90);
+            this.btnServicio4.Name = "btnServicio4";
+            this.btnServicio4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio4.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio4.TabIndex = 7;
+            this.btnServicio4.Text = "Pago de Creditos";
+            this.btnServicio4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio4.UseVisualStyleBackColor = true;
+            this.btnServicio4.Click += new System.EventHandler(this.btnPagoCreditos_Click);
             // 
-            // btnPagoServiciosPublicos
+            // btnServicio3
             // 
-            this.btnPagoServiciosPublicos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnPagoServiciosPublicos.FlatAppearance.BorderSize = 0;
-            this.btnPagoServiciosPublicos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPagoServiciosPublicos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnPagoServiciosPublicos.Location = new System.Drawing.Point(20, 60);
-            this.btnPagoServiciosPublicos.Name = "btnPagoServiciosPublicos";
-            this.btnPagoServiciosPublicos.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnPagoServiciosPublicos.Size = new System.Drawing.Size(217, 30);
-            this.btnPagoServiciosPublicos.TabIndex = 6;
-            this.btnPagoServiciosPublicos.Text = "Pago de Servicios Publicos";
-            this.btnPagoServiciosPublicos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPagoServiciosPublicos.UseVisualStyleBackColor = true;
-            this.btnPagoServiciosPublicos.Click += new System.EventHandler(this.btnPagoServiciosPublicos_Click);
+            this.btnServicio3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio3.FlatAppearance.BorderSize = 0;
+            this.btnServicio3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio3.Location = new System.Drawing.Point(20, 60);
+            this.btnServicio3.Name = "btnServicio3";
+            this.btnServicio3.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio3.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio3.TabIndex = 6;
+            this.btnServicio3.Text = "Pago de Servicios Publicos";
+            this.btnServicio3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio3.UseVisualStyleBackColor = true;
+            this.btnServicio3.Click += new System.EventHandler(this.btnPagoServiciosPublicos_Click);
             // 
-            // btnDepositos
+            // btnServicio2
             // 
-            this.btnDepositos.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDepositos.FlatAppearance.BorderSize = 0;
-            this.btnDepositos.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDepositos.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnDepositos.Location = new System.Drawing.Point(20, 30);
-            this.btnDepositos.Name = "btnDepositos";
-            this.btnDepositos.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnDepositos.Size = new System.Drawing.Size(217, 30);
-            this.btnDepositos.TabIndex = 5;
-            this.btnDepositos.Text = "Depositos";
-            this.btnDepositos.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDepositos.UseVisualStyleBackColor = true;
-            this.btnDepositos.Click += new System.EventHandler(this.btnDepositos_Click);
+            this.btnServicio2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio2.FlatAppearance.BorderSize = 0;
+            this.btnServicio2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio2.Location = new System.Drawing.Point(20, 30);
+            this.btnServicio2.Name = "btnServicio2";
+            this.btnServicio2.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio2.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio2.TabIndex = 5;
+            this.btnServicio2.Text = "Depositos";
+            this.btnServicio2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio2.UseVisualStyleBackColor = true;
+            this.btnServicio2.Click += new System.EventHandler(this.btnDepositos_Click);
             // 
-            // btnRetiros
+            // btnServicio1
             // 
-            this.btnRetiros.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnRetiros.FlatAppearance.BorderSize = 0;
-            this.btnRetiros.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRetiros.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnRetiros.Location = new System.Drawing.Point(20, 0);
-            this.btnRetiros.Name = "btnRetiros";
-            this.btnRetiros.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnRetiros.Size = new System.Drawing.Size(217, 30);
-            this.btnRetiros.TabIndex = 4;
-            this.btnRetiros.Text = "Retiros";
-            this.btnRetiros.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnRetiros.UseVisualStyleBackColor = true;
-            this.btnRetiros.Click += new System.EventHandler(this.btnRetiros_Click);
+            this.btnServicio1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnServicio1.FlatAppearance.BorderSize = 0;
+            this.btnServicio1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnServicio1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnServicio1.Location = new System.Drawing.Point(20, 0);
+            this.btnServicio1.Name = "btnServicio1";
+            this.btnServicio1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnServicio1.Size = new System.Drawing.Size(217, 30);
+            this.btnServicio1.TabIndex = 4;
+            this.btnServicio1.Text = "Retiros";
+            this.btnServicio1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnServicio1.UseVisualStyleBackColor = true;
+            this.btnServicio1.Click += new System.EventHandler(this.btnRetiros_Click);
             // 
             // panelMenuCaja
             // 
-            this.panelMenuCaja.Controls.Add(this.btnCaja);
+            this.panelMenuCaja.Controls.Add(this.btnGrupo1);
             this.panelMenuCaja.Controls.Add(this.picIconCaja);
             this.panelMenuCaja.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelMenuCaja.Location = new System.Drawing.Point(0, 61);
@@ -458,22 +458,22 @@
             this.panelMenuCaja.Size = new System.Drawing.Size(237, 45);
             this.panelMenuCaja.TabIndex = 2;
             // 
-            // btnCaja
+            // btnGrupo1
             // 
-            this.btnCaja.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCaja.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCaja.FlatAppearance.BorderSize = 0;
-            this.btnCaja.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCaja.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btnCaja.Location = new System.Drawing.Point(42, 0);
-            this.btnCaja.Name = "btnCaja";
-            this.btnCaja.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnCaja.Size = new System.Drawing.Size(195, 45);
-            this.btnCaja.TabIndex = 3;
-            this.btnCaja.Text = "Caja";
-            this.btnCaja.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnCaja.UseVisualStyleBackColor = true;
-            this.btnCaja.Click += new System.EventHandler(this.btnCaja_Click);
+            this.btnGrupo1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGrupo1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnGrupo1.FlatAppearance.BorderSize = 0;
+            this.btnGrupo1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGrupo1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnGrupo1.Location = new System.Drawing.Point(42, 0);
+            this.btnGrupo1.Name = "btnGrupo1";
+            this.btnGrupo1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnGrupo1.Size = new System.Drawing.Size(195, 45);
+            this.btnGrupo1.TabIndex = 3;
+            this.btnGrupo1.Text = "Caja";
+            this.btnGrupo1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnGrupo1.UseVisualStyleBackColor = true;
+            this.btnGrupo1.Click += new System.EventHandler(this.btnCaja_Click);
             // 
             // picIconCaja
             // 
@@ -536,6 +536,7 @@
             this.panelPrincipal.Controls.Add(this.tableLayoutPanel3);
             this.panelPrincipal.Controls.Add(this.tableLayoutPanel1);
             this.panelPrincipal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPrincipal.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.panelPrincipal.Location = new System.Drawing.Point(237, 61);
             this.panelPrincipal.Name = "panelPrincipal";
             this.panelPrincipal.Size = new System.Drawing.Size(745, 520);
@@ -1038,21 +1039,21 @@
         private ProgressBar barPlataforma3;
         private Panel panelMenuSuperior;
         private Panel panelSubMenuCaja;
-        private Button btnPagoServiciosPublicos;
-        private Button btnDepositos;
-        private Button btnRetiros;
+        private Button btnServicio3;
+        private Button btnServicio2;
+        private Button btnServicio1;
         private Panel panelSubMenuServicioCliente;
-        private Button btnSolicitarInfoCreditos;
-        private Button btnRetirarTarjeta;
+        private Button btnServicio11;
+        private Button btnServicio10;
         private Panel panelSubMenuPlataforma;
-        private Button btnCajaSeguridad;
-        private Button btnFormalizarCredito;
-        private Button btnSolicitarTarjeta;
-        private Button btnPagoCreditos;
-        private Button btnCambiarPin;
-        private Button btnDesbloquearCuenta;
+        private Button btnServicio7;
+        private Button btnServicio6;
+        private Button btnServicio5;
+        private Button btnServicio4;
+        private Button btnServicio9;
+        private Button btnServicio8;
         private PictureBox picIconCaja;
-        internal Button btnCaja;
+        internal Button btnGrupo1;
         private TableLayoutPanel tableLayoutPanel4;
         private PictureBox pictureBox1;
         internal Button button1;
@@ -1061,10 +1062,32 @@
         private Button button2;
         private Panel panelMenuCaja;
         private Panel panelMenuServicioCliente;
-        internal Button btnServicioCliente;
+        internal Button btnGrupo3;
         private PictureBox picIconServicioCliente;
         private Panel panelMenuPlataforma;
-        internal Button btnPlataforma;
+        internal Button btnGrupo2;
         private PictureBox picIconPlataforma;
+        private Login login = new Login();
+        public void bindServicios() {
+            List<Button> botonesMenu = Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
+            List<Button> botonesMenuLogin = login.getAllButtonsOfPanelMenu();
+            foreach (Button buttonLogin in botonesMenuLogin)
+            {
+                foreach(Button button in botonesMenu)
+                {
+                    if (buttonLogin.Name == button.Name)
+                    {
+                        if (buttonLogin.BackColor == login.getColorDeshabilitado())
+                        {
+                            button.Visible = false;
+                        }
+                        else
+                        {
+                            button.Text = buttonLogin.Text;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

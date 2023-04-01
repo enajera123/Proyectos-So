@@ -8,33 +8,50 @@ namespace Proyecto_2.Modelos
 {
     internal class ListaEspera
     {
-        private List<Servicio> serviciosEspera { set; get; }
-        private List<Cliente> clientesEspera;
+        private Queue<Servicio> serviciosEspera;
+        private Queue<Cliente> clientesEspera;
         public ListaEspera()
         {
+            serviciosEspera = new Queue<Servicio>();
+            clientesEspera = new Queue<Cliente>();
         }
 
-        public ListaEspera(List<Servicio> serviciosEspera, List<Cliente> clientesEspera)
+        public ListaEspera(Queue<Servicio> serviciosEspera, Queue<Cliente> clientesEspera)
         {
             this.serviciosEspera = serviciosEspera;
             this.clientesEspera = clientesEspera;
         }
-        public void agregarCliente(Cliente cliente) {
-            //Agrega a la lista y reordena
-            clientesEspera.Add(cliente);
+        public Queue<Cliente> getClientesEspera() {
+            return this.clientesEspera;
         }
-        public Cliente obtenerCliente() {
+        public void agregarCliente(Cliente cliente)
+        {
+            //Agrega a la lista y reordena
+            clientesEspera.Enqueue(cliente);
+            ordenarClientes();
+        }
+        public Cliente obtenerCliente()
+        {
             //Obtiene el siguiente cliente de la cola
-            return new Cliente();
+            return clientesEspera.Dequeue();
         }
         public void agregarServicio(Servicio servicio)
         {
             //Agrega a la lista y reordena
-            serviciosEspera.Add(servicio);
+            serviciosEspera.Enqueue(servicio);
+            ordenarServicios();
         }
-        public Servicio obtenerServicio() {
+        public Servicio obtenerServicio()
+        {
             //Agrega a la lista y reordena
-            return new Servicio();
+            return serviciosEspera.Dequeue();
         }
+        public void ordenarServicios() {
+            serviciosEspera = new Queue<Servicio>(serviciosEspera.OrderBy(s => s.getPrioridad()));
+        }
+        public void ordenarClientes() {
+            clientesEspera = new Queue<Cliente>(clientesEspera.OrderBy(s => s.getServicio().getPrioridad()));
+        }
+
     }
 }

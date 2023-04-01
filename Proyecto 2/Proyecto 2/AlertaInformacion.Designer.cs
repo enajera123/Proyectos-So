@@ -155,5 +155,10 @@
                 return "no preferencial";
             return "";
         }
+        public void limpiarAlerta() {
+            checkPreferencial.Checked = false;
+            checkNoPreferencial.Checked = false;
+            txtNombre.ResetText();
+        }
     }
 }
