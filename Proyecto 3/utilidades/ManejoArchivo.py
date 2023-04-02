@@ -38,7 +38,7 @@ class ManejoArchivo:
         print("no exist")
 
     def obtenerRutaCarpeta(nombreCarpeta):
-        return path.abspath(nombreCarpeta)
+        return path.relpath(nombreCarpeta)
 
     def enlistarArchivos(arbol, txtRuta, ruta):
         arbol.clear()
