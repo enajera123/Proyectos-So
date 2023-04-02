@@ -1,7 +1,7 @@
 import sys
 # PyQt5
 from PyQt5 import uic
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QEvent
 from PyQt5.QtWidgets import QMainWindow, QApplication
 # Utilidades
 from utilidades.ManejoArchivo import ManejoArchivo
@@ -28,9 +28,16 @@ class LoginView(QMainWindow):
         """Asocia los eventos con sus disparadores"""
         self.btnCrear.clicked.connect(self.btnCrear_click)
         self.btnIniciarSesion.clicked.connect(self.btnIniciarSesion_click)
+        self.txtClave.returnPressed.connect(self.on_returnPressed)
+        self.txtNombre.returnPressed.connect(self.on_returnPressed)
     # =======================
     # Eventos
     # =======================
+
+    def on_returnPressed(self):
+        event = QEvent(QEvent.KeyPress)
+        LoginView.btnIniciarSesion_click(self,event)
+        
 
     def btnCrear_click(self, event):
         nombre = self.txtNombre.text().strip()
