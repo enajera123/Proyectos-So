@@ -399,7 +399,7 @@ QPushButton:hover{
            </widget>
           </item>
           <item>
-           <widget class="QListView" name="listPermisosUsuarios"/>
+           <widget class="QListWidget" name="lisitWPerUsuarios"/>
           </item>
           <item>
            <widget class="QPushButton" name="btnEliminarUsuario">
