@@ -33,6 +33,11 @@ class ManejoArchivo:
         if (os.path.exists("bin/"+nombreCarpeta)):
             shutil.rmtree("bin/"+nombreCarpeta)  # Borrado recursivo
         os.mkdir("bin/"+nombreCarpeta)
+        
+    def crearCarpetaNoDefault(nombreCarpeta):
+        if (os.path.exists("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)):
+            shutil.rmtree("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)  # Borrado recursivo
+        os.mkdir("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)
 
     def eliminarCarpeta(rutaAbsoluta):
         if (os.path.exists(rutaAbsoluta)):
