@@ -50,30 +50,32 @@ class Main(QMainWindow):
 
         self.btnCerrarSesion.clicked.connect(self.btnCerrarSesion_click)
 
-        self.arbolPrincipal.clicked.connect(
+        self.arbolPrincipal.itemSelectionChanged.connect(
             self.arbolPrincipal_itemSelected)
 
     # =======================
     #        Eventos
     # =======================
     def btnCommit_click(self, event):
-        print("Codigo voanvoa")
+        print("Codigo aqui")
 
     def btnUpdate_click(self, event):
         print("Codigo aqui")
 
     def btnRecuperar_click(self, event):
-        ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, "controlador")
+        print("codigo aqui")
 
     def btnCrear_click(self, event):
-        uso = "crear"
-        ManejoArchivo.crearCarpeta("bin")
-        Main.abrirModificar(self) #prueba crear
+        ruta = Main.obtenerRutaItemSeleccionado(self)
+        Data.rutaModificar = ruta
+        Data.opcion = "Crear"
+        if(ruta!=""):
+            Main.abrirModificar(self)  # prueba crear
 
     def btnModificar_click(self, event):
-        uso = "modificar"
         ruta = Main.obtenerRutaItemSeleccionado(self)
+        Data.rutaModificar = ruta
+        Data.opcion = "Modificar"
         if ruta != "":
             Main.abrirModificar(self)
 
@@ -90,7 +92,7 @@ class Main(QMainWindow):
             Main.enlistarArchivos(self)
             self.btnCommit.show()
 
-    def arbolPrincipal_itemSelected(self, event):
+    def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
         self.txtRuta.setText(Main.obtenerRutaItemSeleccionado(self))
     # =======================
@@ -100,8 +102,8 @@ class Main(QMainWindow):
     def obtenerRutaItemSeleccionado(self):
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
-            return ManejoArchivo.obtenerRutaCarpeta("bin/"+Data.nombre+"/"+selected_item[0].text(0))
-        return ""
+            return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(2))
+        return Data.rutaPrincipal
 
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""
@@ -110,7 +112,7 @@ class Main(QMainWindow):
 
     def enlistarArchivos(self):
         ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, "bin/"+Data.nombre)
+            self.arbolPrincipal, self.txtRuta, Data.rutaPrincipal)
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares

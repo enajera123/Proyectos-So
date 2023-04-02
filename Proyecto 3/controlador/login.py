@@ -60,11 +60,12 @@ class LoginView(QMainWindow):
     def btnIniciarSesion_click(self, event):
         nombre = self.txtNombre.text().strip()
         clave = self.txtClave.text()
+        ruta = "bin/"+nombre+"/raiz/"
         # Verificar
         usuarios = ManejoArchivo.leerUsuarios()
         for usuario in usuarios:
             if (ManejoArchivo.comprobarUsuario(usuario, nombre, clave)):
-                LoginView.bindCampos(nombre, clave)
+                LoginView.bindCampos(nombre, clave, ruta)
                 LoginView.abrirMain(self)  # Cambio de ventana
                 return
             LoginView.mostrarAlerta("Compruebe sus credenciales", "error")
@@ -74,15 +75,17 @@ class LoginView(QMainWindow):
     # Funciones Utiles
     # =======================
 
-    def bindCampos(nombre, clave):
+    def bindCampos(nombre, clave, ruta):
         Data.clave = clave
         Data.nombre = nombre
+        Data.rutaPrincipal = ruta
 
     def crearCarpetasDefault(nombre):
         # Crea una carpeta de un usuario propio
-        ManejoArchivo.crearCarpeta(nombre)
-        ManejoArchivo.crearCarpeta(nombre+"/raiz")  # Crea la raiz
-        ManejoArchivo.crearCarpeta(nombre+"/temporal")  # Crea el temporal
+        ManejoArchivo.crearCarpeta("bin/"+nombre)
+        ManejoArchivo.crearCarpeta("bin/"+nombre+"/raiz")  # Crea la raiz
+        ManejoArchivo.crearCarpeta(
+            "bin/"+nombre+"/temporal")  # Crea el temporal
         usuario = []
         ManejoArchivo.guardarPermisos(usuario, nombre+"/raiz/permisos.bin")
 

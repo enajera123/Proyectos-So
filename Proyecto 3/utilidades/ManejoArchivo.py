@@ -26,25 +26,20 @@ class ManejoArchivo:
     # Funciones
     # =======================
 
-    def crearCarpeta(nombreCarpeta):
+    def crearCarpeta(ruta):
         """
         Solo crea dentro de la carpeta bin
         """
-        if (os.path.exists("bin/"+nombreCarpeta)):
-            shutil.rmtree("bin/"+nombreCarpeta)  # Borrado recursivo
-        os.mkdir("bin/"+nombreCarpeta)
-        
-    def crearCarpetaNoDefault(nombreCarpeta):
-        if (os.path.exists("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)):
-            shutil.rmtree("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)  # Borrado recursivo
-        os.mkdir("bin/"+Data.nombre+"/raiz/"+nombreCarpeta)
+        if (os.path.exists(ruta)):
+            shutil.rmtree(ruta)  # Borrado recursivo
+        os.mkdir(ruta)
 
     def eliminarCarpeta(rutaAbsoluta):
         if (os.path.exists(rutaAbsoluta)):
             shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
 
     def obtenerRutaCarpeta(nombreCarpeta):
-        return path.abspath(nombreCarpeta)
+        return path.relpath(nombreCarpeta)
 
     def enlistarArchivos(arbol, txtRuta, ruta):
         """
@@ -54,8 +49,9 @@ class ManejoArchivo:
             ruta (String): ruta relativa
         """
         arbol.clear()
-        ruta = path.abspath(ruta)
         txtRuta.setText(ruta)  # Ingresa en el txt la ruta de la raiz(Default)
+        ruta = path.abspath(ruta)
+
         if (path.isdir(ruta)):
             for element in listdir(ruta):
                 nombre = element
@@ -65,7 +61,7 @@ class ManejoArchivo:
                 else:
                     mime = MimeTypes()
                     tipoArchivo = mime.guess_type(archivo)[0]
-                fila = [nombre, tipoArchivo, archivo]
+                fila = [nombre, tipoArchivo, os.path.relpath(archivo)]
                 item = QTreeWidgetItem(arbol, fila)
                 arbol.insertTopLevelItems(0, [item])
                 ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)
@@ -88,7 +84,7 @@ class ManejoArchivo:
                 if os.path.isdir(full_path):
                     item = QTreeWidgetItem(parent)
                     ManejoArchivo.bindQTreeWidgetItem(
-                        item, file, "Carpeta", full_path)
+                        item, file, "Carpeta", os.path.relpath(full_path))
                     # Listar todas las subcarpetas recursivamente
                     ManejoArchivo.listar_carpetas(full_path, item)
                 # Si es un archivo, agregarlo al árbol
@@ -97,7 +93,7 @@ class ManejoArchivo:
                     mime = MimeTypes()
                     tipoArchivo = mime.guess_type(full_path)[0]
                     ManejoArchivo.bindQTreeWidgetItem(
-                        archivo, file, tipoArchivo, full_path)
+                        archivo, file, tipoArchivo, os.path.relpath(full_path))
 
     def bindQTreeWidgetItem(item, *args):
         """Ingresa los datos dentro de una fila del QTreeWidgetItem"""

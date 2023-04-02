@@ -658,6 +658,12 @@ QPushButton:hover{
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QTreeWidget" name="arbolTemporal">
+            <property name="autoScroll">
+             <bool>false</bool>
+            </property>
+            <property name="itemsExpandable">
+             <bool>false</bool>
+            </property>
             <property name="sortingEnabled">
              <bool>true</bool>
             </property>
@@ -755,6 +761,9 @@ QPushButton:hover{
           </item>
           <item row="1" column="0" colspan="2">
            <widget class="QTreeWidget" name="arbolPrincipal">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -796,6 +805,9 @@ QPushButton:hover{
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustIgnored</enum>
             </property>
+            <property name="autoScroll">
+             <bool>false</bool>
+            </property>
             <property name="autoScrollMargin">
              <number>16</number>
             </property>
@@ -836,7 +848,7 @@ QPushButton:hover{
              <bool>true</bool>
             </property>
             <property name="columnCount">
-             <number>2</number>
+             <number>3</number>
             </property>
             <attribute name="headerVisible">
              <bool>true</bool>
@@ -878,6 +890,11 @@ QPushButton:hover{
             <column>
              <property name="text">
               <string>Tipo Archivo</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Ruta</string>
              </property>
             </column>
            </widget>
