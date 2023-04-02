@@ -67,9 +67,12 @@ class Main(QMainWindow):
             self.arbolPrincipal, self.txtRuta, "controlador")
 
     def btnCrear_click(self, event):
+        uso = "crear"
         ManejoArchivo.crearCarpeta("bin")
+        Main.abrirModificar(self) #prueba crear
 
     def btnModificar_click(self, event):
+        uso = "modificar"
         ruta = Main.obtenerRutaItemSeleccionado(self)
         if ruta != "":
             Main.abrirModificar(self)
