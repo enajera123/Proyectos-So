@@ -70,7 +70,9 @@ class Main(QMainWindow):
         ManejoArchivo.crearCarpeta("bin")
 
     def btnModificar_click(self, event):
-        print("Codigo aqui")
+        ruta = Main.obtenerRutaItemSeleccionado(self)
+        if ruta != "":
+            Main.abrirModificar(self)
 
     def btnCerrarSesion_click(self, event):
         from controlador.login import LoginView
@@ -80,7 +82,7 @@ class Main(QMainWindow):
 
     def btnEliminar_click(self, event):
         ruta = Main.obtenerRutaItemSeleccionado(self)
-        if ruta!="":
+        if ruta != "":
             ManejoArchivo.eliminarCarpeta(ruta)
             Main.enlistarArchivos(self)
             self.btnCommit.show()
@@ -107,5 +109,10 @@ class Main(QMainWindow):
         ManejoArchivo.enlistarArchivos(
             self.arbolPrincipal, self.txtRuta, "bin/"+Data.nombre)
 
-
+    def abrirModificar(self):
+        # Notese que se importa el controlador en la funcion para evitar imports circulares
+        from controlador.modificar import Modificar
+        self.hide()
+        self.nuevaVentana = Modificar()
+        self.nuevaVentana.show()
 # Termina la clase
