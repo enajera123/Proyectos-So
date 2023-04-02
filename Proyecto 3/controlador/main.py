@@ -57,17 +57,16 @@ class Main(QMainWindow):
     #        Eventos
     # =======================
     def btnCommit_click(self, event):
-        print("Codigo voanvoa")
+        print("Codigo aqui")
 
     def btnUpdate_click(self, event):
         print("Codigo aqui")
 
     def btnRecuperar_click(self, event):
-        ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, "controlador")
+        print("Codigo aqui")
 
     def btnCrear_click(self, event):
-        ManejoArchivo.crearCarpeta("bin")
+        print("Codigo aqui")
 
     def btnModificar_click(self, event):
         ruta = Main.obtenerRutaItemSeleccionado(self)
@@ -83,7 +82,7 @@ class Main(QMainWindow):
     def btnEliminar_click(self, event):
         ruta = Main.obtenerRutaItemSeleccionado(self)
         if ruta != "":
-            ManejoArchivo.eliminarCarpeta(ruta)
+            ManejoArchivo.eliminarCarpeta(path.abspath(ruta))
             Main.enlistarArchivos(self)
             self.btnCommit.show()
 
@@ -97,7 +96,7 @@ class Main(QMainWindow):
     def obtenerRutaItemSeleccionado(self):
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
-            return ManejoArchivo.obtenerRutaCarpeta("bin/"+Data.nombre+"/"+selected_item[0].text(0))
+            return path.relpath(selected_item[0].text(2))
         return ""
 
     def ocultarBotones(self):
@@ -108,6 +107,8 @@ class Main(QMainWindow):
     def enlistarArchivos(self):
         ManejoArchivo.enlistarArchivos(
             self.arbolPrincipal, self.txtRuta, "bin/"+Data.nombre)
+
+     # ManejoArchivo.listar_archivos_ruta(self.arbolPrincipal, "bin/+Data.nombre")
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares

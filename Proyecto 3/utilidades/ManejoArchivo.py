@@ -11,6 +11,7 @@ from mimetypes import MimeTypes
 # QTreeWidgetItem Ingresa un item al arbol
 from PyQt5.QtWidgets import QTreeWidgetItem
 from modelo.Usuario import Usuario
+from utilidades.Data import Data
 
 
 class ManejoArchivo:
@@ -26,39 +27,83 @@ class ManejoArchivo:
     # =======================
 
     def crearCarpeta(nombreCarpeta):
+        """
+        Solo crea dentro de la carpeta bin
+        """
         if (os.path.exists("bin/"+nombreCarpeta)):
             shutil.rmtree("bin/"+nombreCarpeta)  # Borrado recursivo
         os.mkdir("bin/"+nombreCarpeta)
 
     def eliminarCarpeta(rutaAbsoluta):
-        print(path.relpath(rutaAbsoluta))
-        if(os.path.exists(path.relpath(rutaAbsoluta))):
-            shutil.rmtree(path.relpath(rutaAbsoluta))  # Borrado recursivo
-            print("exist")
-        print("no exist")
+        if (os.path.exists(rutaAbsoluta)):
+            shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
 
     def obtenerRutaCarpeta(nombreCarpeta):
-        return path.relpath(nombreCarpeta)
+        return path.abspath(nombreCarpeta)
 
     def enlistarArchivos(arbol, txtRuta, ruta):
+        """
+        Args:
+            arbol (QtreeWidget): Arbol
+            txtRuta (QLineEdit): TextBox
+            ruta (String): ruta relativa
+        """
         arbol.clear()
         ruta = path.abspath(ruta)
-        txtRuta.setText(ruta)
+        txtRuta.setText(ruta)  # Ingresa en el txt la ruta de la raiz(Default)
         if (path.isdir(ruta)):
             for element in listdir(ruta):
                 nombre = element
                 archivo = ruta+"/"+nombre
-                informacionArchivo = stat(archivo)
                 if (path.isdir(archivo)):
                     tipoArchivo = "Carpeta"
                 else:
                     mime = MimeTypes()
                     tipoArchivo = mime.guess_type(archivo)[0]
-                    # size = str(informacion.st_size)+" bytes"
-                    # fecha = str(time.ctime(informacion.st_mtime))
-                fila = [nombre, tipoArchivo]
-                arbol.insertTopLevelItems(0, [QTreeWidgetItem(arbol, fila)])
+                fila = [nombre, tipoArchivo, archivo]
+                item = QTreeWidgetItem(arbol, fila)
+                arbol.insertTopLevelItems(0, [item])
+                ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)
 
+    def listar_carpetas(path, parent):
+        """
+        Args:
+            path (string): Ruta Absoluta
+            parent (QTreeWidgetItem): item del tree
+        """
+        # Verificar si la ruta es un directorio
+        if os.path.isdir(path):
+            # Obtener una lista de todos los archivos y carpetas en el directorio
+            files = os.listdir(path)
+            # Recorrer todos los archivos y carpetas
+            for file in files:
+                # Obtener la ruta completa del archivo o carpeta
+                full_path = os.path.join(path, file)
+                # Si es una carpeta, agregarla al árbol
+                if os.path.isdir(full_path):
+                    item = QTreeWidgetItem(parent)
+                    ManejoArchivo.bindQTreeWidgetItem(
+                        item, file, "Carpeta", full_path)
+                    # Listar todas las subcarpetas recursivamente
+                    ManejoArchivo.listar_carpetas(full_path, item)
+                # Si es un archivo, agregarlo al árbol
+                elif os.path.isfile(full_path):
+                    archivo = QTreeWidgetItem(parent)
+                    mime = MimeTypes()
+                    tipoArchivo = mime.guess_type(full_path)[0]
+                    ManejoArchivo.bindQTreeWidgetItem(
+                        archivo, file, tipoArchivo, full_path)
+
+    def bindQTreeWidgetItem(item, *args):
+        """Ingresa los datos dentro de una fila del QTreeWidgetItem"""
+        n = 0
+        for arg in args:
+            item.setText(n, arg)
+            n += 1
+
+    # =======================
+    # Control de usuarios
+    # =======================
     def guardarUsuarios(usuarios):
         usuarios_leidos = ManejoArchivo.leerUsuarios()
         for usuario in usuarios:
@@ -79,3 +124,21 @@ class ManejoArchivo:
             return True
         else:
             return False
+# =======================
+# Control de permisos
+# =======================
+
+    def guardarPermisos(permisos, ruta):
+        permisos_leidos = ManejoArchivo.leerPermisos(ruta)
+        for permiso in permisos:
+            permisos_leidos.append(usuario)
+        with open("bin/"+ruta, "wb") as archivo:
+            pickle.dump(permisos_leidos, archivo)
+
+    def leerPermisos(ruta):
+        try:
+            with open(ruta+"permisos.bin", "rb") as archivo:
+                permisos = pickle.load(archivo)
+        except FileNotFoundError:
+            permisos = []
+        return permisos

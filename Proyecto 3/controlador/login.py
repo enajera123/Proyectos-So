@@ -9,6 +9,7 @@ from utilidades.Data import Data
 from utilidades.Alerta import Alerta
 # Modelo
 from modelo.Usuario import Usuario
+from modelo.Archivo import Archivo
 
 # =======================
 # Controlador
@@ -36,30 +37,25 @@ class LoginView(QMainWindow):
 
     def on_returnPressed(self):
         event = QEvent(QEvent.KeyPress)
-        LoginView.btnIniciarSesion_click(self,event)
-        
+        LoginView.btnIniciarSesion_click(self, event)
 
     def btnCrear_click(self, event):
         nombre = self.txtNombre.text().strip()
         clave = self.txtClave.text()
         if (len(nombre) > 0 and len(clave) > 0):
             if (not LoginView.verificarNombre(nombre)):
-                alerta = Alerta(
-                    "El nombre de usuario ya existe, por favor escoja otro", "Error")
-                alerta.mostrarAlerta()
+                LoginView.mostrarAlerta(
+                    "El nombre de usuario ya existe, por favor escoja otro", "error")
             else:
                 LoginView.crearCarpetasDefault(nombre)
                 usuario = Usuario(nombre, clave)
                 ManejoArchivo.guardarUsuarios([usuario])
-                alerta = Alerta(
+                LoginView.mostrarAlerta(
                     "Usuario Creado Exitosamente. Bienvenido "+nombre, "confirmacion")
-                alerta.mostrarAlerta()
                 LoginView.bindCampos(nombre, clave)
                 LoginView.abrirMain(self)  # Cambio de ventana
         else:
-            alerta = Alerta(
-                "No puede dejar campos vacios", "error")
-            alerta.mostrarAlerta()
+            LoginView.mostrarAlerta("No puede dejar campos vacios", "error")
 
     def btnIniciarSesion_click(self, event):
         nombre = self.txtNombre.text().strip()
@@ -71,8 +67,7 @@ class LoginView(QMainWindow):
                 LoginView.bindCampos(nombre, clave)
                 LoginView.abrirMain(self)  # Cambio de ventana
                 return
-        alerta = Alerta("Compruebe sus credenciales", "error")
-        alerta.mostrarAlerta()
+            LoginView.mostrarAlerta("Compruebe sus credenciales", "error")
         # Transferencia entre controladores
 
     # =======================
@@ -88,6 +83,8 @@ class LoginView(QMainWindow):
         ManejoArchivo.crearCarpeta(nombre)
         ManejoArchivo.crearCarpeta(nombre+"/raiz")  # Crea la raiz
         ManejoArchivo.crearCarpeta(nombre+"/temporal")  # Crea el temporal
+        usuario = []
+        ManejoArchivo.guardarPermisos(usuario, nombre+"/raiz/permisos.bin")
 
     def abrirMain(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
@@ -102,5 +99,9 @@ class LoginView(QMainWindow):
             if usuario.nombre == nombre:
                 return False
         return True
+
+    def mostrarAlerta(contenido, tipo):
+        alerta = Alerta(contenido, tipo)
+        alerta.mostrarAlerta()
 
 # Termina la clase
