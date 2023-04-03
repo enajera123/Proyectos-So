@@ -17,5 +17,6 @@ namespace Proyecto_2.Utilidades
         {
             return getAllControls(panel).OfType<Button>().ToList();
         }
+        
     }
 }

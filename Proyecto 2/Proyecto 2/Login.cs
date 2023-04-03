@@ -209,6 +209,9 @@ namespace Proyecto_2
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
 
+            //Codigo aqui
+            Principal principal = new Principal();
+            principal.Show();
         }
     }
 }
