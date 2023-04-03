@@ -66,10 +66,10 @@ class Main(QMainWindow):
         print("codigo aqui")
 
     def btnCrear_click(self, event):
-        ruta = Main.obtenerRutaItemSeleccionado(self)
+        ruta = Data.rutaPrincipal
         Data.rutaModificar = ruta
         Data.opcion = "Crear"
-        if(ruta!=""):
+        if (ruta != ""):
             Main.abrirModificar(self)  # prueba crear
 
     def btnModificar_click(self, event):
@@ -89,6 +89,8 @@ class Main(QMainWindow):
         ruta = Main.obtenerRutaItemSeleccionado(self)
         if ruta != "":
             ManejoArchivo.eliminarCarpeta(ruta)
+            ManejoArchivo.eliminarArchivo(ruta, Data.rutaArchivos)
+            
             Main.enlistarArchivos(self)
             self.btnCommit.show()
 
@@ -103,7 +105,7 @@ class Main(QMainWindow):
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
             return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(2))
-        return Data.rutaPrincipal
+        return ""
 
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""

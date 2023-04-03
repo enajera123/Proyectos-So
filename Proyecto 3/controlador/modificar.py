@@ -6,17 +6,20 @@ from os import path
 from utilidades.ManejoArchivo import ManejoArchivo
 from utilidades.Data import Data
 from utilidades.Alerta import Alerta
-
+# Modelo
+from modelo.Archivo import Archivo
 # =======================
 # Controlador
 # =======================
 
 
 class Modificar(QMainWindow):
+    rutaArchivos = "bin/"+Data.nombre+"/raiz/archivos.bin"
 
     def __init__(self):  # this
         super(Modificar, self).__init__()  # Inicializa la clase -> Initialize
         uic.loadUi("vista/modificar.ui", self)
+        # Eventos
         self.cbNombreUsuario.setCurrentIndex(-1)
         self.btnRegresar.clicked.connect(self.btnRegresar_click)
         self.btnCrearCarpeta.clicked.connect(self.btnCrearCarpeta_click)
@@ -35,30 +38,60 @@ class Modificar(QMainWindow):
 
     def btnCrearCarpeta_click(self, event):
         nombreCarpeta = self.txtNombreCarpeta.text()
+        ruta = self.txtRuta.text()
         if (len(nombreCarpeta) > 0):
-            ruta = Data.rutaModificar+"/"+nombreCarpeta
             # hacer una verificación de nombres carpetas iguales
-            ManejoArchivo.crearCarpeta(ruta)
+            if (self.btnCrearCarpeta.text() == "Crear"):  # Crear
+                ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta)
+                archivo = Archivo(ruta+"/"+nombreCarpeta)
+                archivos = ManejoArchivo.leerArchivos(Data.rutaArchivos)
+                archivos.append(archivo)
+                ManejoArchivo.guardarArchivos(
+                    archivos, Data.rutaArchivos)
             # falta una validacion aca para manejar los errores de sobreescritura de carpetas
-            ManejoArchivo.enlistarArchivos(
-                self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+                ManejoArchivo.enlistarArchivos(
+                    self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+            else:  # Modificar
+                rutaNueva = path.dirname(ruta)+"/"+nombreCarpeta
+                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
+                Data.rutaModificar = rutaNueva
+                Modificar.reiniciarCampos(self)
+        else:
+            Modificar.mostrarAlerta("Debe escribir un nombre", "error")
 
     def arbolPrincipal_clicked(self):
         self.txtNombreCarpeta.setText(
-            Modificar.obtenerNombreItemSeleccionado(self))
+            Modificar.obtenerItemSeleccionado(self, 0))
+        self.txtRuta.setText(Modificar.obtenerItemSeleccionado(self, 2))
+
         # =======================
         # Utilidades
         # =======================
 
-    def obtenerNombreItemSeleccionado(self):
+    def obtenerItemSeleccionado(self, opcion):
+        """
+            opcion (int): 
+            0:nombre
+            2:ruta
+        """
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
-            return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(0))
+            return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(opcion))
         return Data.rutaPrincipal
 
     def llenarCampos(self):
         ruta = Data.rutaModificar
         self.btnCrearCarpeta.setText(Data.opcion)
+        for usuario in ManejoArchivo.leerUsuarios():
+            self.cbNombreUsuario.addItem(usuario.nombre)
         if (len(ruta) > 0):
-            self.txtRuta.text = Data.rutaModificar
+            self.txtRuta.setText(Data.rutaModificar)
+
+    def mostrarAlerta(contenido, tipo):
+        alerta = Alerta(contenido, tipo)
+        alerta.mostrarAlerta()
+
+    def reiniciarCampos(self):
+        self.txtNombreCarpeta.setText("")
+        self.txtRuta.setText(Data.rutaModificar)
 # Termina la clase
