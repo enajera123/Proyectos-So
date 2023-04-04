@@ -8,17 +8,15 @@ namespace Proyecto_2
         alertaInformacion alerta;
         public Principal()
         {
-
             InitializeComponent();
             controlador = new Controlador();
             alerta = new alertaInformacion();
-            ocultarSubMenus();
-            bindServicios();
         }
+
         private void Principal_Load(object sender, EventArgs e)
         {
-
-
+            ocultarSubMenus();
+            bindServicios();
         }
         /**Menu de hamburguesa**/
         private void hamburguerPic_Click(object sender, EventArgs e)
@@ -233,8 +231,13 @@ namespace Proyecto_2
         private void registrarPeticion(Cliente cliente)
         {
             controlador.registrarPeticion(cliente);
-            //controlador.getListaEspera().getClientesEspera()
+            //controlador.getListaEspera().getClientesEspera();
+
+           
             btnGrupo1.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
+
+
+
         }
 
     }

@@ -1,13 +1,7 @@
-from utilidades.ManejoArchivo import ManejoArchivo
-
-
 class Archivo:
-    ruta = ""
+    nombre = ""
     listaUsuarios = []
     listaPermisos = []
 
-    def __init__(self, ruta):
+    def __init__(self):
         super(Archivo, self).__init__()
-        Archivo.ruta = ruta
-
-   

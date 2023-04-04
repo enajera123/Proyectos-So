@@ -30,18 +30,13 @@ class ManejoArchivo:
         """
         Solo crea dentro de la carpeta bin
         """
-        if (path.isdir(path.dirname(ruta))):
-            if (os.path.exists(ruta)):
-                shutil.rmtree(ruta)  # Borrado recursivo
-            os.mkdir(ruta)
+        if (os.path.exists(ruta)):
+            shutil.rmtree(ruta)  # Borrado recursivo
+        os.mkdir(ruta)
 
     def eliminarCarpeta(rutaAbsoluta):
         if (os.path.exists(rutaAbsoluta)):
             shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
-
-    def renombrarCarpeta(nombreCarpeta, nuevoNombre):
-        if (path.exists(nombreCarpeta)):
-            os.rename(nombreCarpeta, nuevoNombre)
 
     def obtenerRutaCarpeta(nombreCarpeta):
         return path.relpath(nombreCarpeta)
@@ -131,30 +126,20 @@ class ManejoArchivo:
         else:
             return False
 # =======================
-# Control de archivos
+# Control de permisos
 # =======================
 
-    def guardarArchivos(archivo, ruta):
-        with open(ruta, "wb") as arch:
-            pickle.dump(archivo, arch)
+    def guardarPermisos(permisos, ruta):
+        permisos_leidos = ManejoArchivo.leerPermisos(ruta)
+        for permiso in permisos:
+            permisos_leidos.append(usuario)
+        with open("bin/"+ruta, "wb") as archivo:
+            pickle.dump(permisos_leidos, archivo)
 
-    def leerArchivos(ruta):
+    def leerPermisos(ruta):
         try:
-            with open(ruta, "rb") as archivo:
-                archivos_leidos = pickle.load(archivo)
+            with open(ruta+"permisos.bin", "rb") as archivo:
+                permisos = pickle.load(archivo)
         except FileNotFoundError:
-            archivos_leidos = []
-        return archivos_leidos
-
-    def eliminarArchivo(rutaArchivo, ruta):
-        try:
-            with open(ruta, "rb+") as file:
-                archivos_leidos = pickle.load(file)
-                for archivo_leido in archivos_leidos:
-                    if archivo_leido.ruta == rutaArchivo:
-                        archivos_leidos.remove(archivo_leido)
-                file.seek(0)  # Posiciona el cursos en 0
-                pickle.dump(archivos_leidos, file)  # Sobreescribe
-                file.truncate()  # Asegura
-        except FileNotFoundError:
-            return
+            permisos = []
+        return permisos
