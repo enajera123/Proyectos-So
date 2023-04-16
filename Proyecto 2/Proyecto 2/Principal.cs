@@ -11,12 +11,14 @@ namespace Proyecto_2
             InitializeComponent();
             controlador = new Controlador();
             alerta = new alertaInformacion();
+            ocultarSubMenus();
+            
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
             ocultarSubMenus();
-            bindServicios();
+            
         }
         /**Menu de hamburguesa**/
         private void hamburguerPic_Click(object sender, EventArgs e)

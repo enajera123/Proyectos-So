@@ -1067,8 +1067,8 @@
         private Panel panelMenuPlataforma;
         internal Button btnGrupo2;
         private PictureBox picIconPlataforma;
-        private Login login = new Login();
-        public void bindServicios() {
+        
+        public void bindServicios(Login login) {
             List<Button> botonesMenu = Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
             List<Button> botonesMenuLogin = login.getAllButtonsOfPanelMenu();
             foreach (Button buttonLogin in botonesMenuLogin)

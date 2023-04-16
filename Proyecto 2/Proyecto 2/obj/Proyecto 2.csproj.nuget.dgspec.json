@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sebastian\\OneDrive\\Documents\\Unaversidad\\SO\\proyecto2\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj": {}
+    "C:\\Users\\Esteban\\OneDrive\\Documentos\\UNA\\Semestre V\\Proyectos\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sebastian\\OneDrive\\Documents\\Unaversidad\\SO\\proyecto2\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj": {
+    "C:\\Users\\Esteban\\OneDrive\\Documentos\\UNA\\Semestre V\\Proyectos\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sebastian\\OneDrive\\Documents\\Unaversidad\\SO\\proyecto2\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj",
+        "projectUniqueName": "C:\\Users\\Esteban\\OneDrive\\Documentos\\UNA\\Semestre V\\Proyectos\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj",
         "projectName": "Proyecto 2",
-        "projectPath": "C:\\Users\\Sebastian\\OneDrive\\Documents\\Unaversidad\\SO\\proyecto2\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj",
-        "packagesPath": "C:\\Users\\Sebastian\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sebastian\\OneDrive\\Documents\\Unaversidad\\SO\\proyecto2\\Proyectos-So\\Proyecto 2\\Proyecto 2\\obj\\",
+        "projectPath": "C:\\Users\\Esteban\\OneDrive\\Documentos\\UNA\\Semestre V\\Proyectos\\Proyectos-So\\Proyecto 2\\Proyecto 2\\Proyecto 2.csproj",
+        "packagesPath": "C:\\Users\\Esteban\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Esteban\\OneDrive\\Documentos\\UNA\\Semestre V\\Proyectos\\Proyectos-So\\Proyecto 2\\Proyecto 2\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Sebastian\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Esteban\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
