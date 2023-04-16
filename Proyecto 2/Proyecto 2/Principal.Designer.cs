@@ -1067,19 +1067,33 @@
         private Panel panelMenuPlataforma;
         internal Button btnGrupo2;
         private PictureBox picIconPlataforma;
-        
-        public void bindServicios(Login login) {
+
+        public void bindServicios(Login login)
+        {
             List<Button> botonesMenu = Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
             List<Button> botonesMenuLogin = login.getAllButtonsOfPanelMenu();
             foreach (Button buttonLogin in botonesMenuLogin)
             {
-                foreach(Button button in botonesMenu)
+                foreach (Button button in botonesMenu)
                 {
-                    if (buttonLogin.Name == button.Name)
+
+                    if (buttonLogin.BackColor == login.getColorDeshabilitado())
                     {
-                        if (buttonLogin.BackColor == login.getColorDeshabilitado())
+                        button.Visible = false;
+                        if (buttonLogin.Name == button.Name)
                         {
-                            button.Visible = false;
+                            if (button.Name.Contains("Grupo1"))
+                            {
+                                panelMenuCaja.Visible = false;
+                            }
+                            else if (button.Name.Contains("Grupo2"))
+                            {
+                                panelMenuPlataforma.Visible = false;
+                            }
+                            else
+                            {
+                                panelMenuServicioCliente.Visible = false;
+                            }
                         }
                         else
                         {
