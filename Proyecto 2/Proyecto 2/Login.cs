@@ -217,10 +217,17 @@ namespace Proyecto_2
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
+            flowDatosToPrincipal();
             Principal principal = new Principal();
             principal.bindServicios(this);
-            this.Hide();
+            this.Hide();//Error
             principal.Show();
+        }
+        public void flowDatosToPrincipal()
+        {
+            Utilidades.Utilidades.setCantCajas(1, cajasGrupo1);
+            Utilidades.Utilidades.setCantCajas(2, cajasGrupo2);
+            Utilidades.Utilidades.setCantCajas(3, cajasGrupo3);
         }
     }
 }

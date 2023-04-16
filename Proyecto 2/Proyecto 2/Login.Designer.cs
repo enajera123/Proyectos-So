@@ -709,9 +709,9 @@ namespace Proyecto_2
         private Panel panelSeleccionado;
         private Color colorDeshabilitado = Color.FromArgb(255, 255, 192, 192);
         private Color colorHabilitado = Color.FromArgb(255, 17, 121, 174);
-        private int cajasGrupo1 = 3;
-        private int cajasGrupo2 = 3;
-        private int cajasGrupo3 = 3;
+        int cajasGrupo1 = 3;
+        int cajasGrupo2 = 3;
+        int cajasGrupo3 = 3;
         public List<Button> getAllButtonsOfPanelMenu()
         {
             return Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
