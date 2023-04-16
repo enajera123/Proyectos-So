@@ -23,6 +23,8 @@ namespace Proyecto_2.Modelos
             this.tiempoAtencion = tiempoAtencion;
         }
 
-        
+        public Caja()
+        {
+        }
     }
 }
