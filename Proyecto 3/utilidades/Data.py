@@ -12,6 +12,7 @@ class Data:
     #=======================
     opcion = ""
     rutaModificar = ""
+    rutaArchivos = ""
     #=======================
     #	Main to Crear
     #=======================
