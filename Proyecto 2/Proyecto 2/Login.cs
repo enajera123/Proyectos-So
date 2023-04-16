@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace Proyecto_2
 {
-    
+
     public partial class Login : Form
-    {        
-        
+    {
+
 
         public Login()
         {
@@ -47,7 +47,8 @@ namespace Proyecto_2
                 {
                     txtCantidad.Text = cajasGrupo2.ToString();
                 }
-                else {
+                else
+                {
                     txtCantidad.Text = cajasGrupo3.ToString();
                 }
             }
@@ -57,7 +58,8 @@ namespace Proyecto_2
             }
 
         }
-        private bool setCantidadCajas(int min, int max,int n,char operacion) {
+        private bool setCantidadCajas(int min, int max, int n, char operacion)
+        {
 
             switch (operacion)
             {
@@ -82,7 +84,8 @@ namespace Proyecto_2
         /**EVENTOS**/
         private void btnMenos_Click(object sender, EventArgs e)
         {
-            if (botonSeleccionado.Name.Contains("Grupo1") && setCantidadCajas(2, 3, Convert.ToInt16(txtCantidad.Text), '-')) {
+            if (botonSeleccionado.Name.Contains("Grupo1") && setCantidadCajas(2, 3, Convert.ToInt16(txtCantidad.Text), '-'))
+            {
                 cajasGrupo1--;
             }
             if (botonSeleccionado.Name.Contains("Grupo2") && setCantidadCajas(2, 3, Convert.ToInt16(txtCantidad.Text), '-'))
@@ -112,27 +115,27 @@ namespace Proyecto_2
 
         private void btnGrupo1_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnGrupo1,panelSubMenu1);
+            asignarDatos(btnGrupo1, panelSubMenu1);
         }
 
         private void btnServicio1_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio1,null);
+            asignarDatos(btnServicio1, null);
         }
 
         private void btnServicio2_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio2,null);
+            asignarDatos(btnServicio2, null);
         }
 
         private void btnServicio3_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio3,null);
+            asignarDatos(btnServicio3, null);
         }
 
         private void btnServicio4_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio4,null);
+            asignarDatos(btnServicio4, null);
         }
 
         private void btnGrupo2_Click(object sender, EventArgs e)
@@ -142,27 +145,27 @@ namespace Proyecto_2
 
         private void btnServicio5_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio5,null);
+            asignarDatos(btnServicio5, null);
         }
 
         private void btnServicio6_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio6,null);
+            asignarDatos(btnServicio6, null);
         }
 
         private void btnServicio7_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio7,null);
+            asignarDatos(btnServicio7, null);
         }
 
         private void btnServicio8_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio8,null);
+            asignarDatos(btnServicio8, null);
         }
 
         private void btnServicio9_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio9,null);
+            asignarDatos(btnServicio9, null);
         }
 
         private void btnGrupo3_Click(object sender, EventArgs e)
@@ -172,7 +175,7 @@ namespace Proyecto_2
 
         private void btnServicio10_Click(object sender, EventArgs e)
         {
-            asignarDatos(btnServicio10,null);
+            asignarDatos(btnServicio10, null);
         }
 
         private void btnServicio11_Click(object sender, EventArgs e)
@@ -181,34 +184,43 @@ namespace Proyecto_2
         }
         private void btnHabilitado_CheckedChanged(object sender, EventArgs e)
         {
-            if (botonSeleccionado != null) {
+            if (botonSeleccionado != null)
+            {
                 if (btnHabilitado.Checked == false)
                 {
-                    if (panelSeleccionado != null) {
+                    if (panelSeleccionado != null)
+                    {
                         panelSeleccionado.BackColor = colorDeshabilitado;//Color rojo para deshabilitar
                     }
                     botonSeleccionado.BackColor = colorDeshabilitado;
-                    
+
                 }
-                else {
+                else
+                {
                     if (panelSeleccionado != null)
                     {
-                        
+
                         panelSeleccionado.BackColor = colorHabilitado;//Color Azul para habilitad
                     }
                     botonSeleccionado.BackColor = Color.Empty;
                 }
             }
         }
-       
+
         private void txtNombre_TextChanged(object sender, EventArgs e)
         {
-            botonSeleccionado.Text = txtNombre.Text;
+            if (botonSeleccionado != null)
+            {
+                botonSeleccionado.Text = txtNombre.Text;
+            }
         }
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-
+            Principal principal = new Principal();
+            principal.bindServicios(this);
+            this.Hide();
+            principal.Show();
         }
     }
 }
