@@ -21,9 +21,7 @@ namespace Proyecto_2.Modelos
             this.tipoServicio = tipoServicio;
         }
 
-        public Servicio()
-        {
-        }
+        
         public string getNombre()
         {
             return this.nombre;

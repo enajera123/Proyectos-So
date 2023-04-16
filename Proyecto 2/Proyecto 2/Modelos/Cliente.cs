@@ -12,10 +12,7 @@ namespace Proyecto_2.Modelos
         private Servicio servicio;
         private DateTime tiempoLlegada;
         private bool prioritario;
-        public Cliente()
-        {
-        }
-
+        
         public Cliente(string nombre, string tipoServicio, bool prioritario)
         {
             this.nombre = nombre;
