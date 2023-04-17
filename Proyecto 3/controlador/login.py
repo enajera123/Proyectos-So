@@ -40,43 +40,49 @@ class LoginView(QMainWindow):
         LoginView.btnIniciarSesion_click(self, event)
 
     def btnCrear_click(self, event):
-        nombre = self.txtNombre.text().strip()
-        clave = self.txtClave.text()
-        ruta = "bin/"+nombre+"/raiz"
-        rutaArchivos = "bin/"+nombre+"/raiz/archivos.bin"
-        if (len(nombre) > 0 and len(clave) > 0):
-            if (not LoginView.verificarNombre(nombre)):
-                LoginView.mostrarAlerta(
-                    "El nombre de usuario ya existe, por favor escoja otro", "error")
+        # Variables
+        variables = LoginView.VariablesCampos(self.txtNombre.text().strip(), self.txtClave.text())
+        # Comprobacion
+        if (len(variables[0]) > 0 and len(variables[1]) > 0):
+            if (not LoginView.verificarNombre(variables[0])):
+                # Alerta
+                LoginView.mostrarAlerta("El nombre de usuario ya existe, por favor escoja otro", "error")
             else:
-                LoginView.crearCarpetasDefault(nombre)
-                usuario = Usuario(nombre, clave)
-                ManejoArchivo.guardarUsuarios([usuario])
-                LoginView.mostrarAlerta(
-                    "Usuario Creado Exitosamente. Bienvenido "+nombre, "confirmacion")
-                LoginView.bindCampos(nombre, clave, ruta, rutaArchivos)
+                # Creacion
+                LoginView.crearUsuario(variables[0], variables[1])
+                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3])
                 LoginView.abrirMain(self)  # Cambio de ventana
         else:
             LoginView.mostrarAlerta("No puede dejar campos vacios", "error")
 
     def btnIniciarSesion_click(self, event):
-        nombre = self.txtNombre.text().strip()
-        clave = self.txtClave.text()
-        ruta = "bin/"+nombre+"/raiz"
-        rutaArchivos = "bin/"+nombre+"/raiz/archivos.bin"
+        variables = LoginView.VariablesCampos(self.txtNombre.text().strip(), self.txtClave.text())
         # Verificar
-        usuarios = ManejoArchivo.leerUsuarios()
+        usuarios = ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios())
         for usuario in usuarios:
-            if (ManejoArchivo.comprobarUsuario(usuario, nombre, clave)):
-                LoginView.bindCampos(nombre, clave, ruta, rutaArchivos)
+            if (LoginView.comprobarUsuario(usuario, variables[0], variables[1])):
+                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3])
                 LoginView.abrirMain(self)  # Cambio de ventana
                 return
-            LoginView.mostrarAlerta("Compruebe sus credenciales", "error")
+        LoginView.mostrarAlerta("Compruebe sus credenciales", "error")
         # Transferencia entre controladores
 
     # =======================
     # Funciones Utiles
     # =======================
+    def comprobarUsuario(usuario, nombre, clave):
+        if usuario.nombre == nombre and usuario.clave == clave:
+            return True
+        else:
+            return False
+    def VariablesCampos(nombre, clave):
+        return nombre, clave, "bin/"+nombre+"/raiz", "bin/"+nombre+"/archivos.JSON"
+
+    def crearUsuario(nombre, clave):
+        usuario = Usuario(0, nombre, clave)
+        ManejoArchivo.crearUsuario(usuario)
+        LoginView.mostrarAlerta("Usuario Creado Exitosamente. Bienvenido "+nombre, "confirmacion")
+        LoginView.crearCarpetasDefault(nombre)
 
     def bindCampos(nombre, clave, ruta, rutaArchivos):
         Data.clave = clave
@@ -86,10 +92,10 @@ class LoginView(QMainWindow):
 
     def crearCarpetasDefault(nombre):
         # Crea una carpeta de un usuario propio
-        ManejoArchivo.crearCarpeta("bin/"+nombre)
-        ManejoArchivo.crearCarpeta("bin/"+nombre+"/raiz")  # Crea la raiz
-        ManejoArchivo.crearCarpeta(
-            "bin/"+nombre+"/temporal")  # Crea el temporal
+        rutaArchivos = "bin/"+nombre+"/archivos.JSON";
+        ManejoArchivo.crearCarpeta("bin/"+nombre, rutaArchivos)
+        ManejoArchivo.crearCarpeta("bin/"+nombre+"/raiz", rutaArchivos)  # Crea la raiz
+        ManejoArchivo.crearCarpeta("bin/"+nombre+"/temporal", rutaArchivos)  # Crea el temporal
         # ManejoArchivo.guardarArchivos(
         #     archivos, "bin/"+nombre+"/raiz/archivos.bin")
 
@@ -102,6 +108,7 @@ class LoginView(QMainWindow):
 
     def verificarNombre(nombre):
         usuarios = ManejoArchivo.leerUsuarios()
+        usuarios = ManejoArchivo.deserializarJSONToUsuarios(usuarios)
         for usuario in usuarios:
             if usuario.nombre == nombre:
                 return False

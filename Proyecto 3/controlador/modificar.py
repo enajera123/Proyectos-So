@@ -18,15 +18,14 @@ class Modificar(QMainWindow):
 
     def __init__(self):  # this
         super(Modificar, self).__init__()  # Inicializa la clase -> Initialize
-        uic.loadUi("vista/Modificar.ui", self)
+        uic.loadUi("vista/modificar.ui", self)
         # Eventos
-        #self.cbNombreUsuario.setCurrentIndex(-1)
+        self.cbNombreUsuario.setCurrentIndex(-1)
         self.btnRegresar.clicked.connect(self.btnRegresar_click)
-        #self.arbolPrincipal.itemSelectionChanged.connect(
-        #    self.arbolPrincipal_clicked)
-        #Crear.llenarCampos(self)
-        #ManejoArchivo.enlistarArchivos(
-        #    self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+        self.btnCrearCarpeta.clicked.connect(self.btnCrearCarpeta_click)
+        self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_clicked)
+        Modificar.llenarCampos(self)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
 
     def btnRegresar_click(self, event):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
@@ -34,6 +33,29 @@ class Modificar(QMainWindow):
         self.hide()
         self.nuevaVentana = Main()
         self.nuevaVentana.show()
+
+    def btnCrearCarpeta_click(self, event):
+        nombreCarpeta = self.txtNombreCarpeta.text()
+        ruta = self.txtRuta.text()
+        if (len(nombreCarpeta) > 0):
+            # hacer una verificación de nombres carpetas iguales
+            if (self.btnCrearCarpeta.text() == "Crear"):  # Crear
+                ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos)
+            # falta una validacion aca para manejar los errores de sobreescritura de carpetas
+                ManejoArchivo.enlistarArchivos(
+                    self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+            else:  # Modificar
+                rutaNueva = path.dirname(ruta)+"/"+nombreCarpeta
+                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
+                Data.rutaModificar = rutaNueva
+                Modificar.reiniciarCampos(self)
+        else:
+            Modificar.mostrarAlerta("Debe escribir un nombre", "error")
+
+    def arbolPrincipal_clicked(self):
+        self.txtNombreCarpeta.setText(
+            Modificar.obtenerItemSeleccionado(self, 0))
+        self.txtRuta.setText(Modificar.obtenerItemSeleccionado(self, 2))
 
         # =======================
         # Utilidades
@@ -53,7 +75,7 @@ class Modificar(QMainWindow):
     def llenarCampos(self):
         ruta = Data.rutaModificar
         self.btnCrearCarpeta.setText(Data.opcion)
-        for usuario in ManejoArchivo.leerUsuarios():
+        for usuario in ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()):
             self.cbNombreUsuario.addItem(usuario.nombre)
         if (len(ruta) > 0):
             self.txtRuta.setText(Data.rutaModificar)

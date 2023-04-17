@@ -93,9 +93,7 @@ class Main(QMainWindow):
     def btnEliminar_click(self, event):
         ruta = Main.obtenerRutaItemSeleccionado(self)
         if ruta != "":
-            ManejoArchivo.eliminarCarpeta(ruta)
-            ManejoArchivo.eliminarArchivo(ruta, Data.rutaArchivos)
-            
+            ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
             Main.enlistarArchivos(self)
             self.btnCommit.show()
             
@@ -131,8 +129,7 @@ class Main(QMainWindow):
         self.btnUpdate.hide()
 
     def enlistarArchivos(self):
-        ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, Data.rutaPrincipal)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, self.txtRuta, Data.rutaPrincipal)
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares

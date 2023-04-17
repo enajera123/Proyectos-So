@@ -3,11 +3,13 @@ from utilidades.ManejoArchivo import ManejoArchivo
 
 class Archivo:
     ruta = ""
+    tipoArchivo = ""
     listaUsuarios = []
     listaPermisos = []
 
-    def __init__(self, ruta):
+    def __init__(self, ruta, tipoArchivo):
         super(Archivo, self).__init__()
-        Archivo.ruta = ruta
+        self.ruta = ruta
+        self.tipoArchivo = tipoArchivo
 
    
