@@ -57,11 +57,12 @@
             tituloPic = new PictureBox();
             panelNavegador = new Panel();
             panelPrincipal = new Panel();
-            tableLayoutPanel4 = new TableLayoutPanel();
-            pictureBox1 = new PictureBox();
+            panelResponsive = new TableLayoutPanel();
+            flowContenedor1 = new TableLayoutPanel();
+            flowContenedor3 = new TableLayoutPanel();
+            flowContenedor2 = new TableLayoutPanel();
+            listProcesos = new ListView();
             button1 = new Button();
-            tableLayoutPanel6 = new TableLayoutPanel();
-            pictureBox3 = new PictureBox();
             button2 = new Button();
             panelMenu.SuspendLayout();
             panelSubMenuServicioCliente.SuspendLayout();
@@ -76,10 +77,8 @@
             panelMenuSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)hamburguerPic).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tituloPic).BeginInit();
-            tableLayoutPanel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            panelPrincipal.SuspendLayout();
+            panelResponsive.SuspendLayout();
             SuspendLayout();
             // 
             // panelMenu
@@ -478,6 +477,7 @@
             // panelPrincipal
             // 
             panelPrincipal.BackColor = Color.FromArgb(233, 200, 123);
+            panelPrincipal.Controls.Add(panelResponsive);
             panelPrincipal.Dock = DockStyle.Fill;
             panelPrincipal.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
             panelPrincipal.Location = new Point(237, 61);
@@ -485,30 +485,76 @@
             panelPrincipal.Size = new Size(745, 520);
             panelPrincipal.TabIndex = 2;
             // 
-            // tableLayoutPanel4
+            // panelResponsive
             // 
-            tableLayoutPanel4.ColumnCount = 2;
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
-            tableLayoutPanel4.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel4.Controls.Add(pictureBox1, 1, 0);
-            tableLayoutPanel4.Dock = DockStyle.Top;
-            tableLayoutPanel4.Location = new Point(0, 0);
-            tableLayoutPanel4.Name = "tableLayoutPanel4";
-            tableLayoutPanel4.RightToLeft = RightToLeft.Yes;
-            tableLayoutPanel4.RowCount = 1;
-            tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel4.Size = new Size(200, 100);
-            tableLayoutPanel4.TabIndex = 0;
+            panelResponsive.ColumnCount = 4;
+            panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2222214F));
+            panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2222233F));
+            panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.2222233F));
+            panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            panelResponsive.Controls.Add(flowContenedor1, 0, 0);
+            panelResponsive.Controls.Add(listProcesos, 3, 0);
+            panelResponsive.Controls.Add(flowContenedor3, 2, 0);
+            panelResponsive.Controls.Add(flowContenedor2, 1, 0);
+            panelResponsive.Dock = DockStyle.Fill;
+            panelResponsive.Location = new Point(0, 0);
+            panelResponsive.Name = "panelResponsive";
+            panelResponsive.RowCount = 1;
+            panelResponsive.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            panelResponsive.Size = new Size(745, 520);
+            panelResponsive.TabIndex = 4;
             // 
-            // pictureBox1
+            // flowContenedor1
             // 
-            pictureBox1.Image = Properties.Resources.caja;
-            pictureBox1.Location = new Point(3, 3);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(34, 34);
-            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox1.TabIndex = 4;
-            pictureBox1.TabStop = false;
+            flowContenedor1.ColumnCount = 1;
+            flowContenedor1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            flowContenedor1.Dock = DockStyle.Fill;
+            flowContenedor1.Location = new Point(3, 3);
+            flowContenedor1.Name = "flowContenedor1";
+            flowContenedor1.RowCount = 3;
+            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor1.Size = new Size(159, 514);
+            flowContenedor1.TabIndex = 3;
+            // 
+            // flowContenedor3
+            // 
+            flowContenedor3.ColumnCount = 1;
+            flowContenedor3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            flowContenedor3.Dock = DockStyle.Fill;
+            flowContenedor3.Location = new Point(333, 3);
+            flowContenedor3.Name = "flowContenedor3";
+            flowContenedor3.RowCount = 3;
+            flowContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            flowContenedor3.Size = new Size(159, 514);
+            flowContenedor3.TabIndex = 1;
+            // 
+            // flowContenedor2
+            // 
+            flowContenedor2.ColumnCount = 1;
+            flowContenedor2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            flowContenedor2.Dock = DockStyle.Fill;
+            flowContenedor2.Location = new Point(168, 3);
+            flowContenedor2.Name = "flowContenedor2";
+            flowContenedor2.RowCount = 3;
+            flowContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            flowContenedor2.Size = new Size(159, 514);
+            flowContenedor2.TabIndex = 2;
+            // 
+            // listProcesos
+            // 
+            listProcesos.Dock = DockStyle.Fill;
+            listProcesos.Location = new Point(498, 3);
+            listProcesos.Name = "listProcesos";
+            listProcesos.Size = new Size(244, 514);
+            listProcesos.TabIndex = 0;
+            listProcesos.UseCompatibleStateImageBehavior = false;
             // 
             // button1
             // 
@@ -523,31 +569,6 @@
             button1.Text = "Caja";
             button1.TextAlign = ContentAlignment.MiddleLeft;
             button1.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel6
-            // 
-            tableLayoutPanel6.ColumnCount = 2;
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 80F));
-            tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel6.Controls.Add(pictureBox3, 1, 0);
-            tableLayoutPanel6.Dock = DockStyle.Top;
-            tableLayoutPanel6.Location = new Point(0, 0);
-            tableLayoutPanel6.Name = "tableLayoutPanel6";
-            tableLayoutPanel6.RightToLeft = RightToLeft.Yes;
-            tableLayoutPanel6.RowCount = 1;
-            tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel6.Size = new Size(200, 100);
-            tableLayoutPanel6.TabIndex = 0;
-            // 
-            // pictureBox3
-            // 
-            pictureBox3.Image = Properties.Resources.plataforma;
-            pictureBox3.Location = new Point(3, 3);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(34, 34);
-            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox3.TabIndex = 4;
-            pictureBox3.TabStop = false;
             // 
             // button2
             // 
@@ -587,10 +608,8 @@
             panelMenuSuperior.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)hamburguerPic).EndInit();
             ((System.ComponentModel.ISupportInitialize)tituloPic).EndInit();
-            tableLayoutPanel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            tableLayoutPanel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            panelPrincipal.ResumeLayout(false);
+            panelResponsive.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -618,11 +637,7 @@
         private Button btnServicio8;
         private PictureBox picIconCaja;
         internal Button btnGrupo1;
-        private TableLayoutPanel tableLayoutPanel4;
-        private PictureBox pictureBox1;
         internal Button button1;
-        private TableLayoutPanel tableLayoutPanel6;
-        private PictureBox pictureBox3;
         private Button button2;
         private Panel panelMenuCaja;
         private Panel panelMenuServicioCliente;
@@ -631,7 +646,10 @@
         private Panel panelMenuPlataforma;
         internal Button btnGrupo2;
         private PictureBox picIconPlataforma;
-
+        private TableLayoutPanel flowContenedor1;
+        private TableLayoutPanel flowContenedor2;
+        private TableLayoutPanel flowContenedor3;
+        private ListView listProcesos;
         public void bindServicios(Login login)
         {
             List<Button> botonesMenu = Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
@@ -644,6 +662,7 @@
                     {
                         if (buttonLogin.BackColor == login.getColorDeshabilitado())
                         {
+                            button.Visible = false;
                             if (button.Name.Contains("Grupo1"))
                             {
                                 panelMenuCaja.Visible = false;
@@ -656,7 +675,6 @@
                             {
                                 panelMenuServicioCliente.Visible = false;
                             }
-                            button.Visible = false;
                         }
                         else
                         {
@@ -666,5 +684,7 @@
                 }
             }
         }
+
+        private TableLayoutPanel panelResponsive;
     }
 }

@@ -17,7 +17,8 @@ namespace Proyecto_2
 
         private void Principal_Load(object sender, EventArgs e)
         {
-            ocultarSubMenus();
+
+            inicializarCajas();
 
         }
         /**Menu de hamburguesa**/
@@ -232,15 +233,55 @@ namespace Proyecto_2
         }
         private void registrarPeticion(Cliente cliente)
         {
-            controlador.registrarPeticion(cliente);
-            //controlador.getListaEspera().getClientesEspera();
-
-
-            btnGrupo1.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
-
-
-
+            //   controlador.registrarPeticion(cliente);
+            //   btnGrupo1.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
         }
+        private void inicializarCajas()
+        {
+            int cajas1, cajas2, cajas3;
+            cajas1 = Utilidades.Utilidades.getCantCajas(1);
+            cajas2 = Utilidades.Utilidades.getCantCajas(2);
+            cajas3 = Utilidades.Utilidades.getCantCajas(3);
+            for (int i = 0; i < cajas1; i++)
+            {
+                flowContenedor1.Controls.Add(crearCaja(1), 0, i);
+            }
+            for (int i = 0; i < cajas2; i++)
+            {
+                flowContenedor2.Controls.Add(crearCaja(2), 0, i);
+            }
+            for (int i = 0; i < cajas3; i++)
+            {
+                flowContenedor3.Controls.Add(crearCaja(3), 0, i);
+            }
+        }
+        private Panel crearCaja(int tipo)
+        {
+            Panel panel = new Panel();
+            PictureBox foto = new PictureBox();
+            foto.SizeMode = PictureBoxSizeMode.Zoom;
+            if (tipo == 1)
+            {
+                foto.Image = Properties.Resources.caja;
+            }
+            else if (tipo == 2)
+            {
+                foto.Image = Properties.Resources.plataforma;
+            }
+            else
+            {
+                foto.Image = Properties.Resources.servicioCliente;
+            }
+            ProgressBar barra = new ProgressBar();
+            barra.Dock = DockStyle.Top;
+            foto.Dock = DockStyle.Fill;
+            panel.Controls.Add(foto);
+            panel.Controls.Add(barra);
+            panel.Dock = DockStyle.Fill;
+            panel.Padding = new Padding(20);
+            return panel;
+        }
+
 
     }
 }
