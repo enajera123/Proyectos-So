@@ -626,7 +626,7 @@ QTreeView{
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,8">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,0">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -722,6 +722,13 @@ QPushButton:hover{
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout">
+          <item row="2" column="0">
+           <widget class="QLineEdit" name="txtCambiarNom">
+            <property name="placeholderText">
+             <string>Modificar nombre</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0" colspan="2">
            <widget class="QLineEdit" name="txtRuta">
             <property name="enabled">
@@ -756,6 +763,26 @@ QPushButton:hover{
             </property>
             <property name="clearButtonEnabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QPushButton" name="btnUpdate">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Update</string>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>../src/img/update-icon.png</normaloff>../src/img/update-icon.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>30</width>
+              <height>30</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -899,7 +926,7 @@ QPushButton:hover{
             </column>
            </widget>
           </item>
-          <item row="2" column="0">
+          <item row="3" column="0">
            <widget class="QPushButton" name="btnCommit">
             <property name="enabled">
              <bool>true</bool>
@@ -929,22 +956,21 @@ QPushButton:hover{
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QPushButton" name="btnUpdate">
-            <property name="enabled">
-             <bool>true</bool>
+           <widget class="QPushButton" name="btnCambiarNom">
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+	background-color:rgb(153, 102, 51);
+}
+QPushButton:hover{
+	background-color:rgb(160, 120, 51);
+}</string>
             </property>
             <property name="text">
-             <string>Update</string>
+             <string/>
             </property>
             <property name="icon">
              <iconset>
-              <normaloff>../src/img/update-icon.png</normaloff>../src/img/update-icon.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>30</width>
-              <height>30</height>
-             </size>
+              <normaloff>../src/img/modificar-icon.png</normaloff>../src/img/modificar-icon.png</iconset>
             </property>
            </widget>
           </item>

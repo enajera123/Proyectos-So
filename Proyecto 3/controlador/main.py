@@ -15,6 +15,7 @@ from mimetypes import MimeTypes
 # sys.path.append(path.abspath("../modelo"))
 from utilidades.ManejoArchivo import ManejoArchivo
 from utilidades.Data import Data
+from utilidades.Alerta import Alerta
 
 
 # from ..modelo.ManejoArchivo import ManejoArchivo
@@ -47,8 +48,12 @@ class Main(QMainWindow):
         self.btnModificar.clicked.connect(self.btnModificar_click)
 
         self.btnEliminar.clicked.connect(self.btnEliminar_click)
+        
+        self.btnCambiarNom.clicked.connect(self.btnCambiarNom_click)
 
         self.btnCerrarSesion.clicked.connect(self.btnCerrarSesion_click)
+        
+        #self.txtCambiarNom.returnPressed.connect(self.on_returnPressed)
 
         self.arbolPrincipal.itemSelectionChanged.connect(
             self.arbolPrincipal_itemSelected)
@@ -70,7 +75,7 @@ class Main(QMainWindow):
         Data.rutaModificar = ruta
         Data.opcion = "Crear"
         if (ruta != ""):
-            Main.abrirModificar(self)  # prueba crear
+            Main.abrirCrear(self)  # prueba crear
 
     def btnModificar_click(self, event):
         ruta = Main.obtenerRutaItemSeleccionado(self)
@@ -93,6 +98,19 @@ class Main(QMainWindow):
             
             Main.enlistarArchivos(self)
             self.btnCommit.show()
+            
+    def btnCambiarNom_click(self, event):
+        NuevoNom = self.txtCambiarNom.text()
+        ruta = Main.obtenerRutaItemSeleccionado(self)
+        if ruta != "":
+            rutaNueva = path.dirname(ruta)+"/"+NuevoNom
+            ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
+            Data.rutaModificar = rutaNueva
+            Main.reiniciarCampos(self)
+            Main.enlistarArchivos(self)
+        else:
+            Main.mostrarAlerta("Debe escribir un nombre", "error")
+            
 
     def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
@@ -122,4 +140,18 @@ class Main(QMainWindow):
         self.hide()
         self.nuevaVentana = Modificar()
         self.nuevaVentana.show()
+        
+    def abrirCrear(self):
+        from controlador.crear import Crear
+        self.hide()
+        self.nuevaVentana = Crear()
+        self.nuevaVentana.show()
+        
+    def reiniciarCampos(self):
+        self.txtCambiarNom.setText("")
+        self.txtRuta.setText(Data.rutaModificar)
+        
+    def mostrarAlerta(contenido, tipo):
+        alerta = Alerta(contenido, tipo)
+        alerta.mostrarAlerta()
 # Termina la clase
