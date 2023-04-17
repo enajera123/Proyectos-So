@@ -25,7 +25,7 @@ class Crear(QMainWindow):
         self.btnCrearCarpeta.clicked.connect(self.btnCrearCarpeta_click)
         self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_clicked)
         Crear.llenarCampos(self)
-        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
 
     def btnRegresar_click(self, event):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
@@ -42,8 +42,7 @@ class Crear(QMainWindow):
             if (self.btnCrearCarpeta.text() == "Crear"):  # Crear
                 ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos)
             # falta una validacion aca para manejar los errores de sobreescritura de carpetas
-                ManejoArchivo.enlistarArchivos(
-                    self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
+                ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
             else:  # Modificar
                 rutaNueva = path.dirname(ruta)+"/"+nombreCarpeta
                 ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
@@ -70,14 +69,12 @@ class Crear(QMainWindow):
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
             return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(opcion))
-        return Data.rutaPrincipal
+        return ""
 
     def llenarCampos(self):
         ruta = Data.rutaModificar
-        self.btnCrearCarpeta.setText(Data.opcion)
         for usuario in ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()):
             self.cbNombreUsuario.addItem(usuario.nombre)
-        if (len(ruta) > 0):
             self.txtRuta.setText(Data.rutaModificar)
 
     def mostrarAlerta(contenido, tipo):

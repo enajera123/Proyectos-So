@@ -10,7 +10,6 @@ class Data:
     #=======================
     #	Main to Modificar
     #=======================
-    opcion = ""
     rutaModificar = ""
     rutaArchivos = ""
     #=======================

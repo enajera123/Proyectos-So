@@ -55,8 +55,7 @@ class Main(QMainWindow):
         
         #self.txtCambiarNom.returnPressed.connect(self.on_returnPressed)
 
-        self.arbolPrincipal.itemSelectionChanged.connect(
-            self.arbolPrincipal_itemSelected)
+        self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_itemSelected)
 
     # =======================
     #        Eventos
@@ -73,14 +72,12 @@ class Main(QMainWindow):
     def btnCrear_click(self, event):
         ruta = Data.rutaPrincipal
         Data.rutaModificar = ruta
-        Data.opcion = "Crear"
         if (ruta != ""):
             Main.abrirCrear(self)  # prueba crear
 
     def btnModificar_click(self, event):
-        ruta = Main.obtenerRutaItemSeleccionado(self)
+        ruta = Main.obtenerItemSeleccionado(self, 2)
         Data.rutaModificar = ruta
-        Data.opcion = "Modificar"
         if ruta != "":
             Main.abrirModificar(self)
 
@@ -99,10 +96,10 @@ class Main(QMainWindow):
             
     def btnCambiarNom_click(self, event):
         NuevoNom = self.txtCambiarNom.text()
-        ruta = Main.obtenerRutaItemSeleccionado(self)
-        if ruta != "":
+        ruta = Main.obtenerItemSeleccionado(self,2)
+        if len(NuevoNom) > 0:
             rutaNueva = path.dirname(ruta)+"/"+NuevoNom
-            ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
+            ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)
             Data.rutaModificar = rutaNueva
             Main.reiniciarCampos(self)
             Main.enlistarArchivos(self)
@@ -112,24 +109,31 @@ class Main(QMainWindow):
 
     def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
-        self.txtRuta.setText(Main.obtenerRutaItemSeleccionado(self))
+        self.txtRuta.setText(Main.obtenerItemSeleccionado(self, 2))
+        self.txtCambiarNom.setText(Main.obtenerItemSeleccionado(self, 0))
     # =======================
     # Utilidades
     # =======================
 
-    def obtenerRutaItemSeleccionado(self):
+    def obtenerItemSeleccionado(self, opcion):
+        """
+            opcion (int): 
+            0:nombre
+            2:ruta
+        """
         selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
         if len(selected_item) > 0:
-            return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(2))
+            return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(opcion))
         return ""
-
+        
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""
         self.btnCommit.hide()
         self.btnUpdate.hide()
 
     def enlistarArchivos(self):
-        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, self.txtRuta, Data.rutaPrincipal)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaPrincipal)
+        self.txtRuta.setText(Data.rutaPrincipal)  # Ingresa en el txt la ruta de la raiz(Default)
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares

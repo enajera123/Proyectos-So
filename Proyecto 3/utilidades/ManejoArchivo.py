@@ -33,7 +33,10 @@ class ManejoArchivo:
         if (path.isdir(path.dirname(rutaArchivo))):
             if (os.path.exists(rutaArchivo)):
                 shutil.rmtree(rutaArchivo)  # Borrado recursivo
-            os.mkdir(rutaArchivo)
+            if "." in rutaArchivo:
+                open(rutaArchivo,"w")
+            else:
+                os.mkdir(rutaArchivo)
             tipoArchivo = ManejoArchivo.obtenerTipoArchivo(rutaArchivo)
             archivo = Archivo(rutaArchivo, tipoArchivo)
             ManejoArchivo.crearArchivo(archivo, rutaDefault)
@@ -43,9 +46,10 @@ class ManejoArchivo:
             shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
             ManejoArchivo.eliminarArchivo(rutaAbsoluta, rutaDefault)
 
-    def renombrarCarpeta(nombreCarpeta, nuevoNombre):
-        if (path.exists(nombreCarpeta)):
-            os.rename(nombreCarpeta, nuevoNombre)
+    def renombrarCarpeta(rutaAntigua, rutaNueva, rutaDefault):
+        if (path.exists(rutaAntigua)):
+            os.rename(rutaAntigua, rutaNueva)
+            ManejoArchivo.actualizarArchivo(rutaAntigua, rutaNueva, rutaDefault)
 
     def listar_carpetas(path, parent):
         """
@@ -134,7 +138,15 @@ class ManejoArchivo:
             return []
         with open(ruta, 'r') as f:
             return json.load(f)
-
+        
+    def actualizarArchivo(rutaAntigua, rutaNueva,rutaDefault):
+        
+        archivos = ManejoArchivo.leerArchivos(rutaDefault)
+        for i in archivos:
+            if(i['ruta'] == rutaAntigua):
+                i['ruta'] = rutaNueva
+        ManejoArchivo.guardarArchivos(archivos,rutaDefault)
+        
     def crearArchivo(archivo, ruta):
         archivos = ManejoArchivo.leerArchivos(ruta)
         archivos.append(archivo.__dict__)
@@ -168,15 +180,14 @@ class ManejoArchivo:
             item.setText(n, arg)
             n += 1
             
-    def enlistarArchivos(arbol, txtRuta, ruta):
+    def enlistarArchivos(arbol, ruta):
         """
         Args:
             arbol (QtreeWidget): Arbol
-            txtRuta (QLineEdit): TextBox
             ruta (String): ruta relativa
         """
         arbol.clear()
-        txtRuta.setText(ruta)  # Ingresa en el txt la ruta de la raiz(Default)
+        
         ruta = path.abspath(ruta)
         if (path.isdir(ruta)):
             for element in listdir(ruta):

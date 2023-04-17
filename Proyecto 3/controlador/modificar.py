@@ -24,7 +24,7 @@ class Modificar(QMainWindow):
         self.btnRegresar.clicked.connect(self.btnRegresar_click)
         # self.btnCrearCarpeta.clicked.connect(self.btnCrearCarpeta_click)
         #self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_clicked)
-        #Modificar.llenarCampos(self)
+        Modificar.llenarCampos(self)
         #ManejoArchivo.enlistarArchivos(self.arbolPrincipal, self.txtRuta, Data.rutaModificar)
 
     def btnRegresar_click(self, event):
@@ -72,13 +72,11 @@ class Modificar(QMainWindow):
     #         return ManejoArchivo.obtenerRutaCarpeta(selected_item[0].text(opcion))
     #     return Data.rutaPrincipal
 
-    # def llenarCampos(self):
-    #     ruta = Data.rutaModificar
-    #     self.btnCrearCarpeta.setText(Data.opcion)
-    #     for usuario in ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()):
-    #         self.cbNombreUsuario.addItem(usuario.nombre)
-    #     if (len(ruta) > 0):
-    #         self.txtRuta.setText(Data.rutaModificar)
+    def llenarCampos(self):
+        ruta = Data.rutaModificar
+        for usuario in ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()):
+            self.cbNombreUsuario.addItem(usuario.nombre)
+            self.txtRuta.setText(Data.rutaModificar)
 
     # def mostrarAlerta(contenido, tipo):
     #     alerta = Alerta(contenido, tipo)

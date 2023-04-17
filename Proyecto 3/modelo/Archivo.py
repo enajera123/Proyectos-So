@@ -9,7 +9,7 @@ class Archivo:
 
     def __init__(self, ruta, tipoArchivo):
         super(Archivo, self).__init__()
-        self.ruta = ruta
+        self.ruta = ruta 
         self.tipoArchivo = tipoArchivo
 
    
