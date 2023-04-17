@@ -12,13 +12,13 @@ namespace Proyecto_2
             controlador = new Controlador();
             alerta = new alertaInformacion();
             ocultarSubMenus();
-            
+
         }
 
         private void Principal_Load(object sender, EventArgs e)
         {
             ocultarSubMenus();
-            
+
         }
         /**Menu de hamburguesa**/
         private void hamburguerPic_Click(object sender, EventArgs e)
@@ -235,7 +235,7 @@ namespace Proyecto_2
             controlador.registrarPeticion(cliente);
             //controlador.getListaEspera().getClientesEspera();
 
-           
+
             btnGrupo1.Text = controlador.getListaEspera().getClientesEspera().Count.ToString();
 
 
