@@ -42,9 +42,11 @@ class ManejoArchivo:
             ManejoArchivo.crearArchivo(archivo, rutaDefault)
 
     def eliminarCarpeta(rutaAbsoluta, rutaDefault):
-        if (os.path.exists(rutaAbsoluta)):
+        if (path.exists(rutaAbsoluta) and path.isdir(rutaAbsoluta)):
             shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
-            ManejoArchivo.eliminarArchivo(rutaAbsoluta, rutaDefault)
+        elif path.isfile(rutaAbsoluta):
+            os.remove(rutaAbsoluta)
+        ManejoArchivo.eliminarArchivo(rutaAbsoluta, rutaDefault)
 
     def renombrarCarpeta(rutaAntigua, rutaNueva, rutaDefault):
         if (path.exists(rutaAntigua)):

@@ -88,7 +88,7 @@ class Main(QMainWindow):
         self.nuevaVentana.show()
 
     def btnEliminar_click(self, event):
-        ruta = Main.obtenerRutaItemSeleccionado(self)
+        ruta = Main.obtenerItemSeleccionado(self,2)
         if ruta != "":
             ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
             Main.enlistarArchivos(self)
