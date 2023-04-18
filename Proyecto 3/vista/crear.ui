@@ -20,6 +20,9 @@
 }
 QFrame{
 	border:none;
+}
+QTreeWidget{
+	background-color:white;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout" stretch="10">
@@ -117,6 +120,9 @@ QPushButton:hover{
              </item>
              <item>
               <widget class="QLineEdit" name="txtRuta">
+               <property name="enabled">
+                <bool>false</bool>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background-color:white;
 color:gray;</string>
@@ -126,6 +132,26 @@ color:gray;</string>
                </property>
                <property name="placeholderText">
                 <string>/</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="btnSubirNivel">
+               <property name="toolTip">
+                <string>Sube un nivel en la ruta</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../src/img/flechaArriba-icon.png</normaloff>../src/img/flechaArriba-icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -210,13 +236,13 @@ color:gray;</string>
              <item>
               <widget class="QTreeWidget" name="arbolPrincipal">
                <property name="styleSheet">
-                <string notr="true">background-color:white;</string>
+                <string notr="true"/>
                </property>
                <property name="horizontalScrollBarPolicy">
                 <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
                <property name="sizeAdjustPolicy">
-                <enum>QAbstractScrollArea::AdjustToContents</enum>
+                <enum>QAbstractScrollArea::AdjustIgnored</enum>
                </property>
                <property name="autoScroll">
                 <bool>true</bool>
@@ -452,10 +478,56 @@ color:gray;</string>
               </widget>
              </item>
              <item>
-              <widget class="QListView" name="listPermisosUsuarios">
-               <property name="styleSheet">
-                <string notr="true">background-color:white;</string>
+              <widget class="QTreeWidget" name="arbolPermisos">
+               <property name="horizontalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
                </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustIgnored</enum>
+               </property>
+               <property name="autoScroll">
+                <bool>true</bool>
+               </property>
+               <property name="selectionMode">
+                <enum>QAbstractItemView::SingleSelection</enum>
+               </property>
+               <property name="selectionBehavior">
+                <enum>QAbstractItemView::SelectRows</enum>
+               </property>
+               <property name="indentation">
+                <number>20</number>
+               </property>
+               <attribute name="headerVisible">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="headerCascadingSectionResizes">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="headerDefaultSectionSize">
+                <number>130</number>
+               </attribute>
+               <attribute name="headerHighlightSections">
+                <bool>true</bool>
+               </attribute>
+               <attribute name="headerMinimumSectionSize">
+                <number>19</number>
+               </attribute>
+               <attribute name="headerShowSortIndicator" stdset="0">
+                <bool>false</bool>
+               </attribute>
+               <attribute name="headerStretchLastSection">
+                <bool>true</bool>
+               </attribute>
+               <column>
+                <property name="text">
+                 <string>Nombre</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Permisos</string>
+                </property>
+               </column>
               </widget>
              </item>
              <item>

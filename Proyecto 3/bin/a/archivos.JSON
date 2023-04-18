@@ -1,1 +1,1 @@
-[{"ruta": "bin/a", "tipoArchivo": "Carpeta"}, {"ruta": "bin/a/raiz", "tipoArchivo": "Carpeta"}, {"ruta": "bin/a/temporal"}]
+[{"ruta": "bin/a", "tipoArchivo": "Carpeta"}, {"ruta": "bin/a/raiz", "tipoArchivo": "Carpeta"}, {"ruta": "bin/a/temporal"}, {"ruta": "bin/a/raiz/personal", "tipoArchivo": "Carpeta"}]
