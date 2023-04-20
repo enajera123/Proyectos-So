@@ -169,8 +169,23 @@ color:gray;</string>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
-          <item>
+         <layout class="QGridLayout" name="gridLayout">
+          <property name="leftMargin">
+           <number>12</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>12</number>
+          </property>
+          <property name="bottomMargin">
+           <number>12</number>
+          </property>
+          <property name="spacing">
+           <number>-1</number>
+          </property>
+          <item row="0" column="0">
            <widget class="QFrame" name="Carpeta">
             <property name="styleSheet">
              <string notr="true"/>
@@ -197,20 +212,7 @@ color:gray;</string>
                 </font>
                </property>
                <property name="text">
-                <string>Carpeta</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLineEdit" name="txtNombreCarpeta">
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color:white;</string>
+                <string>Archivos</string>
                </property>
               </widget>
              </item>
@@ -230,6 +232,19 @@ color:gray;</string>
                </property>
                <property name="text">
                 <string>Nombre:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLineEdit" name="txtNombreCarpeta">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color:white;</string>
                </property>
               </widget>
              </item>
@@ -276,23 +291,10 @@ color:gray;</string>
                </column>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="btnCrearCarpeta">
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Crear</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
-          <item>
+          <item row="0" column="1">
            <widget class="QFrame" name="Permisos">
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -398,19 +400,6 @@ color:gray;</string>
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btnAgregarUsuario">
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Agregar</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QRadioButton" name="rbtnEscritura">
                <property name="font">
                 <font>
@@ -456,6 +445,79 @@ color:gray;</string>
                <property name="autoExclusive">
                 <bool>false</bool>
                </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="panelBotones">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>30</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>234</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btnAgregarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/crear-icon.png</normaloff>../src/img/crear-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEliminarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/eliminar-icon.png</normaloff>../src/img/eliminar-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
              <item>
@@ -530,16 +592,53 @@ color:gray;</string>
                </column>
               </widget>
              </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QFrame" name="panelBoton">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <widget class="QPushButton" name="btnEliminarUsuario">
+              <widget class="QPushButton" name="btnCrearCarpeta">
                <property name="font">
                 <font>
                  <family>Arial</family>
-                 <pointsize>12</pointsize>
+                 <pointsize>20</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>Eliminar</string>
+                <string>Crear</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../src/img/commit-icon.png</normaloff>../src/img/commit-icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>40</width>
+                 <height>40</height>
+                </size>
                </property>
               </widget>
              </item>

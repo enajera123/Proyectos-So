@@ -20,9 +20,13 @@
 }
 QFrame{
 	border:none;
-}</string>
+}
+QTreeWidget, QLineEdit{
+	background-color:white;
+}
+</string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="10">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -172,64 +176,6 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
-              <widget class="QComboBox" name="cbNombreUsuario">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>14</pointsize>
-                </font>
-               </property>
-               <property name="toolTipDuration">
-                <number>-1</number>
-               </property>
-               <property name="layoutDirection">
-                <enum>Qt::LeftToRight</enum>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color:rgb(240, 240, 240);</string>
-               </property>
-               <property name="editable">
-                <bool>false</bool>
-               </property>
-               <property name="currentText">
-                <string/>
-               </property>
-               <property name="currentIndex">
-                <number>-1</number>
-               </property>
-               <property name="maxVisibleItems">
-                <number>10</number>
-               </property>
-               <property name="maxCount">
-                <number>10</number>
-               </property>
-               <property name="insertPolicy">
-                <enum>QComboBox::NoInsert</enum>
-               </property>
-               <property name="sizeAdjustPolicy">
-                <enum>QComboBox::AdjustToContents</enum>
-               </property>
-               <property name="duplicatesEnabled">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QLabel" name="lblNombreUsuario">
                <property name="font">
                 <font>
@@ -249,15 +195,9 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="btnAgregarUsuario">
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Agregar</string>
+              <widget class="QComboBox" name="cbUsuarios">
+               <property name="styleSheet">
+                <string notr="true">background-color:rgb(215, 215, 215);</string>
                </property>
               </widget>
              </item>
@@ -310,6 +250,79 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
+              <widget class="QFrame" name="frame">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+                <property name="spacing">
+                 <number>60</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>590</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btnAgregarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/crear-icon.png</normaloff>../src/img/crear-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEliminarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/eliminar-icon.png</normaloff>../src/img/eliminar-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
               <widget class="QLabel" name="lblTituloListView">
                <property name="font">
                 <font>
@@ -329,23 +342,20 @@ QPushButton:hover{
               </widget>
              </item>
              <item>
-              <widget class="QListView" name="listPermisosUsuarios">
-               <property name="styleSheet">
-                <string notr="true">background-color:white;</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="btnEliminarUsuario">
-               <property name="font">
-                <font>
-                 <family>Arial</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Eliminar</string>
-               </property>
+              <widget class="QTreeWidget" name="arbolPermisos">
+               <attribute name="headerDefaultSectionSize">
+                <number>286</number>
+               </attribute>
+               <column>
+                <property name="text">
+                 <string>Nombre</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Permisos</string>
+                </property>
+               </column>
               </widget>
              </item>
             </layout>

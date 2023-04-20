@@ -12,7 +12,7 @@ from mimetypes import MimeTypes
 # QTreeWidgetItem Ingresa un item al arbol
 from PyQt5.QtWidgets import QTreeWidgetItem
 from modelo.Usuario import Usuario
-
+from modelo.Archivo import Archivo
 from utilidades.Data import Data
 
 
@@ -28,18 +28,22 @@ class ManejoArchivo:
     # Manejo Carpetas
     # =======================
 
-    def crearCarpeta(rutaArchivo, rutaDefault):
+    def crearCarpeta(rutaArchivo, rutaDefault, *args):
         from modelo.Archivo import Archivo
         if (path.isdir(path.dirname(rutaArchivo))):
-            if (os.path.exists(rutaArchivo)):
+            if (os.path.exists(rutaArchivo)):#Si existe lo borra
                 shutil.rmtree(rutaArchivo)  # Borrado recursivo
-            if "." in rutaArchivo:
+            if "." in rutaArchivo:#Creacion de archivos
                 open(rutaArchivo,"w")
             else:
-                os.mkdir(rutaArchivo)
+                os.mkdir(rutaArchivo)#creacion de carpetas
             tipoArchivo = ManejoArchivo.obtenerTipoArchivo(rutaArchivo)
-            archivo = Archivo(rutaArchivo, tipoArchivo)
-            ManejoArchivo.crearArchivo(archivo, rutaDefault)
+            if(len(args)>=2):
+                archivo = Archivo(rutaArchivo, tipoArchivo,args[0],args[1])
+            else:
+                archivo = Archivo(rutaArchivo, tipoArchivo,[],[])
+                
+            ManejoArchivo.crearArchivo(archivo, rutaDefault)#Crea archivo
 
     def eliminarCarpeta(rutaAbsoluta, rutaDefault):
         if (path.exists(rutaAbsoluta) and path.isdir(rutaAbsoluta)):
@@ -51,7 +55,10 @@ class ManejoArchivo:
     def renombrarCarpeta(rutaAntigua, rutaNueva, rutaDefault):
         if (path.exists(rutaAntigua)):
             os.rename(rutaAntigua, rutaNueva)
-            ManejoArchivo.actualizarArchivo(rutaAntigua, rutaNueva, rutaDefault)
+            archivo =  ManejoArchivo.leerArchivo(rutaDefault, rutaAntigua)
+            archivo.ruta = rutaNueva
+            if archivo:
+                ManejoArchivo.actualizarArchivo(rutaAntigua, archivo, rutaDefault)
 
     def listar_carpetas(path, parent):
         """
@@ -141,13 +148,29 @@ class ManejoArchivo:
         with open(ruta, 'r') as f:
             return json.load(f)
         
-    def actualizarArchivo(rutaAntigua, rutaNueva,rutaDefault):
-        
+    def leerArchivo(ruta, key):
+        archivos = ManejoArchivo.leerArchivos(ruta)
+        archivo = next((i for i in archivos if i['ruta'] == key), None)
+        return Archivo(**archivo) if archivo else None
+    
+    def deserializarJSONToArchivos(array):
+        archivos = []
+        for i in array:
+            archivo = Archivo(i['ruta'], i['tipoArchivo'], i['listaUsuarios'],i['listaPermisos'])
+            archivos.append(archivos)
+        return archivos
+    
+    def actualizarArchivo(ruta, archivo, rutaDefault):
         archivos = ManejoArchivo.leerArchivos(rutaDefault)
+        archivos_guardar = []
         for i in archivos:
-            if(i['ruta'] == rutaAntigua):
-                i['ruta'] = rutaNueva
-        ManejoArchivo.guardarArchivos(archivos,rutaDefault)
+            if(i['ruta'] == ruta):
+                i = archivo.__dict__
+            if ruta in i['ruta']:
+                i['ruta'] = i['ruta'].replace(ruta,archivo.ruta)
+                
+            archivos_guardar.append(i)
+        ManejoArchivo.guardarArchivos(archivos_guardar,rutaDefault)
         
     def crearArchivo(archivo, ruta):
         archivos = ManejoArchivo.leerArchivos(ruta)

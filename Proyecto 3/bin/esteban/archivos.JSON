@@ -1,1 +1,1 @@
-[{"ruta": "bin/esteban", "tipoArchivo": "Carpeta"}, {"ruta": "bin/esteban/raiz", "tipoArchivo": "Carpeta"}, {"ruta": "bin/esteban/temporal", "tipoArchivo": "Carpeta"}, {"ruta": "bin/esteban/raiz/Personal", "tipoArchivo": "Carpeta"}]
+[{"ruta": "bin/Esteban", "tipoArchivo": "Carpeta", "listaUsuarios": [], "listaPermisos": []}, {"ruta": "bin/Esteban/raiz", "tipoArchivo": "Carpeta", "listaUsuarios": [], "listaPermisos": []}, {"ruta": "bin/Esteban/temporal", "tipoArchivo": "Carpeta", "listaUsuarios": [], "listaPermisos": []}]

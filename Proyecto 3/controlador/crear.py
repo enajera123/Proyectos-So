@@ -8,6 +8,9 @@ from utilidades.ManejoArchivo import ManejoArchivo
 from utilidades.Data import Data
 from utilidades.Alerta import Alerta
 from utilidades.ArbolUtilidades import ArbolUtilidades
+from utilidades.RadioButonUtilidades import RadioButonUtilidades
+from utilidades.Generalidades import Generalidades
+from utilidades.ComboBoxUtilidades import ComboBoxUtilidades
 # Modelo
 from modelo.Archivo import Archivo
 
@@ -41,19 +44,19 @@ class Crear(QMainWindow):
         ArbolUtilidades.eliminarItem(self.arbolPermisos, item)
 
     def btnAgregarUsuario_click(self, event):
-        item = Crear.obetenerValorComboBox(self.cbNombreUsuario)
-        permisos = Crear.leerRadioButons(self)
-        if (item):
-            ArbolUtilidades.agregarItem(self.arbolPermisos, [item, permisos])
-            Crear.reiniciarRadioButons(self)
+        arg0 = self.cbNombreUsuario
+        arg1 = self.rbtnLectura
+        arg2 = self.rbtnEscritura
+        arg3 = self.rbtnEjecucion
+        arg4 = self.arbolPermisos
+        Generalidades.agregarUsuario(arg0,arg1,arg2,arg3,arg4)
 
     def btnSubirNivel_click(self, event):
         ruta = self.txtRuta.text()
         if (ruta != "bin/"+Data.nombre+"/raiz"):
             ruta = path.dirname(ruta)
-            ArbolUtilidades.buscarItem(self.arbolPrincipal, ruta)
-            ArbolUtilidades.desplegarItem(
-                ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, -1), False)
+            ArbolUtilidades.buscarItem(self.arbolPrincipal, ruta,2)
+            ArbolUtilidades.desplegarItem(ArbolUtilidades.obtnerItemSeleccionado(self.arbolPrincipal, -1), False)
             self.txtRuta.setText(ruta)
             if ruta == "bin/"+Data.nombre+"/raiz":
                 self.arbolPrincipal.collapseAll()
@@ -68,65 +71,37 @@ class Crear(QMainWindow):
     def btnCrearCarpeta_click(self, event):
         nombreCarpeta = self.txtNombreCarpeta.text()
         ruta = self.txtRuta.text()
+        permisos = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 1)
+        usuarios = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 0)
         if (len(nombreCarpeta) > 0):
             # hacer una verificación de nombres carpetas iguales
-            if (self.btnCrearCarpeta.text() == "Crear"):  # Crear
-                ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos)
+                ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos,usuarios,permisos)
             # falta una validacion aca para manejar los errores de sobreescritura de carpetas
                 ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
-            else:  # Modificar
-                rutaNueva = path.dirname(ruta)+"/"+nombreCarpeta
-                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva)
-                Data.rutaModificar = rutaNueva
                 Crear.reiniciarCampos(self)
         else:
             Crear.mostrarAlerta("Debe escribir un nombre", "error")
 
     def arbolPrincipal_clicked(self):
-        self.txtNombreCarpeta.setText(
-            ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 0))
-        self.txtRuta.setText(
-            ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2))
+        self.txtRuta.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2))
         # =======================
         # Utilidades
         # =======================
 
-    def obetenerValorComboBox(comboBox):
-        indice = comboBox.currentIndex()
-        valor = comboBox.itemText(indice)
-        return valor
-
     def llenarCampos(self):
         ruta = Data.rutaModificar
-        for usuario in ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()):
-            self.cbNombreUsuario.addItem(usuario.nombre)
-            self.txtRuta.setText(Data.rutaModificar)
-
-    def mostrarAlerta(contenido, tipo):
-        alerta = Alerta(contenido, tipo)
-        alerta.mostrarAlerta()
+        ComboBoxUtilidades.llenarComboBox(self.cbNombreUsuario, ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()))
+        self.txtRuta.setText(Data.rutaModificar)
+        usuario = Data.nombre
+        ArbolUtilidades.agregarItem(self.arbolPermisos, [usuario,"[Lectura][Escritura][Ejecucion]"])
 
     def reiniciarCampos(self):
         self.txtNombreCarpeta.setText("")
         self.txtRuta.setText(Data.rutaModificar)
-
-    def leerRadioButons(self):
-        cadena = ""
-        lectura = self.rbtnLectura
-        escritura = self.rbtnEscritura
-        ejecucion = self.rbtnEjecucion
-        if (lectura.isChecked()):
-            cadena += "[Lectura]"
-        if (escritura.isChecked()):
-            cadena += "[Escritura]"
-        if (ejecucion.isChecked()):
-            cadena += "[Ejecucion]"
-        if not (lectura.isChecked() or escritura.isChecked() or ejecucion.isChecked()):
-            cadena += "[None]"
-        return cadena
-    def reiniciarRadioButons(self):
-        self.rbtnLectura.setChecked(False)
-        self.rbtnEscritura.setChecked(False)
-        self.rbtnEjecucion.setChecked(False)
+        RadioButonUtilidades.reiniciarRadioButons(self.rbtnEscritura,self.rbtnLectura,self.rbtnEjecucion)
+        self.arbolPermisos.clear()
+        ArbolUtilidades.agregarItem(self.arbolPermisos, [Data.nombre,"[Lectura][Escritura][Ejecucion]"])
         
+
+    
 # Termina la clase
