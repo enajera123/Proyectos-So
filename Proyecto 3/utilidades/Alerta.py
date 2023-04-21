@@ -3,6 +3,7 @@ class Alerta:
     def __init__(self,mensaje,tipo):
         self.tipo = tipo
         self.mensaje = mensaje
+        
     def mostrarAlerta(self):
         alerta = QMessageBox()
         alerta.setWindowTitle(self.mensaje)

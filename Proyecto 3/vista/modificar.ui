@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,9 +20,13 @@
 }
 QFrame{
 	border:none;
-}</string>
+}
+QTreeWidget, QLineEdit{
+	background-color:white;
+}
+</string>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,10">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -35,61 +39,6 @@ QFrame{
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item>
-     <widget class="QFrame" name="paneSuperior">
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QPushButton" name="btnRegresar">
-         <property name="font">
-          <font>
-           <pointsize>15</pointsize>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QPushButton{
-	background-color:rgb(191, 42, 53)
-}
-QPushButton:hover{
-	background-color:rgb(211, 42, 53)
-}</string>
-         </property>
-         <property name="text">
-          <string>Regresar</string>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normaloff>../src/img/volver-icon.png</normaloff>../src/img/volver-icon.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>25</width>
-           <height>25</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>672</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item>
      <widget class="QFrame" name="panelInferior">
       <property name="styleSheet">
@@ -109,113 +58,80 @@ QPushButton:hover{
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,11">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QFrame" name="Carpeta">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
+        <widget class="QFrame" name="panelRuta">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
-           <widget class="QLabel" name="lblTituloCarpeta">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
+           <widget class="QFrame" name="paneSuperior">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="text">
-             <string>Carpeta</string>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="txtNombreCarpeta">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:white;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblNombreCarpeta">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
-            </property>
-            <property name="text">
-             <string>Nombre:</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTreeWidget" name="twUbicacion">
-            <property name="styleSheet">
-             <string notr="true">background-color:white;</string>
-            </property>
-            <property name="columnCount">
-             <number>1</number>
-            </property>
-            <attribute name="headerVisible">
-             <bool>true</bool>
-            </attribute>
-            <column>
-             <property name="text">
-              <string>Carpeta</string>
-             </property>
-            </column>
-            <item>
-             <property name="text">
-              <string>a</string>
-             </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
-              <property name="text">
-               <string>b</string>
-              </property>
-              <item>
-               <property name="text">
-                <string>c</string>
+              <widget class="QPushButton" name="btnRegresar">
+               <property name="font">
+                <font>
+                 <pointsize>15</pointsize>
+                </font>
                </property>
-              </item>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+	background-color:rgb(191, 42, 53)
+}
+QPushButton:hover{
+	background-color:rgb(211, 42, 53)
+}</string>
+               </property>
+               <property name="text">
+                <string>Regresar</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>../src/img/volver-icon.png</normaloff>../src/img/volver-icon.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>25</width>
+                 <height>25</height>
+                </size>
+               </property>
+              </widget>
              </item>
-            </item>
+            </layout>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="btnCrearCarpeta">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
+           <widget class="QLineEdit" name="txtRuta">
+            <property name="styleSheet">
+             <string notr="true">background-color:white;</string>
             </property>
-            <property name="text">
-             <string>Crear</string>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>/</string>
             </property>
            </widget>
           </item>
@@ -223,195 +139,226 @@ QPushButton:hover{
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="Permisos">
+        <widget class="QFrame" name="PanelContenidoInferior">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
-           <widget class="QLabel" name="lblTituloPermisos">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>14</pointsize>
-              <weight>75</weight>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
+           <widget class="QFrame" name="Permisos">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
             </property>
-            <property name="text">
-             <string>Permisos</string>
+            <property name="frameShadow">
+             <enum>QFrame::Raised</enum>
             </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="cbNombreUsuario">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">background-color:rgb(240, 240, 240);</string>
-            </property>
-            <property name="editable">
-             <bool>true</bool>
-            </property>
-            <property name="currentText">
-             <string/>
-            </property>
-            <property name="currentIndex">
-             <number>-1</number>
-            </property>
-            <property name="maxVisibleItems">
-             <number>5</number>
-            </property>
-            <property name="maxCount">
-             <number>10</number>
-            </property>
-            <property name="insertPolicy">
-             <enum>QComboBox::NoInsert</enum>
-            </property>
-            <property name="duplicatesEnabled">
-             <bool>false</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string>Prueba1</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Prueba 2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Prueba 3</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblNombreUsuario">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
-            </property>
-            <property name="text">
-             <string>Nombre usuario: </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnAgregarUsuario">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Agregar</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rbtnEscritura">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Escritura</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rbtnLectura">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Lectura</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rbtnEjecucion">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Ejecucion</string>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="lblTituloListView">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>14</pointsize>
-              <weight>50</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-              <underline>false</underline>
-              <strikeout>false</strikeout>
-              <kerning>true</kerning>
-             </font>
-            </property>
-            <property name="text">
-             <string>Tabla de usuarios</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QListWidget" name="lisitWPerUsuarios"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="btnEliminarUsuario">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>12</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Eliminar</string>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <item>
+              <widget class="QLabel" name="lblTituloPermisos">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>14</pointsize>
+                 <weight>75</weight>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="text">
+                <string>Permisos</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblNombreUsuario">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="text">
+                <string>Nombre usuario: </string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="cbUsuarios">
+               <property name="styleSheet">
+                <string notr="true">background-color:rgb(215, 215, 215);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbtnEscritura">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Escritura</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbtnLectura">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Lectura</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbtnEjecucion">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>12</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Ejecucion</string>
+               </property>
+               <property name="autoExclusive">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QFrame" name="frame">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0">
+                <property name="spacing">
+                 <number>60</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>590</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="btnAgregarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/crear-icon.png</normaloff>../src/img/crear-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="btnEliminarUsuario">
+                  <property name="font">
+                   <font>
+                    <family>Arial</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset>
+                    <normaloff>../src/img/eliminar-icon.png</normaloff>../src/img/eliminar-icon.png</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>30</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lblTituloListView">
+               <property name="font">
+                <font>
+                 <family>Arial</family>
+                 <pointsize>14</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                 <underline>false</underline>
+                 <strikeout>false</strikeout>
+                 <kerning>true</kerning>
+                </font>
+               </property>
+               <property name="text">
+                <string>Tabla de usuarios</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTreeWidget" name="arbolPermisos">
+               <attribute name="headerDefaultSectionSize">
+                <number>286</number>
+               </attribute>
+               <column>
+                <property name="text">
+                 <string>Nombre</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Permisos</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>

@@ -15,6 +15,8 @@ from mimetypes import MimeTypes
 # sys.path.append(path.abspath("../modelo"))
 from utilidades.ManejoArchivo import ManejoArchivo
 from utilidades.Data import Data
+from utilidades.Alerta import Alerta
+from utilidades.ArbolUtilidades import ArbolUtilidades
 
 
 # from ..modelo.ManejoArchivo import ManejoArchivo
@@ -47,30 +49,36 @@ class Main(QMainWindow):
         self.btnModificar.clicked.connect(self.btnModificar_click)
 
         self.btnEliminar.clicked.connect(self.btnEliminar_click)
+        
+        self.btnCambiarNom.clicked.connect(self.btnCambiarNom_click)
 
         self.btnCerrarSesion.clicked.connect(self.btnCerrarSesion_click)
+        
+        #self.txtCambiarNom.returnPressed.connect(self.on_returnPressed)
 
-        self.arbolPrincipal.clicked.connect(
-            self.arbolPrincipal_itemSelected)
+        self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_itemSelected)
 
     # =======================
     #        Eventos
     # =======================
     def btnCommit_click(self, event):
-        print("Codigo voanvoa")
+        print("Codigo aqui")
 
     def btnUpdate_click(self, event):
         print("Codigo aqui")
 
     def btnRecuperar_click(self, event):
-        ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, "controlador")
+        print("codigo aqui")
 
     def btnCrear_click(self, event):
-        ManejoArchivo.crearCarpeta("bin")
+        ruta = Data.rutaPrincipal
+        Data.rutaModificar = ruta
+        if (ruta != ""):
+            Main.abrirCrear(self)  # prueba crear
 
     def btnModificar_click(self, event):
-        ruta = Main.obtenerRutaItemSeleccionado(self)
+        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2)
+        Data.rutaModificar = ruta
         if ruta != "":
             Main.abrirModificar(self)
 
@@ -81,33 +89,41 @@ class Main(QMainWindow):
         self.nuevaVentana.show()
 
     def btnEliminar_click(self, event):
-        ruta = Main.obtenerRutaItemSeleccionado(self)
+        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal,2)
         if ruta != "":
-            ManejoArchivo.eliminarCarpeta(ruta)
+            ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
             Main.enlistarArchivos(self)
             self.btnCommit.show()
+            
+    def btnCambiarNom_click(self, event):
+        NuevoNom = self.txtCambiarNom.text()
+        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal,2)
+        if len(NuevoNom) > 0:
+            rutaNueva = path.dirname(ruta)+"/"+NuevoNom
+            ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)
+            Data.rutaModificar = rutaNueva
+            Main.reiniciarCampos(self)
+            Main.enlistarArchivos(self)
+        else:
+            Main.mostrarAlerta("Debe escribir un nombre", "error")
+            
 
-    def arbolPrincipal_itemSelected(self, event):
+    def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
-        self.txtRuta.setText(Main.obtenerRutaItemSeleccionado(self))
+        self.txtRuta.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2))
+        self.txtCambiarNom.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 0))
     # =======================
     # Utilidades
     # =======================
-
-    def obtenerRutaItemSeleccionado(self):
-        selected_item = self.arbolPrincipal.selectedItems()  # Obtiene la linea seleccionada
-        if len(selected_item) > 0:
-            return ManejoArchivo.obtenerRutaCarpeta("bin/"+Data.nombre+"/"+selected_item[0].text(0))
-        return ""
-
+        
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""
         self.btnCommit.hide()
         self.btnUpdate.hide()
 
     def enlistarArchivos(self):
-        ManejoArchivo.enlistarArchivos(
-            self.arbolPrincipal, self.txtRuta, "bin/"+Data.nombre)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaPrincipal)
+        self.txtRuta.setText(Data.rutaPrincipal)  # Ingresa en el txt la ruta de la raiz(Default)
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
@@ -115,4 +131,18 @@ class Main(QMainWindow):
         self.hide()
         self.nuevaVentana = Modificar()
         self.nuevaVentana.show()
+        
+    def abrirCrear(self):
+        from controlador.crear import Crear
+        self.hide()
+        self.nuevaVentana = Crear()
+        self.nuevaVentana.show()
+        
+    def reiniciarCampos(self):
+        self.txtCambiarNom.setText("")
+        self.txtRuta.setText(Data.rutaModificar)
+        
+    def mostrarAlerta(contenido, tipo):
+        alerta = Alerta(contenido, tipo)
+        alerta.mostrarAlerta()
 # Termina la clase
