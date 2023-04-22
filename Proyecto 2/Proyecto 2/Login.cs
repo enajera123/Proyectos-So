@@ -220,7 +220,7 @@ namespace Proyecto_2
             flowDatosToPrincipal();
             Principal principal = new Principal();
             principal.bindServicios(this);
-            //this.Hide();//Error
+            this.Hide();//Error
             principal.Show();
         }
         public void flowDatosToPrincipal()
