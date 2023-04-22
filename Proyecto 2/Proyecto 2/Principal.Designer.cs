@@ -595,6 +595,7 @@
             Name = "Principal";
             Text = "Principal";
             Load += Principal_Load;
+            FormClosing += Principal_FormClosing;
             panelMenu.ResumeLayout(false);
             panelSubMenuServicioCliente.ResumeLayout(false);
             panelMenuServicioCliente.ResumeLayout(false);

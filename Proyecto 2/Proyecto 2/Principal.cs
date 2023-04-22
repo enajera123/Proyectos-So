@@ -21,6 +21,11 @@ namespace Proyecto_2
             inicializarCajas();
 
         }
+        private void Principal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
         /**Menu de hamburguesa**/
         private void hamburguerPic_Click(object sender, EventArgs e)
         {
