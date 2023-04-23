@@ -1,4 +1,7 @@
-﻿namespace Proyecto_2
+﻿using Microsoft.VisualBasic.Logging;
+using Proyecto_2.Modelos;
+
+namespace Proyecto_2
 {
     partial class Principal
     {
@@ -58,17 +61,14 @@
             panelNavegador = new Panel();
             panelPrincipal = new Panel();
             panelResponsive = new TableLayoutPanel();
-            panelContenedor5 = new TableLayoutPanel();
-            flowContenedor1 = new TableLayoutPanel();
+            panelContenedor2 = new TableLayoutPanel();
+            panelContenedor1 = new TableLayoutPanel();
             listProcesos = new ListView();
             columNombre = new ColumnHeader();
             columPrioridad = new ColumnHeader();
             columPeso = new ColumnHeader();
             columnCliente = new ColumnHeader();
-            panelContenedor6 = new TableLayoutPanel();
-            button1 = new Button();
-            button2 = new Button();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            panelContenedor3 = new TableLayoutPanel();
             panelMenu.SuspendLayout();
             panelSubMenuServicioCliente.SuspendLayout();
             panelMenuServicioCliente.SuspendLayout();
@@ -497,10 +497,10 @@
             panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.3753872F));
             panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 22.3753834F));
             panelResponsive.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 32.873848F));
-            panelResponsive.Controls.Add(panelContenedor5, 0, 0);
-            panelResponsive.Controls.Add(flowContenedor1, 0, 0);
+            panelResponsive.Controls.Add(panelContenedor2, 0, 0);
+            panelResponsive.Controls.Add(panelContenedor1, 0, 0);
             panelResponsive.Controls.Add(listProcesos, 3, 0);
-            panelResponsive.Controls.Add(panelContenedor6, 2, 0);
+            panelResponsive.Controls.Add(panelContenedor3, 2, 0);
             panelResponsive.Dock = DockStyle.Fill;
             panelResponsive.Location = new Point(0, 0);
             panelResponsive.Name = "panelResponsive";
@@ -509,35 +509,35 @@
             panelResponsive.Size = new Size(745, 520);
             panelResponsive.TabIndex = 4;
             // 
-            // panelContenedor5
+            // panelContenedor2
             // 
-            panelContenedor5.ColumnCount = 1;
-            panelContenedor5.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            panelContenedor5.Dock = DockStyle.Fill;
-            panelContenedor5.Location = new Point(169, 3);
-            panelContenedor5.Name = "panelContenedor5";
-            panelContenedor5.RowCount = 3;
-            panelContenedor5.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor5.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor5.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor5.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            panelContenedor5.Size = new Size(160, 514);
-            panelContenedor5.TabIndex = 4;
+            panelContenedor2.ColumnCount = 1;
+            panelContenedor2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            panelContenedor2.Dock = DockStyle.Fill;
+            panelContenedor2.Location = new Point(169, 3);
+            panelContenedor2.Name = "panelContenedor2";
+            panelContenedor2.RowCount = 3;
+            panelContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor2.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            panelContenedor2.Size = new Size(160, 514);
+            panelContenedor2.TabIndex = 4;
             // 
-            // flowContenedor1
+            // panelContenedor1
             // 
-            flowContenedor1.ColumnCount = 1;
-            flowContenedor1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            flowContenedor1.Dock = DockStyle.Fill;
-            flowContenedor1.Location = new Point(3, 3);
-            flowContenedor1.Name = "flowContenedor1";
-            flowContenedor1.RowCount = 3;
-            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            flowContenedor1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            flowContenedor1.Size = new Size(160, 514);
-            flowContenedor1.TabIndex = 3;
+            panelContenedor1.ColumnCount = 1;
+            panelContenedor1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            panelContenedor1.Dock = DockStyle.Fill;
+            panelContenedor1.Location = new Point(3, 3);
+            panelContenedor1.Name = "panelContenedor1";
+            panelContenedor1.RowCount = 3;
+            panelContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor1.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            panelContenedor1.Size = new Size(160, 514);
+            panelContenedor1.TabIndex = 3;
             // 
             // listProcesos
             // 
@@ -568,48 +568,20 @@
             columnCliente.Text = "Nombre de Cliente";
             columnCliente.Width = 120;
             // 
-            // panelContenedor6
+            // panelContenedor3
             // 
-            panelContenedor6.ColumnCount = 1;
-            panelContenedor6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-            panelContenedor6.Dock = DockStyle.Fill;
-            panelContenedor6.Location = new Point(335, 3);
-            panelContenedor6.Name = "panelContenedor6";
-            panelContenedor6.RowCount = 3;
-            panelContenedor6.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor6.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor6.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
-            panelContenedor6.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            panelContenedor6.Size = new Size(160, 514);
-            panelContenedor6.TabIndex = 1;
-            // 
-            // button1
-            // 
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(43, 3);
-            button1.Name = "button1";
-            button1.Padding = new Padding(10, 0, 0, 0);
-            button1.Size = new Size(154, 34);
-            button1.TabIndex = 3;
-            button1.Text = "Caja";
-            button1.TextAlign = ContentAlignment.MiddleLeft;
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(43, 3);
-            button2.Name = "button2";
-            button2.Padding = new Padding(10, 0, 0, 0);
-            button2.Size = new Size(154, 34);
-            button2.TabIndex = 5;
-            button2.Text = "Plataforma";
-            button2.TextAlign = ContentAlignment.MiddleLeft;
-            button2.UseVisualStyleBackColor = true;
+            panelContenedor3.ColumnCount = 1;
+            panelContenedor3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            panelContenedor3.Dock = DockStyle.Fill;
+            panelContenedor3.Location = new Point(335, 3);
+            panelContenedor3.Name = "panelContenedor3";
+            panelContenedor3.RowCount = 3;
+            panelContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            panelContenedor3.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            panelContenedor3.Size = new Size(160, 514);
+            panelContenedor3.TabIndex = 1;
             // 
             // Principal
             // 
@@ -641,6 +613,7 @@
             ResumeLayout(false);
         }
 
+
         #endregion
 
         private Panel panelMenu;
@@ -665,8 +638,6 @@
         private Button btnServicio8;
         private PictureBox picIconCaja;
         internal Button btnGrupo1;
-        internal Button button1;
-        private Button button2;
         private Panel panelMenuCaja;
         private Panel panelMenuServicioCliente;
         internal Button btnGrupo3;
@@ -674,57 +645,17 @@
         private Panel panelMenuPlataforma;
         internal Button btnGrupo2;
         private PictureBox picIconPlataforma;
-        private TableLayoutPanel flowContenedor7;
-        private TableLayoutPanel flowContenedor8;
-        private TableLayoutPanel panelContenedor6;
+        private TableLayoutPanel panelContenedor1;
+        private TableLayoutPanel panelContenedor2;
+        private TableLayoutPanel panelContenedor3;
         private TableLayoutPanel panelResponsive;
         private ColumnHeader columNombre;
         private ColumnHeader columPeso;
         private ColumnHeader columPrioridad;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private ColumnHeader columnCliente;
+        private ColumnHeader columnCliente;//
         private ListView listProcesos;
-        public void bindServicios(Login login)
-        {
-            List<Button> botonesMenu = Utilidades.Utilidades.getButtonsOfPanel(panelMenu);
-            List<Button> botonesMenuLogin = login.getAllButtonsOfPanelMenu();
-            foreach (Button buttonLogin in botonesMenuLogin)
-            {
-                foreach (Button button in botonesMenu)
-                {
-                    if (buttonLogin.Name == button.Name)
-                    {
-                        if (buttonLogin.BackColor == login.getColorDeshabilitado())
-                        {
-                            button.Visible = false;
-                            if (button.Name.Contains("Grupo1"))
-                            {
-                                panelMenuCaja.Visible = false;
-                            }
-                            if (button.Name.Contains("Grupo2"))
-                            {
-                                panelMenuPlataforma.Visible = false;
-                            }
-                            if (button.Name.Contains("Grupo3"))
-                            {
-                                panelMenuServicioCliente.Visible = false;
-                            }
-                        }
-                        else
-                        {
-                            button.Text = buttonLogin.Text;
-                        }
-                    }
-                }
-            }
-        }
+        
 
-        private TableLayoutPanel flowContenedor1;
-        private Button button8;
-        private Button button7;
-        private Button btnAjustes1;
-        private Button button5;
-        private Button button6;
-        private TableLayoutPanel panelContenedor5;
+
     }
 }

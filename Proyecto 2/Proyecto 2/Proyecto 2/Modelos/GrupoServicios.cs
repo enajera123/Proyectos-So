@@ -41,17 +41,16 @@ namespace Proyecto_2.Modelos
             this.servicios.Enqueue(servicio);
           //  ordenarServicios();
         }
-        public Servicio obtenerServicio()
+        public Servicio? obtenerServicio(string key)
         {
-            //Agrega a la lista y reordena
-            return servicios.Dequeue();
+            foreach (Servicio servicio in servicios) {
+                if (servicio.getNombre() == key) {
+                    return servicio;
+                }
+            }
+            return null;
         }
-        /*public void ordenarServicios() {
-            serviciosEspera = new Queue<Servicio>(serviciosEspera.OrderBy(s => s.getPrioridad()));
-        }
-        public void ordenarClientes() {
-            clientesEspera = new Queue<Cliente>(clientesEspera.OrderBy(s => s.getServicio().getPrioridad()));
-        }*/
+        
 
     }
 }

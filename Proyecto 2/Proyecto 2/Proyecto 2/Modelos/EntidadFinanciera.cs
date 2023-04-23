@@ -34,13 +34,24 @@ namespace Proyecto_2.Modelos
         }
         public void ordernarPeticiones()
         {
-            List<Peticion> lista = peticiones.OrderBy(o => o.getServicio().getPrioridad()).ThenBy(o => o.getServicio().getPeso()).ToList();
-            
+            List<Peticion> lista = peticiones.OrderByDescending(o => o.isPrioritario()).ThenBy(o => o.getServicio().getPrioridad()).ThenBy(o => o.getServicio().getPeso()).ToList();
+
             peticiones.Clear();
             foreach (Peticion p in lista)
             {
                 peticiones.Enqueue(p);
             }
+        }
+        public Servicio? buscarServicio(string key) {
+            Servicio? servicio = null;
+            foreach (GrupoServicios grupo in  gruposServicios)
+            {
+                servicio = grupo.obtenerServicio(key);
+                if (servicio != null) {
+                    return servicio;
+                }
+            }
+            return null;
         }
     }
 }

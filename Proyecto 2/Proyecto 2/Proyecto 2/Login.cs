@@ -222,7 +222,7 @@ namespace Proyecto_2
             principal.bindServicios(this);
             this.Hide();//Error
             principal.Show();
-            
+
 
         }
         public void flowDatosToPrincipal()

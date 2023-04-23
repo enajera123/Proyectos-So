@@ -12,6 +12,7 @@ namespace Proyecto_2.Utilidades
         static int cant1 = 0;
         static int cant2 = 0;
         static int cant3 = 0;
+        static PictureBox fotoAModificar = new PictureBox();
 
         static public int getCantCajas(int numeroGrupoServicio) {
             switch (numeroGrupoServicio)
@@ -51,6 +52,18 @@ namespace Proyecto_2.Utilidades
         static public List<Button> getButtonsOfPanel(Panel panel)
         {
             return getAllControls(panel).OfType<Button>().ToList();
+        }
+        static public void setFotoAModificar(PictureBox foto) {
+            fotoAModificar = foto;
+        }
+        static public PictureBox getFotoAModificar()
+        {
+            PictureBox foto = new PictureBox();
+            foto.Dock = fotoAModificar.Dock;
+            foto.SizeMode = fotoAModificar.SizeMode;
+            foto.Image = fotoAModificar.Image;
+            foto.Name = fotoAModificar.Name;
+            return foto;
         }
     }
 }

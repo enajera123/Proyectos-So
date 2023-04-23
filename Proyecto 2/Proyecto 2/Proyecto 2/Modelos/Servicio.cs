@@ -14,11 +14,12 @@ namespace Proyecto_2.Modelos
         //private int tiempoEjecucion;//Tiempo de ejecucion del servicio
         //private string tipoServicio;//Caja,Plataforma,Servicio al cliente;
 
-        public Servicio(string nombre, int peso, int prioridad)
+        public Servicio(string nombre)
         {
             this.nombre = nombre;
-            this.prioridad = prioridad;
-            this.peso = peso;
+            Random rand = new Random();
+            this.prioridad = rand.Next(1, 6);
+            this.peso = rand.Next(1, 40);
         }
         public Servicio()
         {

@@ -76,3 +76,4 @@ C:\Users\Esteban\OneDrive\Documentos\UNA\Semestre V\Proyectos\Proyectos-So\Proye
 C:\Users\Esteban\OneDrive\Documentos\UNA\Semestre V\Proyectos\Proyectos-So\Proyecto 2\Proyecto 2\Proyecto 2\obj\Debug\net6.0-windows\Proyecto 2.pdb
 C:\Users\Esteban\OneDrive\Documentos\UNA\Semestre V\Proyectos\Proyectos-So\Proyecto 2\Proyecto 2\Proyecto 2\obj\Debug\net6.0-windows\Proyecto 2.genruntimeconfig.cache
 C:\Users\Esteban\OneDrive\Documentos\UNA\Semestre V\Proyectos\Proyectos-So\Proyecto 2\Proyecto 2\Proyecto 2\obj\Debug\net6.0-windows\ref\Proyecto 2.dll
+C:\Users\Esteban\OneDrive\Documentos\UNA\Semestre V\Proyectos\Proyectos-So\Proyecto 2\Proyecto 2\Proyecto 2\obj\Debug\net6.0-windows\Proyecto_2.CajaContenido.resources

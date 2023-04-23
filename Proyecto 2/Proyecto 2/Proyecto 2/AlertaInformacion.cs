@@ -17,15 +17,15 @@ namespace Proyecto_2
             InitializeComponent();
         }
 
-        private void checkNoPreferencial_CheckedChanged(object sender, EventArgs e)
+        private void checkNoPreferencial_Click(object sender, EventArgs e)
         {
             checkPreferencial.Checked = false;
         }
 
-        private void checkPreferencial_CheckedChanged(object sender, EventArgs e)
+        private void checkPreferencial_Click(object sender, EventArgs e)
         {
-            checkNoPreferencial.Checked = false; 
+            checkNoPreferencial.Checked = false;
+            
         }
-        
     }
 }

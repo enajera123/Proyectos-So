@@ -16,13 +16,12 @@ namespace Proyecto_2.Modelos
         {
         }
 
-        public Peticion(string nombre, string tipoServicio, bool prioritario)
+        public Peticion(string nombre, Servicio servicio, bool prioritario)
         {
             this.nombre = nombre;
             this.tiempoLlegada = DateTime.Now;
             this.prioritario = prioritario;
-            Random rand = new Random();
-            this.servicio = new Servicio(tipoServicio, rand.Next(1, 40), rand.Next(1, 6));
+            this.servicio = servicio;
 
         }
         public string getNombre()
