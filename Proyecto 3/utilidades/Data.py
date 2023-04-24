@@ -7,6 +7,8 @@ class Data:
     clave = ""
     uso = ""
     rutaPrincipal = ""
+    rutaPermanente = ""
+    rutaVersiones = ""
     #=======================
     #	Main to Modificar
     #=======================

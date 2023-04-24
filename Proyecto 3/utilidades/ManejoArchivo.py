@@ -27,7 +27,10 @@ class ManejoArchivo:
     # =======================
     # Manejo Carpetas
     # =======================
-
+    def crearCarpeta2(ruta):
+        from modelo.Archivo import Archivo
+        os.mkdir(ruta)#creacion de carpetas    
+        
     def crearCarpeta(rutaArchivo, rutaDefault, *args):
         from modelo.Archivo import Archivo
         if (path.isdir(path.dirname(rutaArchivo))):
@@ -44,7 +47,11 @@ class ManejoArchivo:
                 archivo = Archivo(rutaArchivo, tipoArchivo,[],[])
                 
             ManejoArchivo.crearArchivo(archivo, rutaDefault)#Crea archivo
-
+            
+    def eliminarCarpeta2(ruta):
+        if(path.exists(ruta) and path.isdir(ruta)):
+            shutil.rmtree(ruta)
+            
     def eliminarCarpeta(rutaAbsoluta, rutaDefault):
         if (path.exists(rutaAbsoluta) and path.isdir(rutaAbsoluta)):
             shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
@@ -55,10 +62,14 @@ class ManejoArchivo:
     def renombrarCarpeta(rutaAntigua, rutaNueva, rutaDefault):
         if (path.exists(rutaAntigua)):
             os.rename(rutaAntigua, rutaNueva)
-            archivo =  ManejoArchivo.leerArchivo(rutaDefault, rutaAntigua)
-            archivo.ruta = rutaNueva
+            archivo = ManejoArchivo.leerArchivo(rutaDefault, rutaAntigua)
             if archivo:
+                archivo.ruta = rutaNueva
                 ManejoArchivo.actualizarArchivo(rutaAntigua, archivo, rutaDefault)
+                
+    def renombrarCarpeta2(rutaAntigua, rutaNueva):
+        if (path.exists(rutaAntigua)):
+            os.rename(rutaAntigua, rutaNueva)
 
     def listar_carpetas(path, parent):
         """
@@ -72,19 +83,20 @@ class ManejoArchivo:
             files = os.listdir(path)
             # Recorrer todos los archivos y carpetas
             for file in files:
-                # Obtener la ruta completa del archivo o carpeta
-                full_path = os.path.join(path, file)
-                # Si es una carpeta, agregarla al árbol
-                if os.path.isdir(full_path):
-                    item = QTreeWidgetItem(parent)
-                    ManejoArchivo.bindQTreeWidgetItem(item, file, "Carpeta", os.path.relpath(full_path))
-                    # Listar todas las subcarpetas recursivamente
-                    ManejoArchivo.listar_carpetas(full_path, item)
-                # Si es un archivo, agregarlo al árbol
-                elif os.path.isfile(full_path):
-                    archivo = QTreeWidgetItem(parent)
-                    tipoArchivo = ManejoArchivo.obtenerTipoArchivo(full_path)
-                    ManejoArchivo.bindQTreeWidgetItem(archivo, file, tipoArchivo, os.path.relpath(full_path))
+                if(file !="archivos.JSON"):
+                    # Obtener la ruta completa del archivo o carpeta
+                    full_path = os.path.join(path, file)
+                    # Si es una carpeta, agregarla al árbol
+                    if os.path.isdir(full_path):
+                        item = QTreeWidgetItem(parent)
+                        ManejoArchivo.bindQTreeWidgetItem(item, file, "Carpeta", os.path.relpath(full_path))
+                        # Listar todas las subcarpetas recursivamente
+                        ManejoArchivo.listar_carpetas(full_path, item)
+                    # Si es un archivo, agregarlo al árbol
+                    elif os.path.isfile(full_path):
+                        archivo = QTreeWidgetItem(parent)
+                        tipoArchivo = ManejoArchivo.obtenerTipoArchivo(full_path)
+                        ManejoArchivo.bindQTreeWidgetItem(archivo, file, tipoArchivo, os.path.relpath(full_path))
 
     
 
@@ -172,6 +184,30 @@ class ManejoArchivo:
             archivos_guardar.append(i)
         ManejoArchivo.guardarArchivos(archivos_guardar,rutaDefault)
         
+    def copiarArchivos(destino, origen):
+            for element in listdir(destino):
+                    ruta = destino+"/"+element
+                    if not(path.exists(origen+"/"+element)):
+                        if(path.isdir(ruta)):
+                            shutil.copytree(ruta, origen+"/"+element)
+                        else:
+                            shutil.copy(ruta, origen+"/"+element)
+    def copiarArchivos2(destino, origen):
+        if(path.exists(origen)):
+            ruta = origen+"/"+path.basename(destino)
+            if(path.exists(ruta)):
+                ManejoArchivo.eliminarCarpeta2(ruta)
+            if(path.isdir(destino)):
+                shutil.copytree(destino, ruta)
+            else:
+               shutil.copy(destino, ruta)
+          
+    def moverArchivos(destino, origen):
+        for element in listdir(destino):
+            ruta = destino+"/"+element
+            if not(path.exists(origen+"/"+element)):
+                shutil.move(ruta, origen+"/"+element)
+                    
     def crearArchivo(archivo, ruta):
         archivos = ManejoArchivo.leerArchivos(ruta)
         archivos.append(archivo.__dict__)
@@ -216,10 +252,11 @@ class ManejoArchivo:
         ruta = path.abspath(ruta)
         if (path.isdir(ruta)):
             for element in listdir(ruta):
-                nombre = element
-                archivo = ruta+"/"+nombre
-                tipoArchivo = ManejoArchivo.obtenerTipoArchivo(archivo)
-                fila = [nombre, tipoArchivo, os.path.relpath(archivo)]
-                item = QTreeWidgetItem(arbol, fila)
-                arbol.insertTopLevelItems(0, [item])
-                ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)
+                if(element !="archivos.JSON"):
+                    nombre = element
+                    archivo = ruta+"/"+nombre
+                    tipoArchivo = ManejoArchivo.obtenerTipoArchivo(archivo)
+                    fila = [nombre, tipoArchivo, os.path.relpath(archivo)]
+                    item = QTreeWidgetItem(arbol, fila)
+                    arbol.insertTopLevelItems(0, [item])
+                    ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)

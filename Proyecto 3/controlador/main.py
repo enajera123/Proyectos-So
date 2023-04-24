@@ -1,10 +1,10 @@
 import sys
-import time
+from datetime import datetime
 from PyQt5 import uic
 # QMainWindow clase ventana principal
 # QApplication Arracna la aplicacion
 # QTreeWidgetItem Ingresa un item al arbol
-from PyQt5.QtWidgets import QMainWindow, QApplication, QTreeWidgetItem
+from PyQt5.QtWidgets import QMainWindow, QApplication, QTreeWidgetItem, QInputDialog
 # listdir enlista el directorio
 # stat devuelve informacion del archivo
 # path funciones de rutas
@@ -54,7 +54,8 @@ class Main(QMainWindow):
 
         self.btnCerrarSesion.clicked.connect(self.btnCerrarSesion_click)
         
-        #self.txtCambiarNom.returnPressed.connect(self.on_returnPressed)
+        self.arbolTemporal.itemSelectionChanged.connect(self.arbolVersiones_itemSelected)
+        
 
         self.arbolPrincipal.itemSelectionChanged.connect(self.arbolPrincipal_itemSelected)
 
@@ -62,13 +63,30 @@ class Main(QMainWindow):
     #        Eventos
     # =======================
     def btnCommit_click(self, event):
-        print("Codigo aqui")
+        nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H:%M:%S")+")"
+        rutaVersion = "bin/"+Data.nombre+"/versiones"+"/"+nombre
+        
+        if(len(listdir(Data.rutaPermanente))>0):
+            ManejoArchivo.crearCarpeta2(rutaVersion)
+            ManejoArchivo.moverArchivos(Data.rutaPermanente, rutaVersion)
+        ManejoArchivo.copiarArchivos(Data.rutaPrincipal, Data.rutaPermanente)
+        Main.mostrarVersiones(self)
+        Alerta("El commit se ha creado correctamente!", "confirmacion").mostrarAlerta()
+        
+        
 
     def btnUpdate_click(self, event):
-        print("Codigo aqui")
+        ManejoArchivo.eliminarCarpeta2(Data.rutaPrincipal)
+        ManejoArchivo.crearCarpeta2(Data.rutaPrincipal)
+        ManejoArchivo.copiarArchivos(Data.rutaPermanente, Data.rutaPrincipal)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaPrincipal)
 
     def btnRecuperar_click(self, event):
-        print("codigo aqui")
+        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolTemporal, 2)
+        #ManejoArchivo.eliminarCarpeta2(Data.rutaPrincipal)
+        #ManejoArchivo.crearCarpeta2(Data.rutaPrincipal)
+        ManejoArchivo.copiarArchivos2(ruta, Data.rutaPrincipal)
+        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaPrincipal)
 
     def btnCrear_click(self, event):
         ruta = Data.rutaPrincipal
@@ -89,41 +107,44 @@ class Main(QMainWindow):
         self.nuevaVentana.show()
 
     def btnEliminar_click(self, event):
-        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal,2)
-        if ruta != "":
+        ruta = self.txtRuta.text()
+        if ruta != "" and ruta != Data.rutaPrincipal:
             ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
-            Main.enlistarArchivos(self)
-            self.btnCommit.show()
+        Main.reiniciarCampos(self)
             
     def btnCambiarNom_click(self, event):
         NuevoNom = self.txtCambiarNom.text()
-        ruta = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal,2)
+        ruta = self.txtRuta.text()
         if len(NuevoNom) > 0:
-            rutaNueva = path.dirname(ruta)+"/"+NuevoNom
-            ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)
-            Data.rutaModificar = rutaNueva
+            if(ruta!=""):
+                rutaNueva = path.dirname(ruta)+"/"+NuevoNom
+                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)   
             Main.reiniciarCampos(self)
-            Main.enlistarArchivos(self)
         else:
-            Main.mostrarAlerta("Debe escribir un nombre", "error")
-            
+            Main.mostrarAlerta("Debe escribir un nombre", "error")            
 
     def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
         self.txtRuta.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2))
         self.txtCambiarNom.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 0))
+        
+    def arbolVersiones_itemSelected(self):
+        # Obtiene la primera columna
+        self.txtRuta.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolTemporal, 2))
+        self.txtCambiarNom.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolTemporal, 0))
     # =======================
     # Utilidades
     # =======================
         
     def ocultarBotones(self):
         """Oculta los botones de Commit y Update"""
-        self.btnCommit.hide()
-        self.btnUpdate.hide()
+        #self.btnCommit.hide()
+        #self.btnUpdate.hide()
 
     def enlistarArchivos(self):
         ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaPrincipal)
         self.txtRuta.setText(Data.rutaPrincipal)  # Ingresa en el txt la ruta de la raiz(Default)
+        Main.mostrarVersiones(self)
 
     def abrirModificar(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
@@ -141,8 +162,12 @@ class Main(QMainWindow):
     def reiniciarCampos(self):
         self.txtCambiarNom.setText("")
         self.txtRuta.setText(Data.rutaModificar)
+        Main.enlistarArchivos(self)
         
     def mostrarAlerta(contenido, tipo):
         alerta = Alerta(contenido, tipo)
         alerta.mostrarAlerta()
+        
+    def mostrarVersiones(self):
+        ManejoArchivo.enlistarArchivos(self.arbolTemporal, Data.rutaVersiones)
 # Termina la clase
