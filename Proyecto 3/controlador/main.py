@@ -122,7 +122,8 @@ class Main(QMainWindow):
         if len(NuevoNom) > 0:
             if(ruta!=""):
                 rutaNueva = path.dirname(ruta)+"/"+NuevoNom
-                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)   
+                ManejoArchivo.renombrarCarpeta(ruta, rutaNueva, Data.rutaArchivos)
+                ManejoArchivo.crearRegistro("Renombrar",ruta,rutaNueva)   
             Main.reiniciarCampos(self)
         else:
             Main.mostrarAlerta("Debe escribir un nombre", "error")            

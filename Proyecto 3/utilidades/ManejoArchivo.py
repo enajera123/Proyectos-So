@@ -205,7 +205,9 @@ class ManejoArchivo:
             elif (registro.tipo == "Mover"):
                 shutil.move(registro.rutaPrincipal, registro.rutaSecundaria)
             elif (registro.tipo == "Renombrar"):
-                os.rename(registro.rutaPrincipal, registro.rutaSecundaria)
+                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
+                rutaDestino = registro.rutaSecundaria.replace("\\", "/")
+                os.rename(rutaOrigen.replace("/temporal/", "/raiz/", 1), rutaDestino.replace("/temporal/", "/raiz/", 1))
         ManejoArchivo.limpiarRegistro()
 # =======================
 # Control de archivos
