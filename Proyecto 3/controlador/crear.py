@@ -74,6 +74,8 @@ class Crear(QMainWindow):
         permisos = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 1)
         usuarios = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 0)
         if (len(nombreCarpeta) > 0):
+            #Se crea un registro para el comit
+                ManejoArchivo.crearRegistro("Crear", ruta+"/"+nombreCarpeta)
             # hacer una verificación de nombres carpetas iguales
                 ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos,usuarios,permisos)
             # falta una validacion aca para manejar los errores de sobreescritura de carpetas

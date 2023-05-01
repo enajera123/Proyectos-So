@@ -63,16 +63,19 @@ class Main(QMainWindow):
     #        Eventos
     # =======================
     def btnCommit_click(self, event):
-        nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H:%M:%S")+")"
+        nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H-%M-%S")+")"
         rutaVersion = "bin/"+Data.nombre+"/versiones"+"/"+nombre
-        
+        ManejoArchivo.procesarRegistros()
+        '''            
         if(len(listdir(Data.rutaPermanente))>0):
-            ManejoArchivo.crearCarpeta2(rutaVersion)
-            ManejoArchivo.moverArchivos(Data.rutaPermanente, rutaVersion)
+            ManejoArchivo.eliminarCarpeta2(Data.rutaPermanente)
+            ManejoArchivo.crearCarpeta2(Data.rutaPermanente)
         ManejoArchivo.copiarArchivos(Data.rutaPrincipal, Data.rutaPermanente)
+        '''
+        ManejoArchivo.crearCarpeta2(rutaVersion)
+        ManejoArchivo.copiarArchivos(Data.rutaPermanente, rutaVersion)
         Main.mostrarVersiones(self)
         Alerta("El commit se ha creado correctamente!", "confirmacion").mostrarAlerta()
-        
         
 
     def btnUpdate_click(self, event):
@@ -109,6 +112,7 @@ class Main(QMainWindow):
     def btnEliminar_click(self, event):
         ruta = self.txtRuta.text()
         if ruta != "" and ruta != Data.rutaPrincipal:
+            ManejoArchivo.crearRegistro("Eliminar",ruta)
             ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
         Main.reiniciarCampos(self)
             

@@ -13,6 +13,7 @@ from mimetypes import MimeTypes
 from PyQt5.QtWidgets import QTreeWidgetItem
 from modelo.Usuario import Usuario
 from modelo.Archivo import Archivo
+from modelo.Registro import Registro
 from utilidades.Data import Data
 
 
@@ -21,15 +22,15 @@ class ManejoArchivo:
     # Constantes
     # =======================
     rutaUsuarios = "bin/usuarios.JSON"
-
+    rutaRegistro = "bin/Registro.JSON" #Se usa para saber los archivos que fueron modificados
     def __init__(self):
         super(ManejoArchivo, self).__init__()
     # =======================
     # Manejo Carpetas
     # =======================
     def crearCarpeta2(ruta):
-        from modelo.Archivo import Archivo
-        os.mkdir(ruta)#creacion de carpetas    
+        #from modelo.Archivo import Archivo
+        os.mkdir(ruta)#creacion de carpetas 
         
     def crearCarpeta(rutaArchivo, rutaDefault, *args):
         from modelo.Archivo import Archivo
@@ -146,7 +147,66 @@ class ManejoArchivo:
             usuario = Usuario(i['id'], i['nombre'], i['clave'])
             usuarios.append(usuario)
         return usuarios
-
+# =======================
+# Control de registros
+# =======================
+    def crearRegistro(tipo, rutaPrimaria, rutaSecundaria=None):
+        """
+        tipo: Mover,Renombrar,Eliminar,Crear
+        rutaPrimaria: Guarda la ruta original se usa en Eliminar, Crear
+        rutaSecundaria: Guarda la ruta modificada se usa en Mover, Renombrar
+        """
+        registro = Registro(tipo, rutaPrimaria, rutaSecundaria)
+        registros = ManejoArchivo.leerRegistros()
+        registros.append(registro.__dict__)
+        ManejoArchivo.guardarRegistros(registros)
+    def guardarRegistros(registros):
+        with open(ManejoArchivo.rutaRegistro, 'w') as f:
+            json.dump(registros, f)
+    def leerRegistros():
+        if not os.path.exists(ManejoArchivo.rutaRegistro):
+            return []
+        with open(ManejoArchivo.rutaRegistro, 'r') as f:
+            return json.load(f)
+    def limpiarRegistro():
+        with open(ManejoArchivo.rutaRegistro, 'w') as f:
+            json.dump([], f)
+    def tipoArchivoRegistro(ruta):
+        if (bool(os.path.splitext(ruta)[1])):
+            return True
+        else:
+            return False
+    def deserializarJSONToRegistro(array):
+        registros = []
+        for i in array:
+            registro = Registro(i['tipo'], i['rutaPrimaria'], i['rutaSecundaria'])
+            registros.append(registro)
+        return registros
+    def procesarRegistros():
+        registros = ManejoArchivo.leerRegistros()
+        registros = ManejoArchivo.deserializarJSONToRegistro(registros)
+        for registro in registros:
+            if (registro.tipo == "Eliminar"):
+                rutaDestino = registro.rutaPrimaria.replace("\\", "/")
+                if (ManejoArchivo.tipoArchivoRegistro(rutaDestino)):
+                    os.remove(rutaDestino.replace("/temporal/", "/raiz/", 1))
+                else:
+                    if (len(rutaDestino)==0):
+                        os.rmdir(rutaDestino.replace("/temporal/", "/raiz/", 1))
+                    else:
+                        shutil.rmtree(rutaDestino.replace("/temporal/", "/raiz/", 1))
+            elif (registro.tipo == "Crear"):
+                if (ManejoArchivo.tipoArchivoRegistro(registro.rutaPrimaria)):
+                    rutaDestino = registro.rutaPrimaria.replace("\\", "/")
+                    rutaDestino = rutaDestino.replace("/temporal/", "/raiz/", 1)
+                    shutil.copy(registro.rutaPrimaria, rutaDestino)
+                else:
+                    os.mkdir(registro.rutaPrimaria.replace("/temporal/", "/raiz/", 1))
+            elif (registro.tipo == "Mover"):
+                shutil.move(registro.rutaPrincipal, registro.rutaSecundaria)
+            elif (registro.tipo == "Renombrar"):
+                os.rename(registro.rutaPrincipal, registro.rutaSecundaria)
+        ManejoArchivo.limpiarRegistro()
 # =======================
 # Control de archivos
 # =======================
@@ -260,3 +320,7 @@ class ManejoArchivo:
                     item = QTreeWidgetItem(arbol, fila)
                     arbol.insertTopLevelItems(0, [item])
                     ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)
+    # =======================
+    # Manejo Carpetas
+    # =======================
+    #def enlistarArchivos(arbol, ruta):
