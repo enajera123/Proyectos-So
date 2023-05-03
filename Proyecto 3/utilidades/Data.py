@@ -9,6 +9,7 @@ class Data:
     rutaPrincipal = ""
     rutaPermanente = ""
     rutaVersiones = ""
+    rutaRegistros = ""
     #=======================
     #	Main to Modificar
     #=======================

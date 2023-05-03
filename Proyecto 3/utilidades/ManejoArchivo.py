@@ -22,7 +22,6 @@ class ManejoArchivo:
     # Constantes
     # =======================
     rutaUsuarios = "bin/usuarios.JSON"
-    rutaRegistro = "bin/Registro.JSON" #Se usa para saber los archivos que fueron modificados
     def __init__(self):
         super(ManejoArchivo, self).__init__()
     # =======================
@@ -161,16 +160,20 @@ class ManejoArchivo:
         registros.append(registro.__dict__)
         ManejoArchivo.guardarRegistros(registros)
     def guardarRegistros(registros):
-        with open(ManejoArchivo.rutaRegistro, 'w') as f:
+        with open(Data.rutaRegistros, 'w') as f:
             json.dump(registros, f)
     def leerRegistros():
-        if not os.path.exists(ManejoArchivo.rutaRegistro):
+        if not os.path.exists(Data.rutaRegistros):
             return []
-        with open(ManejoArchivo.rutaRegistro, 'r') as f:
+        with open(Data.rutaRegistros, 'r') as f:
             return json.load(f)
-    def limpiarRegistro():
-        with open(ManejoArchivo.rutaRegistro, 'w') as f:
-            json.dump([], f)
+    def limpiarRegistros():
+        os.remove(Data.rutaRegistros)
+    def existenRegistros():
+        if os.path.exists(Data.rutaRegistros):
+            return True
+        else:
+            return False
     def tipoArchivoRegistro(ruta):
         if (bool(os.path.splitext(ruta)[1])):
             return True
@@ -208,7 +211,15 @@ class ManejoArchivo:
                 rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
                 rutaDestino = registro.rutaSecundaria.replace("\\", "/")
                 os.rename(rutaOrigen.replace("/temporal/", "/raiz/", 1), rutaDestino.replace("/temporal/", "/raiz/", 1))
-        ManejoArchivo.limpiarRegistro()
+            elif (registro.tipo == "Permisos"):
+                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
+                os.remove(rutaOrigen.replace("/temporal/", "/raiz/", 1))
+                shutil.copy(rutaOrigen,rutaOrigen.replace("/temporal/", "/raiz/", 1))
+            elif (registro.tipo == "Ejecutado"):
+                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
+                os.remove(rutaOrigen.replace("/temporal/", "/raiz/", 1))
+                shutil.copy(rutaOrigen,rutaOrigen.replace("/temporal/", "/raiz/", 1))
+        ManejoArchivo.limpiarRegistros()
 # =======================
 # Control de archivos
 # =======================
@@ -314,7 +325,7 @@ class ManejoArchivo:
         ruta = path.abspath(ruta)
         if (path.isdir(ruta)):
             for element in listdir(ruta):
-                if(element !="archivos.JSON"):
+                if(element !="archivos.JSON" and element !="registros.JSON"):
                     nombre = element
                     archivo = ruta+"/"+nombre
                     tipoArchivo = ManejoArchivo.obtenerTipoArchivo(archivo)

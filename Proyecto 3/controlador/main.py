@@ -65,17 +65,20 @@ class Main(QMainWindow):
     def btnCommit_click(self, event):
         nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H-%M-%S")+")"
         rutaVersion = "bin/"+Data.nombre+"/versiones"+"/"+nombre
+        #Avanzado
         ManejoArchivo.procesarRegistros()
-        '''            
-        if(len(listdir(Data.rutaPermanente))>0):
-            ManejoArchivo.eliminarCarpeta2(Data.rutaPermanente)
-            ManejoArchivo.crearCarpeta2(Data.rutaPermanente)
-        ManejoArchivo.copiarArchivos(Data.rutaPrincipal, Data.rutaPermanente)
-        '''
+        #-----------
+        #Simple            
+        #if(len(listdir(Data.rutaPermanente))>0):
+        #    ManejoArchivo.eliminarCarpeta2(Data.rutaPermanente)
+        #    ManejoArchivo.crearCarpeta2(Data.rutaPermanente)
+        #ManejoArchivo.copiarArchivos(Data.rutaPrincipal, Data.rutaPermanente)
+        #--------
         ManejoArchivo.crearCarpeta2(rutaVersion)
         ManejoArchivo.copiarArchivos(Data.rutaPermanente, rutaVersion)
         Main.mostrarVersiones(self)
         Alerta("El commit se ha creado correctamente!", "confirmacion").mostrarAlerta()
+        Main.ocultarBotones(self)
         
 
     def btnUpdate_click(self, event):
@@ -112,9 +115,11 @@ class Main(QMainWindow):
     def btnEliminar_click(self, event):
         ruta = self.txtRuta.text()
         if ruta != "" and ruta != Data.rutaPrincipal:
-            ManejoArchivo.crearRegistro("Eliminar",ruta)
+            if not Data.rutaVersiones in ruta.replace("\\","/"):
+                ManejoArchivo.crearRegistro("Eliminar",ruta)
             ManejoArchivo.eliminarCarpeta(ruta, Data.rutaArchivos)
         Main.reiniciarCampos(self)
+        Main.ocultarBotones(self)
             
     def btnCambiarNom_click(self, event):
         NuevoNom = self.txtCambiarNom.text()
@@ -126,7 +131,8 @@ class Main(QMainWindow):
                 ManejoArchivo.crearRegistro("Renombrar",ruta,rutaNueva)   
             Main.reiniciarCampos(self)
         else:
-            Main.mostrarAlerta("Debe escribir un nombre", "error")            
+            Main.mostrarAlerta("Debe escribir un nombre", "error")  
+        Main.ocultarBotones(self)          
 
     def arbolPrincipal_itemSelected(self):
         # Obtiene la primera columna
@@ -140,10 +146,14 @@ class Main(QMainWindow):
     # =======================
     # Utilidades
     # =======================
-        
     def ocultarBotones(self):
-        """Oculta los botones de Commit y Update"""
-        #self.btnCommit.hide()
+        """Oculta o muestra los botones de Commit y Update si se cumplen las condiciones"""
+        #import os
+        #if os.path.exists(Data.rutaRegistros):
+        if ManejoArchivo.existenRegistros():
+            self.btnCommit.show()
+        else:
+            self.btnCommit.hide()
         #self.btnUpdate.hide()
 
     def enlistarArchivos(self):
