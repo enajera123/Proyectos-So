@@ -234,6 +234,23 @@ QPushButton:hover{
         </widget>
        </item>
        <item>
+        <widget class="QLabel" name="lblNombre">
+         <property name="font">
+          <font>
+           <pointsize>15</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Nombre</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -626,7 +643,7 @@ QTreeView{
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,8">
        <property name="leftMargin">
         <number>0</number>
        </property>
@@ -662,7 +679,7 @@ QPushButton:hover{
              <bool>false</bool>
             </property>
             <property name="itemsExpandable">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
             <property name="sortingEnabled">
              <bool>true</bool>
@@ -680,7 +697,12 @@ QPushButton:hover{
             </column>
             <column>
              <property name="text">
-              <string>TIpo Archivo</string>
+              <string>Tipo</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Ruta</string>
              </property>
             </column>
            </widget>

@@ -7,11 +7,14 @@ class Data:
     clave = ""
     uso = ""
     rutaPrincipal = ""
+    rutaPermanente = ""
+    rutaVersiones = ""
     #=======================
     #	Main to Modificar
     #=======================
     rutaModificar = ""
     rutaArchivos = ""
+    rutaVersionRecuperar = ""
     #=======================
     #	Main to Crear
     #=======================

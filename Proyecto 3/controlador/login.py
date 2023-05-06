@@ -50,7 +50,7 @@ class LoginView(QMainWindow):
             else:
                 # Creacion
                 LoginView.crearUsuario(variables[0], variables[1])
-                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3])
+                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3],variables[4],variables[5])
                 LoginView.abrirMain(self)  # Cambio de ventana
         else:
             LoginView.mostrarAlerta("No puede dejar campos vacios", "error")
@@ -61,7 +61,7 @@ class LoginView(QMainWindow):
         usuarios = ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios())
         for usuario in usuarios:
             if (LoginView.comprobarUsuario(usuario, variables[0], variables[1])):
-                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3])
+                LoginView.bindCampos(variables[0], variables[1], variables[2], variables[3],variables[4],variables[5])
                 LoginView.abrirMain(self)  # Cambio de ventana
                 return
         LoginView.mostrarAlerta("Compruebe sus credenciales", "error")
@@ -76,7 +76,12 @@ class LoginView(QMainWindow):
         else:
             return False
     def VariablesCampos(nombre, clave):
-        return nombre, clave, "bin/"+nombre+"/raiz", "bin/"+nombre+"/archivos.JSON"
+        """
+        Returns:
+           nombre, clave, rutaTemporal, rutaArchivos, rutaPermanente, rutaVersiones
+        """
+        rutaDefecto = "bin/"+nombre
+        return nombre, clave, rutaDefecto+"/temporal", rutaDefecto+"/temporal/archivos.JSON",rutaDefecto+"/raiz", rutaDefecto+"/versiones"
 
     def crearUsuario(nombre, clave):
         usuario = Usuario(0, nombre, clave)
@@ -84,20 +89,22 @@ class LoginView(QMainWindow):
         LoginView.mostrarAlerta("Usuario Creado Exitosamente. Bienvenido "+nombre, "confirmacion")
         LoginView.crearCarpetasDefault(nombre)
 
-    def bindCampos(nombre, clave, ruta, rutaArchivos):
-        Data.clave = clave
-        Data.nombre = nombre
-        Data.rutaPrincipal = ruta
-        Data.rutaArchivos = rutaArchivos
+    def bindCampos(*args):
+        """nombre, clave, rutaTemporal, rutaArchivos, rutaPermanente, rutaVersiones """
+        Data.nombre = args[0]
+        Data.clave = args[1]
+        Data.rutaPrincipal = args[2]
+        Data.rutaArchivos = args[3]
+        Data.rutaPermanente = args[4]
+        Data.rutaVersiones = args[5]
 
     def crearCarpetasDefault(nombre):
         # Crea una carpeta de un usuario propio
-        rutaArchivos = "bin/"+nombre+"/archivos.JSON";
-        ManejoArchivo.crearCarpeta("bin/"+nombre, rutaArchivos)
-        ManejoArchivo.crearCarpeta("bin/"+nombre+"/raiz", rutaArchivos)  # Crea la raiz
-        ManejoArchivo.crearCarpeta("bin/"+nombre+"/temporal", rutaArchivos)  # Crea el temporal
-        # ManejoArchivo.guardarArchivos(
-        #     archivos, "bin/"+nombre+"/raiz/archivos.bin")
+        #rutaArchivos = "bin/"+nombre+"/archivos.JSON";
+        ManejoArchivo.crearCarpeta_Archivo("bin/"+nombre)
+        ManejoArchivo.crearCarpeta_Archivo("bin/"+nombre+"/raiz")  # Crea la raiz
+        ManejoArchivo.crearCarpeta_Archivo("bin/"+nombre+"/temporal")  # Crea el temporal
+        ManejoArchivo.crearCarpeta_Archivo("bin/"+nombre+"/versiones")  # Crea de versiones
 
     def abrirMain(self):
         # Notese que se importa el controlador en la funcion para evitar imports circulares
