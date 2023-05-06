@@ -20,7 +20,7 @@ namespace Proyecto_2
         private void Principal_Load(object sender, EventArgs e)
         {
 
-            inicializarCajas();
+            
 
         }
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
@@ -205,14 +205,16 @@ namespace Proyecto_2
             string grupo = contenido[0];
             string id = contenido[1];
             Utilidades.Utilidades.setFotoAModificar(foto);
+            Utilidades.Utilidades.setNombresGrupos(btnGrupo1.Text, btnGrupo2.Text, btnGrupo3.Text);
             CajaContenido cajaContenido = new CajaContenido();
-            cajaContenido.Show();
+            cajaContenido.ShowDialog();
         }
         private Panel crearCaja(int tipo, int id)
         {
             Panel panel = new Panel();
             PictureBox foto = new PictureBox();
             foto.Name = tipo.ToString() + "." + id.ToString();
+            //Se debe agregar esta caja a la entidad
             foto.Click += clickImagenes;
 
             foto.SizeMode = PictureBoxSizeMode.Zoom;
@@ -297,6 +299,7 @@ namespace Proyecto_2
         //Funciones inicializadoras
         public void bindServicios(Login login)
         {
+            inicializarCajas();
             bindBotones(login);
             llenarListas(login);
            

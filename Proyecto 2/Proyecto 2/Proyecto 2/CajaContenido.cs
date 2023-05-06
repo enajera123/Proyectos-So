@@ -12,6 +12,12 @@ namespace Proyecto_2
 {
     public partial class CajaContenido : Form
     {
+        string grupo1 = "";
+        string grupo2 = "";
+        string grupo3 = "";
+        PictureBox? foto = null;
+        Color colorHabilitado = Color.FromArgb(128, Color.Green);
+        Color colorDesHabilitado = Color.FromArgb(128, Color.Red);
 
         public CajaContenido()
         {
@@ -20,12 +26,16 @@ namespace Proyecto_2
         }
         private void iniciarComponentes()
         {
-            PictureBox foto = Utilidades.Utilidades.getFotoAModificar();
+            grupo1 = Utilidades.Utilidades.getNombreGrupo(1);
+            grupo2 = Utilidades.Utilidades.getNombreGrupo(2);
+            grupo3 = Utilidades.Utilidades.getNombreGrupo(3);
+            foto = Utilidades.Utilidades.getFotoAModificar();
             panelFoto.Controls.Add(foto);
             cbEstado.Items.Add("Habilitado");
             cbEstado.Items.Add("Inhabilitado");
-            
-
+            cbTipoCaja.Items.Add(grupo1);
+            cbTipoCaja.Items.Add(grupo2);
+            cbTipoCaja.Items.Add(grupo3);
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -35,10 +45,42 @@ namespace Proyecto_2
         private void cbEstado_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+            string item = (string) cbEstado.SelectedItem;
+            if (foto != null) {
+                if (item.Equals("Habilitado"))
+                {
+                    foto.BackColor = colorHabilitado;
+                }
+                else
+                {
+                    foto.BackColor = colorDesHabilitado;
+                }
+            }
         }
 
         private void cbTipoCaja_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string item = (string)cbTipoCaja.SelectedItem;
+            if (item == grupo1) {
+                if (foto != null)
+                {
+                    foto.Image = Properties.Resources.caja;
+                }
+            }
+           else if (item == grupo2)
+            {
+                if (foto != null)
+                {
+                    foto.Image = Properties.Resources.plataforma;
+                }
+            }
+            if (item == grupo3)
+            {
+                if (foto != null)
+                {
+                    foto.Image = Properties.Resources.servicioCliente;
+                }
+            }
 
         }
     }
