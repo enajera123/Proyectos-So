@@ -1,3 +1,0 @@
-while(true){
-	cout<<"Hola mundo"<<endl;
-}
