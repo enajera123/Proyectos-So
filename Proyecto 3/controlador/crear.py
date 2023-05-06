@@ -37,7 +37,7 @@ class Crear(QMainWindow):
         self.arbolPrincipal.itemSelectionChanged.connect(
             self.arbolPrincipal_clicked)
         Crear.llenarCampos(self)
-        ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
+        ArbolUtilidades.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
 
     def btnEliminarUsuario_click(self, event):
         item = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPermisos, -1)
@@ -56,7 +56,7 @@ class Crear(QMainWindow):
         if (ruta != "bin/"+Data.nombre+"/raiz"):
             ruta = path.dirname(ruta)
             ArbolUtilidades.buscarItem(self.arbolPrincipal, ruta,2)
-            ArbolUtilidades.desplegarItem(ArbolUtilidades.obtnerItemSeleccionado(self.arbolPrincipal, -1), False)
+            ArbolUtilidades.desplegarItem(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, -1), False)
             self.txtRuta.setText(ruta)
             if ruta == "bin/"+Data.nombre+"/raiz":
                 self.arbolPrincipal.collapseAll()
@@ -74,15 +74,13 @@ class Crear(QMainWindow):
         permisos = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 1)
         usuarios = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 0)
         if (len(nombreCarpeta) > 0):
-            #Se crea un registro para el comit
-                ManejoArchivo.crearRegistro("Crear", ruta+"/"+nombreCarpeta)
             # hacer una verificación de nombres carpetas iguales
-                ManejoArchivo.crearCarpeta(ruta+"/"+nombreCarpeta, Data.rutaArchivos,usuarios,permisos)
+                ManejoArchivo.crear(ruta+"/"+nombreCarpeta, Data.rutaArchivos,usuarios,permisos)
             # falta una validacion aca para manejar los errores de sobreescritura de carpetas
-                ManejoArchivo.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
+                ArbolUtilidades.enlistarArchivos(self.arbolPrincipal, Data.rutaModificar)
                 Crear.reiniciarCampos(self)
         else:
-            Crear.mostrarAlerta("Debe escribir un nombre", "error")
+            Alerta("Debe escribir un nombre", "error").mostrarAlerta()
 
     def arbolPrincipal_clicked(self):
         self.txtRuta.setText(ArbolUtilidades.obtenerItemSeleccionado(self.arbolPrincipal, 2))

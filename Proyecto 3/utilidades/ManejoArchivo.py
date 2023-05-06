@@ -5,6 +5,7 @@ import os
 import shutil
 import pickle
 import json
+import subprocess
 # path funciones de rutas
 from os import path, listdir, stat
 # Verifica el tipo de archivo
@@ -13,7 +14,6 @@ from mimetypes import MimeTypes
 from PyQt5.QtWidgets import QTreeWidgetItem
 from modelo.Usuario import Usuario
 from modelo.Archivo import Archivo
-from modelo.Registro import Registro
 from utilidades.Data import Data
 
 
@@ -22,84 +22,96 @@ class ManejoArchivo:
     # Constantes
     # =======================
     rutaUsuarios = "bin/usuarios.JSON"
+    rutaIds = "bin/ids.JSON"
+
     def __init__(self):
         super(ManejoArchivo, self).__init__()
     # =======================
     # Manejo Carpetas
     # =======================
-    def crearCarpeta2(ruta):
-        #from modelo.Archivo import Archivo
-        os.mkdir(ruta)#creacion de carpetas 
-        
-    def crearCarpeta(rutaArchivo, rutaDefault, *args):
+    def crearCarpeta_Archivo(ruta):
         from modelo.Archivo import Archivo
-        if (path.isdir(path.dirname(rutaArchivo))):
-            if (os.path.exists(rutaArchivo)):#Si existe lo borra
-                shutil.rmtree(rutaArchivo)  # Borrado recursivo
+        if "." in ruta:
+            open(ruta, "w")
+        else:
+            os.mkdir(ruta)#creacion de carpetas    
+        
+    def crear(rutaArchivo, rutaDefault, *args):
+        """Crea un archivo o carpeta y tambien su objeto en el JSON para el manejo
+
+        Args:
+            rutaArchivo (_type_): Ruta del archivo a crear
+            rutaDefault (_type_): Ruta del JSON
+        """
+        from modelo.Archivo import Archivo
+        if (path.isdir(path.dirname(rutaArchivo))):    
             if "." in rutaArchivo:#Creacion de archivos
+                rutaArchivo = ManejoArchivo.duplicadoArchivo(rutaArchivo)
                 open(rutaArchivo,"w")
             else:
+                rutaArchivo = ManejoArchivo.duplicadoCarpeta(rutaArchivo)
                 os.mkdir(rutaArchivo)#creacion de carpetas
             tipoArchivo = ManejoArchivo.obtenerTipoArchivo(rutaArchivo)
+            id = ManejoArchivo.obtenerId()
             if(len(args)>=2):
-                archivo = Archivo(rutaArchivo, tipoArchivo,args[0],args[1])
+                archivo = Archivo(id, rutaArchivo, tipoArchivo,args[0],args[1])
             else:
-                archivo = Archivo(rutaArchivo, tipoArchivo,[],[])
+                archivo = Archivo(id, rutaArchivo, tipoArchivo,[],[])
                 
             ManejoArchivo.crearArchivo(archivo, rutaDefault)#Crea archivo
+          
+    def obtenerId():
+        array = ManejoArchivo.leerIds()
+        ids = [d["id"]for d in array]
+        newId = max(ids)+1 if ids else 1
+        array.append({"id": newId})
+        ManejoArchivo.guardarId(array)
+        return newId
+        
+        
+    def leerIds():
+        if not os.path.exists(ManejoArchivo.rutaIds):
+            return []
+        with open(ManejoArchivo.rutaIds, 'r') as f:
+            return json.load(f)
+        
+    def guardarId(ids):
+        with open(ManejoArchivo.rutaIds, 'w') as f:
+            json.dump(ids, f)
             
-    def eliminarCarpeta2(ruta):
-        if(path.exists(ruta) and path.isdir(ruta)):
-            shutil.rmtree(ruta)
+    def eliminarId(id):
+        ids = ManejoArchivo.leerIds() 
+        newIds = []
+        for i in ids:
+            if not i["id"] == id:
+                newIds.append(i)
+        ManejoArchivo.guardarId(newIds)
+        
+    def eliminarCarpeta(ruta):
+        if(path.exists(ruta) ):
+            if path.isdir(ruta):
+                shutil.rmtree(ruta)
+            if path.isfile(ruta):
+                os.remove(ruta)
+        
             
-    def eliminarCarpeta(rutaAbsoluta, rutaDefault):
-        if (path.exists(rutaAbsoluta) and path.isdir(rutaAbsoluta)):
-            shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
-        elif path.isfile(rutaAbsoluta):
-            os.remove(rutaAbsoluta)
-        ManejoArchivo.eliminarArchivo(rutaAbsoluta, rutaDefault)
-
-    def renombrarCarpeta(rutaAntigua, rutaNueva, rutaDefault):
-        if (path.exists(rutaAntigua)):
-            os.rename(rutaAntigua, rutaNueva)
-            archivo = ManejoArchivo.leerArchivo(rutaDefault, rutaAntigua)
+    def eliminar(rutaAbsoluta, rutaDefault):
+        """Elimina tanto fisico como del JSON
+        """
+        if (path.exists(rutaAbsoluta)):
+            archivo = ManejoArchivo.leerArchivo(rutaDefault, "ruta", rutaAbsoluta)
             if archivo:
-                archivo.ruta = rutaNueva
-                ManejoArchivo.actualizarArchivo(rutaAntigua, archivo, rutaDefault)
-                
-    def renombrarCarpeta2(rutaAntigua, rutaNueva):
+                ManejoArchivo.eliminarArchivo(rutaDefault, archivo)
+            if(path.isdir(rutaAbsoluta)):
+                shutil.rmtree(rutaAbsoluta)  # Borrado recursivo
+            elif path.isfile(rutaAbsoluta):
+                os.remove(rutaAbsoluta)
+            
+
+    def renombrarCarpeta(rutaAntigua, rutaNueva):
         if (path.exists(rutaAntigua)):
-            os.rename(rutaAntigua, rutaNueva)
-
-    def listar_carpetas(path, parent):
-        """
-        Args:
-            path (string): Ruta Absoluta
-            parent (QTreeWidgetItem): item del tree
-        """
-        # Verificar si la ruta es un directorio
-        if os.path.isdir(path):
-            # Obtener una lista de todos los archivos y carpetas en el directorio
-            files = os.listdir(path)
-            # Recorrer todos los archivos y carpetas
-            for file in files:
-                if(file !="archivos.JSON"):
-                    # Obtener la ruta completa del archivo o carpeta
-                    full_path = os.path.join(path, file)
-                    # Si es una carpeta, agregarla al árbol
-                    if os.path.isdir(full_path):
-                        item = QTreeWidgetItem(parent)
-                        ManejoArchivo.bindQTreeWidgetItem(item, file, "Carpeta", os.path.relpath(full_path))
-                        # Listar todas las subcarpetas recursivamente
-                        ManejoArchivo.listar_carpetas(full_path, item)
-                    # Si es un archivo, agregarlo al árbol
-                    elif os.path.isfile(full_path):
-                        archivo = QTreeWidgetItem(parent)
-                        tipoArchivo = ManejoArchivo.obtenerTipoArchivo(full_path)
-                        ManejoArchivo.bindQTreeWidgetItem(archivo, file, tipoArchivo, os.path.relpath(full_path))
-
+            os.rename(rutaAntigua, rutaNueva)   
     
-
     # =======================
     # Control de usuarios
     # =======================
@@ -146,80 +158,7 @@ class ManejoArchivo:
             usuario = Usuario(i['id'], i['nombre'], i['clave'])
             usuarios.append(usuario)
         return usuarios
-# =======================
-# Control de registros
-# =======================
-    def crearRegistro(tipo, rutaPrimaria, rutaSecundaria=None):
-        """
-        tipo: Mover,Renombrar,Eliminar,Crear
-        rutaPrimaria: Guarda la ruta original se usa en Eliminar, Crear
-        rutaSecundaria: Guarda la ruta modificada se usa en Mover, Renombrar
-        """
-        registro = Registro(tipo, rutaPrimaria, rutaSecundaria)
-        registros = ManejoArchivo.leerRegistros()
-        registros.append(registro.__dict__)
-        ManejoArchivo.guardarRegistros(registros)
-    def guardarRegistros(registros):
-        with open(Data.rutaRegistros, 'w') as f:
-            json.dump(registros, f)
-    def leerRegistros():
-        if not os.path.exists(Data.rutaRegistros):
-            return []
-        with open(Data.rutaRegistros, 'r') as f:
-            return json.load(f)
-    def limpiarRegistros():
-        os.remove(Data.rutaRegistros)
-    def existenRegistros():
-        if os.path.exists(Data.rutaRegistros):
-            return True
-        else:
-            return False
-    def tipoArchivoRegistro(ruta):
-        if (bool(os.path.splitext(ruta)[1])):
-            return True
-        else:
-            return False
-    def deserializarJSONToRegistro(array):
-        registros = []
-        for i in array:
-            registro = Registro(i['tipo'], i['rutaPrimaria'], i['rutaSecundaria'])
-            registros.append(registro)
-        return registros
-    def procesarRegistros():
-        registros = ManejoArchivo.leerRegistros()
-        registros = ManejoArchivo.deserializarJSONToRegistro(registros)
-        for registro in registros:
-            if (registro.tipo == "Eliminar"):
-                rutaDestino = registro.rutaPrimaria.replace("\\", "/")
-                if (ManejoArchivo.tipoArchivoRegistro(rutaDestino)):
-                    os.remove(rutaDestino.replace("/temporal/", "/raiz/", 1))
-                else:
-                    if (len(rutaDestino)==0):
-                        os.rmdir(rutaDestino.replace("/temporal/", "/raiz/", 1))
-                    else:
-                        shutil.rmtree(rutaDestino.replace("/temporal/", "/raiz/", 1))
-            elif (registro.tipo == "Crear"):
-                if (ManejoArchivo.tipoArchivoRegistro(registro.rutaPrimaria)):
-                    rutaDestino = registro.rutaPrimaria.replace("\\", "/")
-                    rutaDestino = rutaDestino.replace("/temporal/", "/raiz/", 1)
-                    shutil.copy(registro.rutaPrimaria, rutaDestino)
-                else:
-                    os.mkdir(registro.rutaPrimaria.replace("/temporal/", "/raiz/", 1))
-            elif (registro.tipo == "Mover"):
-                shutil.move(registro.rutaPrincipal, registro.rutaSecundaria)
-            elif (registro.tipo == "Renombrar"):
-                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
-                rutaDestino = registro.rutaSecundaria.replace("\\", "/")
-                os.rename(rutaOrigen.replace("/temporal/", "/raiz/", 1), rutaDestino.replace("/temporal/", "/raiz/", 1))
-            elif (registro.tipo == "Permisos"):
-                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
-                os.remove(rutaOrigen.replace("/temporal/", "/raiz/", 1))
-                shutil.copy(rutaOrigen,rutaOrigen.replace("/temporal/", "/raiz/", 1))
-            elif (registro.tipo == "Ejecutado"):
-                rutaOrigen = registro.rutaPrimaria.replace("\\", "/")
-                os.remove(rutaOrigen.replace("/temporal/", "/raiz/", 1))
-                shutil.copy(rutaOrigen,rutaOrigen.replace("/temporal/", "/raiz/", 1))
-        ManejoArchivo.limpiarRegistros()
+
 # =======================
 # Control de archivos
 # =======================
@@ -233,69 +172,215 @@ class ManejoArchivo:
         with open(ruta, 'r') as f:
             return json.load(f)
         
-    def leerArchivo(ruta, key):
+    def leerArchivo(ruta, key, value):
         archivos = ManejoArchivo.leerArchivos(ruta)
-        archivo = next((i for i in archivos if i['ruta'] == key), None)
+        archivo = next((i for i in archivos if i[key] == value), None)
         return Archivo(**archivo) if archivo else None
     
+    
+
+    
     def deserializarJSONToArchivos(array):
+        
         archivos = []
         for i in array:
-            archivo = Archivo(i['ruta'], i['tipoArchivo'], i['listaUsuarios'],i['listaPermisos'])
-            archivos.append(archivos)
+            archivo = Archivo(i['id'], i['ruta'], i['tipoArchivo'], i['listaUsuarios'],i['listaPermisos'])
+            archivos.append(archivo)
         return archivos
     
-    def actualizarArchivo(ruta, archivo, rutaDefault):
+    
+    def actualizar(ruta, archivo, rutaDefault):
+        """Actualiza un archivo del JSON, no renombra fisicamente
+
+        Args:
+            ruta (_type_): Ruta a modificar
+            archivo (_type_): Archivo objeto
+            rutaDefault (_type_): Ruta de los archivos JSON
+        """
         archivos = ManejoArchivo.leerArchivos(rutaDefault)
         archivos_guardar = []
         for i in archivos:
-            if(i['ruta'] == ruta):
+            if(i['id'] == archivo.id):
                 i = archivo.__dict__
-            if ruta in i['ruta']:
-                i['ruta'] = i['ruta'].replace(ruta,archivo.ruta)
-                
             archivos_guardar.append(i)
+
         ManejoArchivo.guardarArchivos(archivos_guardar,rutaDefault)
+        ManejoArchivo.actualizarHijos(ruta, archivo, rutaDefault)#Se deben actualizar las rutas de 
+        #los hijos para mantener la sincronizacion
         
-    def copiarArchivos(destino, origen):
-            for element in listdir(destino):
-                    ruta = destino+"/"+element
-                    if not(path.exists(origen+"/"+element)):
-                        if(path.isdir(ruta)):
-                            shutil.copytree(ruta, origen+"/"+element)
-                        else:
-                            shutil.copy(ruta, origen+"/"+element)
-    def copiarArchivos2(destino, origen):
+    def actualizarHijos(ruta, archivo, rutaDefault):
+        direccionesHijas = ManejoArchivo.obtenerDirecciones(ruta)
+        hijos = []
+        for direccion in direccionesHijas:
+            archivoHijo = ManejoArchivo.leerArchivo(rutaDefault, "ruta", direccion)
+            archivoHijo.ruta = archivoHijo.ruta.replace(ruta, archivo.ruta)
+            hijos.append(archivoHijo)
+        archivos = ManejoArchivo.leerArchivos(rutaDefault)
+        archivosGuardar = []
+        for i in archivos:
+            for hijo in hijos:
+                if hijo.id == i['id']:
+                    i = hijo.__dict__
+                    break
+            archivosGuardar.append(i)
+        ManejoArchivo.guardarArchivos(archivosGuardar, rutaDefault)
+            
+    def copiarContenidoCarpeta(destino, origen):
+        """Copia el contenido de la carpeta
+        """
+        for element in listdir(destino):
+            ruta = destino+"/"+element
+            if not(path.exists(origen+"/"+element)):
+                if(path.isdir(ruta)):
+                    shutil.copytree(ruta, origen+"/"+element)
+                else:
+                    shutil.copy(ruta, origen+"/"+element)
+                    
+    def copiarArchivo2(destino, origen):
+        """Copia el archivo, si existe alguno con esa ruta lo mueve a un duplicado
+        """
+        rutaAlternativa = origen
+        if(path.isdir(path.dirname(origen))):
+            if(path.exists(origen)):
+                rutaAlternativa = ManejoArchivo.duplicadoArchivo(origen)
+                shutil.copy(origen, rutaAlternativa)
+                os.remove(origen)
+            shutil.copy(destino, origen)
+        return rutaAlternativa.replace("raiz", "temporal")
+            
+    def sobreescribirArchivo(destino, origen):
+        if path.exists(origen):
+            if path.isfile(origen):
+                os.remove(origen)
+                shutil.copy(destino, origen)
+            else:
+                shutil.rmtree(origen)
+                shutil.copytree(destino, origen)
+        else:
+            if path.isfile(destino):
+                shutil.copy(destino, origen)
+            else:
+                 shutil.copytree(destino, origen)
+            
+                
+    def copiarArchivo(destino, origen):
+        """Copia la carpeta o el archivo
+        """
         if(path.exists(origen)):
             ruta = origen+"/"+path.basename(destino)
-            if(path.exists(ruta)):
-                ManejoArchivo.eliminarCarpeta2(ruta)
+            
+            if(path.isdir(ruta)):
+                ruta = ManejoArchivo.duplicadoCarpeta(ruta)
+            elif (path.isfile(ruta)):
+                ruta = ManejoArchivo.duplicadoArchivo(ruta)
             if(path.isdir(destino)):
                 shutil.copytree(destino, ruta)
             else:
                shutil.copy(destino, ruta)
-          
+            
+    def copiarCarpeta(destino, origen):
+        """Copia una carpeta desde el origen al destino completamente vacia
+        """
+        rutaAlternativa = origen
+        if(path.isdir(path.dirname(origen))):
+            if path.isdir(destino):
+                if(path.exists(origen)):
+                    rutaAlternativa = ManejoArchivo.duplicadoCarpeta(origen)#Crea un duplicado
+                    shutil.copytree(origen, rutaAlternativa)#Copia la existente al duplicado
+                    shutil.rmtree(origen)#Para dejar libre la ruta
+                shutil.copytree(destino, origen)#Se copia la que se necesita
+                ManejoArchivo.vaciarCarpeta(origen)#Se vacia la carpeta
+               # for archivo in listdir(origen):
+                #    ruta = path.join(origen, archivo)
+                 #   if(path.isdir(ruta)):
+                  #      shutil.rmtree(ruta)
+                   # else:
+                    #    os.remove(ruta)
+        return rutaAlternativa.replace("raiz", "temporal")
+    
+    def vaciarCarpeta(origen):
+        for archivo in listdir(origen):
+            ruta = path.join(origen, archivo)
+            if(path.isdir(ruta)):
+                shutil.rmtree(ruta)
+            else:
+                os.remove(ruta)
+        
+    def duplicadoCarpeta(ruta):
+        cont = 1;
+        rutaNueva = ruta
+        while(path.exists(rutaNueva)):
+            rutaNueva = ruta+"("+cont.__str__()+")"
+            cont+=1
+        return rutaNueva
+    
+    def duplicadoArchivo(ruta):
+        cont = 1;
+        array = ruta.split(".")
+        rutaNueva = array[0]
+        extension = "."+array[1]
+        while(path.exists(rutaNueva+extension)):
+            rutaNueva = array[0]+"("+cont.__str__()+")"
+            cont+=1 
+        return rutaNueva+extension
+        
     def moverArchivos(destino, origen):
         for element in listdir(destino):
             ruta = destino+"/"+element
             if not(path.exists(origen+"/"+element)):
                 shutil.move(ruta, origen+"/"+element)
-                    
+                
     def crearArchivo(archivo, ruta):
         archivos = ManejoArchivo.leerArchivos(ruta)
         archivos.append(archivo.__dict__)
         ManejoArchivo.guardarArchivos(archivos, ruta)
 
-    def eliminarArchivo(rutaArchivo, rutaDefault):
-        archivos = ManejoArchivo.leerArchivos(rutaDefault)
+    def eliminarArchivo(ruta, archivo):
+        archivos = ManejoArchivo.leerArchivos(ruta)
         iterator = []
         for i in archivos:#Borrado iterativo en el JSON
-            if not(rutaArchivo in i['ruta']):#Si no esta contenido
+            if not(archivo.id == i['id']):#Si no esta contenido
                 iterator.append(i)#Se agrega
-        ManejoArchivo.guardarArchivos(iterator, rutaDefault)#Se guarda el arreglo
+        ManejoArchivo.guardarArchivos(iterator, ruta)#Se guarda el arreglo
+        if path.isdir(archivo.ruta):
+            ManejoArchivo.eliminarHijos(ruta, archivo)
+        
+    def eliminarHijos(ruta, archivo):
+        direccionesHijos = ManejoArchivo.obtenerDirecciones(archivo.ruta)
+        archivos = ManejoArchivo.leerArchivos(ruta)
+        hijos = []
+        for direccionHija in direccionesHijos:
+            archivoHijo = ManejoArchivo.leerArchivo(ruta, "ruta", direccionHija)    
+            if archivoHijo:
+                hijos.append(archivoHijo)
+        archivosNuevos = []
+        for arch in archivos:
+            for hijo in hijos:
+                if not hijo.id == arch['id']:
+                    archivosNuevos.append(arch)
+        ManejoArchivo.guardarArchivos(archivosNuevos, ruta)
+        
+        
+    def abrirArchivo(ruta):
+        if(path.isfile(ruta)):
+            subprocess.run(["open",ruta])
+            
     #=======================
     #		Utilidades
     #=======================
+
+
+    def obtenerDirecciones(ruta):
+        paths = []
+        for root, dirs, files in os.walk(ruta):
+            for file in files:
+                file_path = os.path.join(root, file)
+                paths.append(file_path)
+            for dir in dirs:
+                dir_path = os.path.join(root, dir)
+                paths.append(dir_path)
+        return paths
+
     def obtenerRutaCarpeta(nombreCarpeta):
         return path.relpath(nombreCarpeta)
     
@@ -307,33 +392,4 @@ class ManejoArchivo:
             tipoArchivo = mime.guess_type(ruta)[0]
         return tipoArchivo
     
-    def bindQTreeWidgetItem(item, *args):
-        """Ingresa los datos dentro de una fila del QTreeWidgetItem"""
-        n = 0
-        for arg in args:
-            item.setText(n, arg)
-            n += 1
-            
-    def enlistarArchivos(arbol, ruta):
-        """
-        Args:
-            arbol (QtreeWidget): Arbol
-            ruta (String): ruta relativa
-        """
-        arbol.clear()
-        
-        ruta = path.abspath(ruta)
-        if (path.isdir(ruta)):
-            for element in listdir(ruta):
-                if(element !="archivos.JSON" and element !="registros.JSON"):
-                    nombre = element
-                    archivo = ruta+"/"+nombre
-                    tipoArchivo = ManejoArchivo.obtenerTipoArchivo(archivo)
-                    fila = [nombre, tipoArchivo, os.path.relpath(archivo)]
-                    item = QTreeWidgetItem(arbol, fila)
-                    arbol.insertTopLevelItems(0, [item])
-                    ManejoArchivo.listar_carpetas(ruta+"/"+item.text(0), item)
-    # =======================
-    # Manejo Carpetas
-    # =======================
-    #def enlistarArchivos(arbol, ruta):
+    

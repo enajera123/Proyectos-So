@@ -90,20 +90,21 @@ class Modificar(QMainWindow):
         ruta = Data.rutaModificar
         ComboBoxUtilidades.llenarComboBox(self.cbUsuarios, ManejoArchivo.deserializarJSONToUsuarios(ManejoArchivo.leerUsuarios()))
         self.txtRuta.setText(Data.rutaModificar)
-        archivo = ManejoArchivo.leerArchivo(Data.rutaArchivos, Data.rutaModificar)
+        archivo = ManejoArchivo.leerArchivo(Data.rutaArchivos, "ruta", Data.rutaModificar)
         if archivo:
             for i in range(len(archivo.listaUsuarios)):
                 ArbolUtilidades.agregarItem(self.arbolPermisos, [archivo.listaUsuarios[i], archivo.listaPermisos[i]])
 
     def guardarCambios(self):
-        archivo = ManejoArchivo.leerArchivo(Data.rutaArchivos, Data.rutaModificar)
+        archivo = ManejoArchivo.leerArchivo(Data.rutaArchivos, "ruta", Data.rutaModificar)
         if archivo:
+            id = archivo.id
             ruta = archivo.ruta
             tipoArchivo = archivo.tipoArchivo
             listaUsuarios = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 0)
             listaPermisos = ArbolUtilidades.obtenerDatosColumna(self.arbolPermisos, 1)
-            archivo = Archivo(ruta, tipoArchivo, listaUsuarios, listaPermisos)
-            ManejoArchivo.actualizarArchivo(ruta, archivo, Data.rutaArchivos)
+            archivo = Archivo(id, ruta, tipoArchivo, listaUsuarios, listaPermisos)
+            ManejoArchivo.actualizar(ruta, archivo, Data.rutaArchivos)
 
     def cambioRadioButons(self, radioButon, permiso):
         item = ArbolUtilidades.obtenerItemSeleccionado(self.arbolPermisos, -1)
