@@ -8,6 +8,7 @@ namespace Proyecto_2.Modelos
 {
     internal class GrupoServicios
     {
+        private string nombre;
         private Queue<Servicio> servicios;
         private Queue<Caja> cajas;
         public GrupoServicios()
@@ -16,13 +17,23 @@ namespace Proyecto_2.Modelos
             cajas = new Queue<Caja>();
         }
 
-        public GrupoServicios(Queue<Servicio> servicios, Queue<Caja> cajas)
+        public GrupoServicios(string nombre,Queue<Servicio> servicios, Queue<Caja> cajas)
         {
+            this.nombre = nombre;
             this.servicios = servicios;
             this.cajas = cajas;
         }
+        public string getNombre() {
+            return nombre;
+        }
         public Queue<Caja> getCajas() {
             return this.cajas;
+        }
+        public void intercambiarListToCola(List<Caja>cajasLista) {
+            cajas.Clear();
+            foreach (Caja caja in cajasLista) {
+                cajas.Enqueue(caja);
+            }
         }
         public void agregarCaja(Caja caja)
         {

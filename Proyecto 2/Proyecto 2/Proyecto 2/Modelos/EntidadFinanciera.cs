@@ -42,16 +42,61 @@ namespace Proyecto_2.Modelos
                 peticiones.Enqueue(p);
             }
         }
-        public Servicio? buscarServicio(string key) {
+        public Servicio? buscarServicio(string key)
+        {
             Servicio? servicio = null;
-            foreach (GrupoServicios grupo in  gruposServicios)
+            foreach (GrupoServicios grupo in gruposServicios)
             {
                 servicio = grupo.obtenerServicio(key);
-                if (servicio != null) {
+                if (servicio != null)
+                {
                     return servicio;
                 }
             }
             return null;
+        }
+        public Caja? obtenerCaja(int id, int opcion)
+        {
+            ///Opcion 1 remueve la caja de la lista
+            foreach (GrupoServicios grupo in gruposServicios)
+            {
+                foreach (Caja caja in grupo.getCajas())
+                {
+                    if (caja.getId() == id)
+                    {
+                        if (opcion == 1)
+                        {
+                            List<Caja> lista = grupo.getCajas().ToList();
+                            lista.Remove(caja);
+                            grupo.intercambiarListToCola(lista);
+                            return caja;
+                        }
+                        else
+                        {
+                            return caja;
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+        public void moverDeGrupo_actualizar(Caja actualizada)
+        {
+            
+            //Mueve
+            Caja? caja = obtenerCaja(actualizada.getId(), 1);
+            if (caja != null)
+            {
+                caja.setEstado(actualizada.getEstado());
+                caja.setTipoCaja(actualizada.getTipoCaja());
+                foreach (GrupoServicios grupo in gruposServicios)
+                {
+                    if (caja.getTipoCaja() == grupo.getNombre())
+                    {
+                        grupo.getCajas().Enqueue(caja);
+                    }
+                }
+            }
         }
     }
 }
