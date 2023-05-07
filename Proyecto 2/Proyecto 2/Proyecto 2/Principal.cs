@@ -14,7 +14,7 @@ namespace Proyecto_2
             alerta = new alertaInformacion();
             entidadFinanciera = new EntidadFinanciera();
             InitializeComponent();
-            
+
 
         }
         //Eventos Form
@@ -448,5 +448,24 @@ namespace Proyecto_2
 
         }
 
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDesacelerar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAcelerar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
