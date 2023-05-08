@@ -12,12 +12,12 @@
     -fx-background-color:#a4740c;   
 }
 .txt-standar{
-    -fx-font-size:20px;
+    -fx-font-size:45px;
     -fx-text-fill:#ffffff;
 }
 .btn-txt{
   -fx-text-fill:#ffffff;  
-    -fx-font-size:15px;
+    -fx-font-size:40px;
 }
 .btn-bg-cafeOscuro{   
     -fx-background-color:#94690d;
@@ -25,4 +25,8 @@
 .btn-bg-cafeOscuro:hover{
     
     -fx-background-color:#785815;
+}
+.bg-mano{
+    -fx-background-color:#ffcf6f;
+    
 }

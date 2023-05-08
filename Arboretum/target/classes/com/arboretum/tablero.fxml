@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1280.0" prefWidth="1920.0" spacing="20.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/tablero.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.TableroController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="1280.0" prefWidth="368.0" spacing="20.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
+         <children>
+            <Label text="Arboretum" textFill="WHITE">
+               <font>
+                  <Font name="Apple Chancery" size="54.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="355.0" prefWidth="368.0" stylesheets="@../../styles/tablero.css" />
+            <VBox fx:id="panelEsperando" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Label styleClass="btn-txt" text="Esperando" />
+                  <ProgressIndicator />
+               </children>
+            </VBox>
+            <GridPane fx:id="gridMazos" gridLinesVisible="true">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </GridPane>
+         </children>
+      </VBox>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+         <top>
+            <HBox fx:id="contenedorUsuarios" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label styleClass="btn-txt" text="Usuario" />
+                  <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="107.0" />
+               </children>
+               <BorderPane.margin>
+                  <Insets left="20.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+         <center>
+            <ScrollPane BorderPane.alignment="CENTER">
+               <content>
+                  <GridPane fx:id="gridTablero" alignment="CENTER" gridLinesVisible="true">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                  </GridPane>
+               </content>
+               <BorderPane.margin>
+                  <Insets right="30.0" />
+               </BorderPane.margin>
+            </ScrollPane>
+         </center>
+         <bottom>
+            <HBox BorderPane.alignment="CENTER">
+               <children>
+                  <FlowPane fx:id="contenedorMano" prefHeight="200.0" styleClass="bg-mano" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </FlowPane>
+               </children>
+               <padding>
+                  <Insets bottom="30.0" right="30.0" top="30.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</HBox>
