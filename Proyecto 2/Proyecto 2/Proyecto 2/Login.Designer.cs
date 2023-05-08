@@ -425,7 +425,7 @@ namespace Proyecto_2
             btnGrupo1.Padding = new Padding(10, 0, 0, 0);
             btnGrupo1.Size = new Size(195, 45);
             btnGrupo1.TabIndex = 3;
-            btnGrupo1.Text = "Caas";
+            btnGrupo1.Text = "Cajas";
             btnGrupo1.TextAlign = ContentAlignment.MiddleLeft;
             btnGrupo1.UseVisualStyleBackColor = false;
             btnGrupo1.Click += btnGrupo1_Click;

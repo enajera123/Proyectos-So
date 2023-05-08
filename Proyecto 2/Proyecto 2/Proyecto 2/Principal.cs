@@ -1,6 +1,7 @@
 using Proyecto_2.Modelos;
 using Proyecto_2.Utilidades;
 using System.Collections;
+using System.Windows.Forms.VisualStyles;
 
 namespace Proyecto_2
 {
@@ -13,15 +14,14 @@ namespace Proyecto_2
             alerta = new alertaInformacion();
             entidadFinanciera = new EntidadFinanciera();
             InitializeComponent();
-            ocultarSubMenus();
+
 
         }
         //Eventos Form
         private void Principal_Load(object sender, EventArgs e)
         {
 
-            inicializarCajas();
-
+            ocultarSubMenus();
         }
         private void Principal_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -204,15 +204,68 @@ namespace Proyecto_2
             var contenido = foto.Name.Split('.');//Formato "grupo.nombre"
             string grupo = contenido[0];
             string id = contenido[1];
+            Caja? caja = entidadFinanciera.obtenerCaja(Convert.ToInt32(id), 0);
+            if (caja != null)
+            {
+                Utilidades.Utilidades.setCaja(caja);
+            }
+
             Utilidades.Utilidades.setFotoAModificar(foto);
+            Utilidades.Utilidades.setNombresGrupos(btnGrupo1.Text, btnGrupo2.Text, btnGrupo3.Text);
             CajaContenido cajaContenido = new CajaContenido();
-            cajaContenido.Show();
+            if (cajaContenido.ShowDialog() == DialogResult.OK)
+            {
+                actualizarCajaVisual(Utilidades.Utilidades.getCaja());
+                actualizarCajaLogica(Utilidades.Utilidades.getCaja());
+            }
+        }
+        private void actualizarCajaLogica(Caja cajaActualizada)
+        {
+            entidadFinanciera.moverDeGrupo_actualizar(cajaActualizada);
+        }
+        private void actualizarCajaVisual(Caja cajaActualizada)
+        {
+            //Visual
+            string tipoCaja = cajaActualizada.getTipoCaja();
+            int id = cajaActualizada.getId();
+            Image image = Properties.Resources.caja;
+            Color color = Color.FromArgb(128, Color.Green);
+            List<PictureBox> fotos = new List<PictureBox>();
+            fotos = Utilidades.Utilidades.getPictureBoxOfPanel(panelContenedor1);
+            fotos.AddRange(Utilidades.Utilidades.getPictureBoxOfPanel(panelContenedor2));
+            fotos.AddRange(Utilidades.Utilidades.getPictureBoxOfPanel(panelContenedor3));
+            //Cambia el color de fondo de acuerdo al estado
+            if (cajaActualizada.getEstado() == false)
+            {
+                color = Color.FromArgb(128, Color.Red);
+            }
+            //Cambia la imagen de fondo de acuerdo al tipo
+            if (tipoCaja == btnGrupo2.Text)
+            {
+                image = Properties.Resources.plataforma;
+            }
+            else if (tipoCaja == btnGrupo3.Text)
+            {
+                image = Properties.Resources.servicioCliente;
+            }
+            //Busca la imagen a actualizar en la lista de fotos
+            foreach (PictureBox foto in fotos)
+            {
+                if (foto.Name.Contains("." + id))//Formato grupo.id
+                {
+                    foto.Image = image;
+                    foto.BackColor = color;
+                    break;
+                }
+            }
         }
         private Panel crearCaja(int tipo, int id)
         {
             Panel panel = new Panel();
             PictureBox foto = new PictureBox();
             foto.Name = tipo.ToString() + "." + id.ToString();
+            //Se debe agregar esta caja a la entidad
+            foto.BackColor = Color.FromArgb(128, Color.Green);
             foto.Click += clickImagenes;
 
             foto.SizeMode = PictureBoxSizeMode.Zoom;
@@ -298,9 +351,7 @@ namespace Proyecto_2
         public void bindServicios(Login login)
         {
             bindBotones(login);
-            llenarListas(login);
-           
-
+            inicializarCajas(login);
         }
         private void bindBotones(Login login)
         {
@@ -317,14 +368,17 @@ namespace Proyecto_2
                             button.Visible = false;
                             if (button.Name.Contains("Grupo1"))
                             {
+                                Utilidades.Utilidades.setCantCajas(1, 0);
                                 panelMenuCaja.Visible = false;
                             }
                             if (button.Name.Contains("Grupo2"))
                             {
+                                Utilidades.Utilidades.setCantCajas(2, 0);
                                 panelMenuPlataforma.Visible = false;
                             }
                             if (button.Name.Contains("Grupo3"))
                             {
+                                Utilidades.Utilidades.setCantCajas(3, 0);
                                 panelMenuServicioCliente.Visible = false;
                             }
                         }
@@ -336,37 +390,53 @@ namespace Proyecto_2
                 }
             }
         }
-        private void inicializarCajas()
+        private void inicializarCajas(Login login)
         {
             int cajas1, cajas2, cajas3;
             cajas1 = Utilidades.Utilidades.getCantCajas(1);
             cajas2 = Utilidades.Utilidades.getCantCajas(2);
             cajas3 = Utilidades.Utilidades.getCantCajas(3);
+            int id = 0;
+            Queue<Caja> listCajas1 = new Queue<Caja>();
+            Queue<Caja> listCajas2 = new Queue<Caja>();
+            Queue<Caja> listCajas3 = new Queue<Caja>();
+
             for (int i = 0; i < cajas1; i++)
             {
 
-                panelContenedor1.Controls.Add(crearCaja(1, i), 0, i);
-            }
+                panelContenedor1.Controls.Add(crearCaja(1, id + 1), 0, i);
+                listCajas1.Enqueue(new Caja(btnGrupo1.Text, id + 1));
+                id++;
+            }//Llena las cajas visual y logicamente
+
+            //Se agrega la lista a la entidad, junto con sus grupo
+            crearGrupoServicio(login, btnGrupo1.Text, listCajas1, Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuCaja));
             for (int i = 0; i < cajas2; i++)
             {
-                panelContenedor2.Controls.Add(crearCaja(2, i), 0, i);
-            }
+
+                panelContenedor2.Controls.Add(crearCaja(2, id + 1), 0, i);
+                listCajas2.Enqueue(new Caja(btnGrupo2.Text, id + 1));
+                id++;
+            }//Llena las cajas visual y logicamente
+
+            //Se agrega la lista a la entidad, junto con sus grupo
+            crearGrupoServicio(login, btnGrupo2.Text, listCajas2, Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuPlataforma));
+
             for (int i = 0; i < cajas3; i++)
             {
-                panelContenedor3.Controls.Add(crearCaja(3, i), 0, i);
-            }
-        }
-        private void llenarListas(Login login)
-        {
-            crearGrupoServicio(login, btnGrupo1.Text, Utilidades.Utilidades.getCantCajas(1), Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuCaja));
-            crearGrupoServicio(login, btnGrupo2.Text, Utilidades.Utilidades.getCantCajas(2), Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuPlataforma));
-            crearGrupoServicio(login, btnGrupo3.Text, Utilidades.Utilidades.getCantCajas(3), Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuServicioCliente));
+                panelContenedor3.Controls.Add(crearCaja(3, id + 1), 0, i);
+                listCajas3.Enqueue(new Caja(btnGrupo3.Text, id + 1));
+                id++;
+            }//Llena las cajas visual y logicamente
+
+            //Se agrega la lista a la entidad, junto con sus grupo
+
+            crearGrupoServicio(login, btnGrupo3.Text, listCajas3, Utilidades.Utilidades.getButtonsOfPanel(panelSubMenuServicioCliente));
 
         }
-        private void crearGrupoServicio(Login login, string nombreGrupo, int cantCajas, List<Button> botones)
+        private void crearGrupoServicio(Login login, string nombreGrupo, Queue<Caja> cajas, List<Button> botones)
         {
             Queue<Servicio> servicios = new Queue<Servicio> { };
-            Queue<Caja> cajas = new Queue<Caja> { };
             foreach (Button boton in botones)
             {
                 if (boton.BackColor != login.getColorDeshabilitado())
@@ -374,13 +444,28 @@ namespace Proyecto_2
                     servicios.Enqueue(new Servicio(boton.Text));
                 }
             }
-            for (int i = 0; i < cantCajas; i++)
-            {
-                cajas.Enqueue(new Caja(nombreGrupo));
-            }
-            entidadFinanciera.agregarGrupoServicio(new GrupoServicios(servicios, cajas));
+            entidadFinanciera.agregarGrupoServicio(new GrupoServicios(nombreGrupo, servicios, cajas));
 
         }
 
+        private void btnPlay_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnDesacelerar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnAcelerar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

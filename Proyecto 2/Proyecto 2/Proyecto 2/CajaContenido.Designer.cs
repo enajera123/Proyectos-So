@@ -97,6 +97,7 @@
             // 
             btnCancelar.BackColor = Color.FromArgb(48, 167, 207);
             btnCancelar.CausesValidation = false;
+            btnCancelar.DialogResult = DialogResult.Cancel;
             btnCancelar.FlatAppearance.BorderSize = 0;
             btnCancelar.FlatStyle = FlatStyle.Flat;
             btnCancelar.Location = new Point(12, 29);
@@ -109,6 +110,7 @@
             // btnAceptar
             // 
             btnAceptar.BackColor = Color.FromArgb(48, 167, 207);
+            btnAceptar.DialogResult = DialogResult.OK;
             btnAceptar.FlatAppearance.BorderSize = 0;
             btnAceptar.FlatStyle = FlatStyle.Flat;
             btnAceptar.Location = new Point(328, 27);

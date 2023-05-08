@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Proyecto_2.Modelos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +15,34 @@ namespace Proyecto_2.Utilidades
         static int cant2 = 0;
         static int cant3 = 0;
         static PictureBox fotoAModificar = new PictureBox();
-
+        static string nombreGrupo1 = "";
+        static string nombreGrupo2 = "";
+        static string nombreGrupo3 = "";
+        static Caja caja = new Caja();
+        static public void setCaja(Caja caja) { 
+            Utilidades.caja = caja;
+        }
+        static public Caja getCaja() {
+            return caja;
+        }
+        static public void setNombresGrupos(string n1, string n2, string n3) {
+            nombreGrupo1 = n1;
+            nombreGrupo2 = n2;
+            nombreGrupo3 = n3;
+        }
+        static public string getNombreGrupo(int numeroGrupo) { 
+            switch(numeroGrupo)
+            {
+                case 1:
+                    return Utilidades.nombreGrupo1;
+                case 2:
+                    return Utilidades.nombreGrupo2;
+                case 3:
+                    return Utilidades.nombreGrupo3;
+                default:
+                    return "";
+            }
+        }
         static public int getCantCajas(int numeroGrupoServicio) {
             switch (numeroGrupoServicio)
             {
@@ -52,6 +81,9 @@ namespace Proyecto_2.Utilidades
         static public List<Button> getButtonsOfPanel(Panel panel)
         {
             return getAllControls(panel).OfType<Button>().ToList();
+        }
+        static public List<PictureBox> getPictureBoxOfPanel(Panel panel) {
+            return getAllControls(panel).OfType<PictureBox>().ToList();
         }
         static public void setFotoAModificar(PictureBox foto) {
             fotoAModificar = foto;
