@@ -14,10 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1280.0" prefWidth="1920.0" spacing="20.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/tablero.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.TableroController">
    <children>
-      <VBox alignment="CENTER" prefHeight="1280.0" prefWidth="368.0" spacing="20.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
+      <VBox alignment="CENTER" prefHeight="1280.0" prefWidth="554.0" spacing="20.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
          <children>
             <Label text="Arboretum" textFill="WHITE">
                <font>
@@ -31,7 +30,7 @@
                   <ProgressIndicator />
                </children>
             </VBox>
-            <GridPane fx:id="gridMazos" gridLinesVisible="true">
+            <GridPane fx:id="gridMazos" gridLinesVisible="true" prefHeight="534.0" prefWidth="534.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -61,17 +60,7 @@
             </HBox>
          </top>
          <center>
-            <ScrollPane BorderPane.alignment="CENTER">
-               <content>
-                  <GridPane fx:id="gridTablero" alignment="CENTER" gridLinesVisible="true">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
-               </content>
+            <ScrollPane fx:id="contenedorTablero" styleClass="bg-tablero" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets right="30.0" />
                </BorderPane.margin>

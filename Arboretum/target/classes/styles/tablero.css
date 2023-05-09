@@ -9,24 +9,29 @@
     -fx-background-color:linear-gradient(#e6b850,#c48c15);
 }
 .bg-cafeOscuro{
-    -fx-background-color:#a4740c;   
+    -fx-background-color:#a4740c;
 }
 .txt-standar{
     -fx-font-size:45px;
     -fx-text-fill:#ffffff;
 }
 .btn-txt{
-  -fx-text-fill:#ffffff;  
+    -fx-text-fill:#ffffff;
     -fx-font-size:40px;
 }
-.btn-bg-cafeOscuro{   
+.btn-bg-cafeOscuro{
     -fx-background-color:#94690d;
 }
 .btn-bg-cafeOscuro:hover{
-    
+
     -fx-background-color:#785815;
 }
 .bg-mano{
     -fx-background-color:#ffcf6f;
-    
+}
+.bg-tablero{
+    -fx-background-color:#60ea8b;
+}
+.bg-tablero:hover{
+    -fx-background-color:#3fe573;
 }
