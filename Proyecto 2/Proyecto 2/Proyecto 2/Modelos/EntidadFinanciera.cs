@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,6 +24,17 @@ namespace Proyecto_2.Modelos
         public Queue<GrupoServicios> getGrupoServicios()
         {
             return this.gruposServicios;
+        }
+        public Caja asignarPeticion(Peticion peticion)
+        {
+            foreach (GrupoServicios grupo in gruposServicios)
+            {
+                if (grupo.obtenerServicio(peticion.getServicio().getNombre()) != null)
+                {
+                    return grupo.agregarPeticionACaja(peticion);
+                }
+            }
+            return null;
         }
         public void agregarGrupoServicio(GrupoServicios grupoServicio)
         {
@@ -82,7 +94,7 @@ namespace Proyecto_2.Modelos
         }
         public void moverDeGrupo_actualizar(Caja actualizada)
         {
-            
+
             //Mueve
             Caja? caja = obtenerCaja(actualizada.getId(), 1);
             if (caja != null)

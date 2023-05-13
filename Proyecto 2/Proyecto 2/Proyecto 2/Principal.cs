@@ -9,6 +9,8 @@ namespace Proyecto_2
     {
         private EntidadFinanciera entidadFinanciera;
         private alertaInformacion alerta;
+        private List<PictureBox> fotosVisual = new List<PictureBox> { };
+        private int velocidadHilo = 1000;
         public Principal()
         {
             alerta = new alertaInformacion();
@@ -261,6 +263,7 @@ namespace Proyecto_2
         }
         private Panel crearCaja(int tipo, int id)
         {
+
             Panel panel = new Panel();
             PictureBox foto = new PictureBox();
             foto.Name = tipo.ToString() + "." + id.ToString();
@@ -288,6 +291,7 @@ namespace Proyecto_2
             panel.Controls.Add(barra);
             panel.Dock = DockStyle.Fill;
             panel.Padding = new Padding(20);
+            fotosVisual.Add(foto);
             return panel;
         }
         //Funciones de menu hamburguesa
@@ -445,27 +449,127 @@ namespace Proyecto_2
                 }
             }
             entidadFinanciera.agregarGrupoServicio(new GrupoServicios(nombreGrupo, servicios, cajas));
-
         }
 
+        private void ejecutar()
+        {
+            Queue<Peticion> listaPeticiones = entidadFinanciera.getPeticiones();
+            while (entidadFinanciera.getPeticiones().Count() > 0)
+            {
+                asignarPeticion(entidadFinanciera.getPeticiones().Dequeue());
+                //ingresarDatosListView(listaPeticiones);
+            }
+        }
+        private void asignarPeticion(Peticion peticion)
+        {
+            Caja caja = entidadFinanciera.asignarPeticion(peticion);
+            if (caja != null)
+            {
+                Thread hilo = new Thread(new ParameterizedThreadStart(hilo_caja));
+                hilo.Start(caja);
+
+                ingresarDatosListView(entidadFinanciera.getPeticiones());
+            }
+        }
+        private void hilo_caja(Object objeto)
+        {
+            Caja caja = (Caja)objeto;
+            foreach (PictureBox foto in fotosVisual)
+            {
+                if (foto.Name.Contains("." + caja.getId()))
+                {
+                    Panel panel = (Panel)foto.Parent;
+                    foreach (ProgressBar barra in Utilidades.Utilidades.getProgressbarOfPanel(panel))
+                    {
+                        Peticion peticion = caja.obtenerPeticion();
+                        if (peticion != null)
+                        {
+                            int peso = peticion.getServicio().getPeso();
+                            int progreso = 0;
+                            for (int i = 0; i <= peso; i++)
+                            {
+                                progreso = (100 * i) / peso;
+                                barra.Invoke((MethodInvoker)delegate { barra.Value = progreso; });
+                                while (velocidadHilo == -1)
+                                {
+
+                                }
+                                Thread.Sleep(velocidadHilo);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void btnPlay_Click(object sender, EventArgs e)
         {
-
+            ejecutar();
+            if (velocidadHilo == -1)
+            {
+                velocidadHilo = lblVelocidad.Text == "X1" ? 1000 : lblVelocidad.Text == "X2" ? 500 : lblVelocidad.Text == "X3" ? 250 : 125;
+            }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-
+            velocidadHilo = -1;
         }
 
         private void btnDesacelerar_Click(object sender, EventArgs e)
         {
+            modificarVelocidad("desacelerar");
+        }
+        private void modificarVelocidad(String opcion)
+        {
+            switch (lblVelocidad.Text)
+            {
+                case "X1":
+                    if (opcion == "acelerar")
+                    {
 
+                        lblVelocidad.Text = "X2";
+                    }
+                    break;
+                case "X2":
+                    if (opcion == "acelerar")
+                    {
+
+                        lblVelocidad.Text = "X3";
+                    }
+                    else
+                    {
+
+                        lblVelocidad.Text = "X1";
+                    }
+                    break;
+                case "X3":
+                    if (opcion == "desacelerar")
+                    {
+
+                        lblVelocidad.Text = "X2";
+                    }
+                    else
+                    {
+                        lblVelocidad.Text = "X4";
+                    }
+                    break;
+                case "X4":
+                    if (opcion == "desacelerar")
+                    {
+                        lblVelocidad.Text = "X3";
+                    }
+                    break;
+            }
+            if (velocidadHilo != -1)
+            {
+                velocidadHilo = lblVelocidad.Text == "X1" ? 1000 : lblVelocidad.Text == "X2" ? 500 : lblVelocidad.Text == "X3" ? 250 : 125;
+
+            }
         }
 
         private void btnAcelerar_Click(object sender, EventArgs e)
         {
-
+            modificarVelocidad("acelerar");
         }
     }
 }

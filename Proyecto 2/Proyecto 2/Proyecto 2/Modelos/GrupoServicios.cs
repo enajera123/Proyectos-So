@@ -17,23 +17,40 @@ namespace Proyecto_2.Modelos
             cajas = new Queue<Caja>();
         }
 
-        public GrupoServicios(string nombre,Queue<Servicio> servicios, Queue<Caja> cajas)
+        public GrupoServicios(string nombre, Queue<Servicio> servicios, Queue<Caja> cajas)
         {
             this.nombre = nombre;
             this.servicios = servicios;
             this.cajas = cajas;
         }
-        public string getNombre() {
+        public string getNombre()
+        {
             return nombre;
         }
-        public Queue<Caja> getCajas() {
+        public Queue<Caja> getCajas()
+        {
             return this.cajas;
         }
-        public void intercambiarListToCola(List<Caja>cajasLista) {
+        public void intercambiarListToCola(List<Caja> cajasLista)
+        {
             cajas.Clear();
-            foreach (Caja caja in cajasLista) {
+            foreach (Caja caja in cajasLista)
+            {
                 cajas.Enqueue(caja);
             }
+        }
+        public Caja agregarPeticionACaja(Peticion peticion)
+        {
+            foreach (Caja caja in cajas)
+            {
+                //Si no ejecuta nada y esta activa
+                if (caja.obtenerPeticion() == null && caja.getEstado() == true)
+                {
+                    caja.agregarPeticion(peticion);
+                    return caja;
+                }
+            }
+            return null;
         }
         public void agregarCaja(Caja caja)
         {
@@ -50,18 +67,20 @@ namespace Proyecto_2.Modelos
         {
             //Agrega a la lista y reordena
             this.servicios.Enqueue(servicio);
-          //  ordenarServicios();
+            //  ordenarServicios();
         }
         public Servicio? obtenerServicio(string key)
         {
-            foreach (Servicio servicio in servicios) {
-                if (servicio.getNombre() == key) {
+            foreach (Servicio servicio in servicios)
+            {
+                if (servicio.getNombre() == key)
+                {
                     return servicio;
                 }
             }
             return null;
         }
-        
+
 
     }
 }

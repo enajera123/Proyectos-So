@@ -85,6 +85,10 @@ namespace Proyecto_2.Utilidades
         static public List<PictureBox> getPictureBoxOfPanel(Panel panel) {
             return getAllControls(panel).OfType<PictureBox>().ToList();
         }
+        static public List<ProgressBar> getProgressbarOfPanel(Panel panel)
+        {
+            return getAllControls(panel).OfType<ProgressBar>().ToList();
+        }
         static public void setFotoAModificar(PictureBox foto) {
             fotoAModificar = foto;
         }
