@@ -59,6 +59,12 @@ namespace Proyecto_2
             hamburguerPic = new PictureBox();
             tituloPic = new PictureBox();
             panelNavegador = new Panel();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnPlay = new PictureBox();
+            btnStop = new PictureBox();
+            btnAcelerar = new PictureBox();
+            btnDesacelerar = new PictureBox();
+            lblVelocidad = new Label();
             panelPrincipal = new Panel();
             panelResponsive = new TableLayoutPanel();
             panelContenedor2 = new TableLayoutPanel();
@@ -69,12 +75,6 @@ namespace Proyecto_2
             columPeso = new ColumnHeader();
             columnCliente = new ColumnHeader();
             panelContenedor3 = new TableLayoutPanel();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            btnPlay = new PictureBox();
-            btnStop = new PictureBox();
-            btnDesacelerar = new PictureBox();
-            btnAcelerar = new PictureBox();
-            lblVelocidad = new Label();
             panelMenu.SuspendLayout();
             panelSubMenuServicioCliente.SuspendLayout();
             panelMenuServicioCliente.SuspendLayout();
@@ -89,13 +89,13 @@ namespace Proyecto_2
             ((System.ComponentModel.ISupportInitialize)hamburguerPic).BeginInit();
             ((System.ComponentModel.ISupportInitialize)tituloPic).BeginInit();
             panelNavegador.SuspendLayout();
-            panelPrincipal.SuspendLayout();
-            panelResponsive.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnPlay).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnStop).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)btnDesacelerar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)btnAcelerar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)btnDesacelerar).BeginInit();
+            panelPrincipal.SuspendLayout();
+            panelResponsive.SuspendLayout();
             SuspendLayout();
             // 
             // panelMenu
@@ -492,6 +492,97 @@ namespace Proyecto_2
             panelNavegador.Size = new Size(745, 61);
             panelNavegador.TabIndex = 1;
             // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 5;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            tableLayoutPanel1.Controls.Add(btnPlay, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnStop, 1, 0);
+            tableLayoutPanel1.Controls.Add(btnAcelerar, 4, 0);
+            tableLayoutPanel1.Controls.Add(btnDesacelerar, 2, 0);
+            tableLayoutPanel1.Controls.Add(lblVelocidad, 3, 0);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(745, 61);
+            tableLayoutPanel1.TabIndex = 0;
+            // 
+            // btnPlay
+            // 
+            btnPlay.Cursor = Cursors.Hand;
+            btnPlay.Dock = DockStyle.Fill;
+            btnPlay.Image = Properties.Resources.play;
+            btnPlay.Location = new Point(3, 10);
+            btnPlay.Margin = new Padding(3, 10, 3, 10);
+            btnPlay.Name = "btnPlay";
+            btnPlay.Size = new Size(143, 41);
+            btnPlay.SizeMode = PictureBoxSizeMode.Zoom;
+            btnPlay.TabIndex = 0;
+            btnPlay.TabStop = false;
+            btnPlay.Click += btnPlay_Click;
+            // 
+            // btnStop
+            // 
+            btnStop.Cursor = Cursors.Hand;
+            btnStop.Dock = DockStyle.Fill;
+            btnStop.Image = Properties.Resources.pausa;
+            btnStop.Location = new Point(152, 10);
+            btnStop.Margin = new Padding(3, 10, 3, 10);
+            btnStop.Name = "btnStop";
+            btnStop.Size = new Size(143, 41);
+            btnStop.SizeMode = PictureBoxSizeMode.Zoom;
+            btnStop.TabIndex = 1;
+            btnStop.TabStop = false;
+            btnStop.Click += btnStop_Click;
+            // 
+            // btnAcelerar
+            // 
+            btnAcelerar.Cursor = Cursors.Hand;
+            btnAcelerar.Dock = DockStyle.Fill;
+            btnAcelerar.Image = Properties.Resources.adelante;
+            btnAcelerar.Location = new Point(599, 10);
+            btnAcelerar.Margin = new Padding(3, 10, 3, 10);
+            btnAcelerar.Name = "btnAcelerar";
+            btnAcelerar.Size = new Size(143, 41);
+            btnAcelerar.SizeMode = PictureBoxSizeMode.Zoom;
+            btnAcelerar.TabIndex = 3;
+            btnAcelerar.TabStop = false;
+            btnAcelerar.Click += btnAcelerar_Click;
+            // 
+            // btnDesacelerar
+            // 
+            btnDesacelerar.Cursor = Cursors.Hand;
+            btnDesacelerar.Dock = DockStyle.Fill;
+            btnDesacelerar.Image = Properties.Resources.hacia_atras;
+            btnDesacelerar.Location = new Point(301, 10);
+            btnDesacelerar.Margin = new Padding(3, 10, 3, 10);
+            btnDesacelerar.Name = "btnDesacelerar";
+            btnDesacelerar.Size = new Size(143, 41);
+            btnDesacelerar.SizeMode = PictureBoxSizeMode.Zoom;
+            btnDesacelerar.TabIndex = 2;
+            btnDesacelerar.TabStop = false;
+            btnDesacelerar.Click += btnDesacelerar_Click;
+            // 
+            // lblVelocidad
+            // 
+            lblVelocidad.AutoSize = true;
+            lblVelocidad.Dock = DockStyle.Fill;
+            lblVelocidad.Font = new Font("Segoe UI", 25F, FontStyle.Bold, GraphicsUnit.Point);
+            lblVelocidad.Location = new Point(450, 10);
+            lblVelocidad.Margin = new Padding(3, 10, 3, 10);
+            lblVelocidad.Name = "lblVelocidad";
+            lblVelocidad.Size = new Size(143, 41);
+            lblVelocidad.TabIndex = 4;
+            lblVelocidad.Text = "X1";
+            lblVelocidad.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // panelPrincipal
             // 
             panelPrincipal.BackColor = Color.FromArgb(233, 200, 123);
@@ -596,93 +687,6 @@ namespace Proyecto_2
             panelContenedor3.Size = new Size(160, 514);
             panelContenedor3.TabIndex = 1;
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.ColumnCount = 5;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tableLayoutPanel1.Controls.Add(btnPlay, 0, 0);
-            tableLayoutPanel1.Controls.Add(btnStop, 1, 0);
-            tableLayoutPanel1.Controls.Add(btnAcelerar, 4, 0);
-            tableLayoutPanel1.Controls.Add(btnDesacelerar, 2, 0);
-            tableLayoutPanel1.Controls.Add(lblVelocidad, 3, 0);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 1;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(745, 61);
-            tableLayoutPanel1.TabIndex = 0;
-            // 
-            // btnPlay
-            // 
-            btnPlay.Dock = DockStyle.Fill;
-            btnPlay.Image = Properties.Resources.play;
-            btnPlay.Location = new Point(3, 10);
-            btnPlay.Margin = new Padding(3, 10, 3, 10);
-            btnPlay.Name = "btnPlay";
-            btnPlay.Size = new Size(143, 41);
-            btnPlay.SizeMode = PictureBoxSizeMode.Zoom;
-            btnPlay.TabIndex = 0;
-            btnPlay.TabStop = false;
-            btnPlay.Click += btnPlay_Click;
-            // 
-            // btnStop
-            // 
-            btnStop.Dock = DockStyle.Fill;
-            btnStop.Image = Properties.Resources.pausa;
-            btnStop.Location = new Point(152, 10);
-            btnStop.Margin = new Padding(3, 10, 3, 10);
-            btnStop.Name = "btnStop";
-            btnStop.Size = new Size(143, 41);
-            btnStop.SizeMode = PictureBoxSizeMode.Zoom;
-            btnStop.TabIndex = 1;
-            btnStop.TabStop = false;
-            btnStop.Click += btnStop_Click;
-            // 
-            // btnDesacelerar
-            // 
-            btnDesacelerar.Dock = DockStyle.Fill;
-            btnDesacelerar.Image = Properties.Resources.hacia_atras;
-            btnDesacelerar.Location = new Point(301, 10);
-            btnDesacelerar.Margin = new Padding(3, 10, 3, 10);
-            btnDesacelerar.Name = "btnDesacelerar";
-            btnDesacelerar.Size = new Size(143, 41);
-            btnDesacelerar.SizeMode = PictureBoxSizeMode.Zoom;
-            btnDesacelerar.TabIndex = 2;
-            btnDesacelerar.TabStop = false;
-            btnDesacelerar.Click += btnDesacelerar_Click;
-            // 
-            // btnAcelerar
-            // 
-            btnAcelerar.Dock = DockStyle.Fill;
-            btnAcelerar.Image = Properties.Resources.adelante;
-            btnAcelerar.Location = new Point(599, 10);
-            btnAcelerar.Margin = new Padding(3, 10, 3, 10);
-            btnAcelerar.Name = "btnAcelerar";
-            btnAcelerar.Size = new Size(143, 41);
-            btnAcelerar.SizeMode = PictureBoxSizeMode.Zoom;
-            btnAcelerar.TabIndex = 3;
-            btnAcelerar.TabStop = false;
-            btnAcelerar.Click += btnAcelerar_Click;
-            // 
-            // lblVelocidad
-            // 
-            lblVelocidad.AutoSize = true;
-            lblVelocidad.Dock = DockStyle.Fill;
-            lblVelocidad.Font = new Font("Segoe UI", 25F, FontStyle.Bold, GraphicsUnit.Point);
-            lblVelocidad.Location = new Point(450, 10);
-            lblVelocidad.Margin = new Padding(3, 10, 3, 10);
-            lblVelocidad.Name = "lblVelocidad";
-            lblVelocidad.Size = new Size(143, 41);
-            lblVelocidad.TabIndex = 4;
-            lblVelocidad.Text = "X2";
-            lblVelocidad.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // Principal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -709,14 +713,14 @@ namespace Proyecto_2
             ((System.ComponentModel.ISupportInitialize)hamburguerPic).EndInit();
             ((System.ComponentModel.ISupportInitialize)tituloPic).EndInit();
             panelNavegador.ResumeLayout(false);
-            panelPrincipal.ResumeLayout(false);
-            panelResponsive.ResumeLayout(false);
             tableLayoutPanel1.ResumeLayout(false);
             tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnPlay).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnStop).EndInit();
-            ((System.ComponentModel.ISupportInitialize)btnDesacelerar).EndInit();
             ((System.ComponentModel.ISupportInitialize)btnAcelerar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)btnDesacelerar).EndInit();
+            panelPrincipal.ResumeLayout(false);
+            panelResponsive.ResumeLayout(false);
             ResumeLayout(false);
         }
 

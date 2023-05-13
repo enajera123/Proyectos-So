@@ -9,47 +9,61 @@ namespace Proyecto_2.Modelos
 {
     internal class Caja
     {
-        private Queue<Peticion> peticiones;
+        private Peticion peticionActual;
         private int id;
         private string tipoCaja;
         private bool estado;
 
         public Caja(string tipoCaja)
         {
-           int id = 0;
-           this.tipoCaja = tipoCaja;
+            int id = 0;
+            this.tipoCaja = tipoCaja;
             this.estado = true;
+            peticionActual = null;
         }
-        public Caja(string tipoCaja, int id) {
+        public Caja(string tipoCaja, int id)
+        {
             this.id = id;
             this.tipoCaja = tipoCaja;
             this.estado = true;
+            peticionActual = null;
+
         }
         public Caja()
         {
+            peticionActual = null;
         }
-        public bool getEstado() {
+        public bool getEstado()
+        {
             return estado;
         }
-        public void setEstado(bool estado) {
+        public void setEstado(bool estado)
+        {
             this.estado = estado;
         }
         public int getId()
         {
-            return id;  
+            return id;
         }
-        public string getTipoCaja() {
+        public string getTipoCaja()
+        {
             return this.tipoCaja;
         }
         public void setTipoCaja(string tipoCaja)
         {
             this.tipoCaja = tipoCaja;
         }
-        public void agregarPeticion(Peticion peticion) {
-            peticiones.Enqueue(peticion);
+        public Peticion obtenerPeticiones()
+        {
+            return peticionActual;
         }
-        public Peticion obtenerPeticion() {
-            return peticiones.Dequeue();
+        public void agregarPeticion(Peticion peticion)
+        {
+            peticionActual = peticion;
+        }
+        public Peticion obtenerPeticion()
+        {
+            return this.peticionActual;
         }
     }
 }
