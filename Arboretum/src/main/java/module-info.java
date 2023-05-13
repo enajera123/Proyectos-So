@@ -4,7 +4,8 @@ module com.arboretum {
     requires javafx.fxml;
     requires java.base;
     requires AnimateFX;
+    requires com.fasterxml.jackson.databind;
     opens com.arboretum to javafx.fxml;
-    
+    exports model;
     exports com.arboretum;
 }

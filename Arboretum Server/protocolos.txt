@@ -1,0 +1,2 @@
+Para conectar se usa el siguiente formato:
+"conectar+<NombreUsuario>"

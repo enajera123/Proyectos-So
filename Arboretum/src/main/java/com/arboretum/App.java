@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("tablero"));
+        scene = new Scene(loadFXML("menu"));
         scene.getRoot().setStyle("-fx-font-family: 'Apple Chancery';");
         stage.setScene(scene);
         stage.show();
