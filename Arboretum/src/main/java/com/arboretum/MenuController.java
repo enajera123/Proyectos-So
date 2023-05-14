@@ -13,14 +13,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import animatefx.animation.BounceIn;
-import java.io.IOException;
-import java.net.Socket;
 
 import java.util.Random;
+import javafx.application.Platform;
+import model.Partida;
+
 import utilidades.Servidor;
 
-//import javafx.scene.media.MediaPlayer;
-//import javafx.scene.media.Media;
 /**
  * FXML Controller class
  *
@@ -47,7 +46,7 @@ public class MenuController implements Initializable {
     @FXML
     private Label lblCantidadJugadores;
     @FXML
-    private ListView<?> listViewJugadores;
+    private ListView<String> listViewJugadores;
     @FXML
     private VBox panelUnirsePartida;
     @FXML
@@ -69,12 +68,29 @@ public class MenuController implements Initializable {
 
     private Servidor servidor;
 
+    private Partida partida;
+
+    private Thread hiloEsperarJugadores;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        servidor = new Servidor();
+        servidor = null;
+        hiloEsperarJugadores = new Thread(() -> {
+            while (partida.getJugadores().size() < 4) {
+                partida = servidor.getPartida();
+                Platform.runLater(() -> {
+                    lblCantidadJugadores.setText(partida.getJugadores().size() + "/4");
+                    listViewJugadores.getItems().clear();
+                    partida.getJugadores().forEach((t) -> {
+                        listViewJugadores.getItems().add(t);
+                    });
+                });
+
+            }
+        });
     }
 
     @FXML
@@ -82,8 +98,6 @@ public class MenuController implements Initializable {
 
         panelCrearPartida.toFront();
         new BounceIn(panelCrearPartida).play();
-//        Media media = new Media(getClass().getResource("leaf.mp3").toString());
-//        MediaPlayer mediaplayer = new MediaPlayer(media);
 
     }
 
@@ -105,11 +119,18 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnEmpezarPartida(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btnUnirse(ActionEvent event) {
+        if (servidor != null) {
+            partida = servidor.unirsePartida(txfNombreUsuario.getText(), txfUnirseNombrePartida.getText(), txfUnirseClavePartida.getText());
+            if (partida != null) {
+                panelEsperarJugadores.toFront();
+                hiloEsperarJugadores.start();
+            }
+        }
         panelEsperarJugadores.toFront();
         new BounceIn(panelEsperarJugadores).play();
     }
@@ -121,15 +142,24 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnCrear_CrearPartida(ActionEvent event) {
-        panelEsperarJugadores.toFront();
+
+        if (servidor != null) {
+            if (servidor.crearPartida(txfCrearNombrePartida.getText(), txfCrearClavePartida.getText())) {
+                partida = servidor.unirsePartida(txfNombreUsuario.getText(), txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
+                panelEsperarJugadores.toFront();
+                hiloEsperarJugadores.start();
+            }
+
+        }
+    }
+
+    @FXML
+    private void btnConectarServidor(ActionEvent event) {
         if (verificaCofiguraciones()) {
             try {
-                servidor = new Servidor(new Socket(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText())));
-                //servidor.setSocket(new Socket(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText())));
+                servidor = new Servidor(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText()));
                 servidor.conectar(txfNombreUsuario.getText());
-                servidor.crearPartida(txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            } catch (Exception e) {
             }
         }
     }

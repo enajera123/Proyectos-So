@@ -139,39 +139,6 @@
                      </styleClass>
                   </Button>
                </children></VBox>
-            <VBox fx:id="panelConfiguraciones" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="bg-cafeGradient">
-               <StackPane.margin>
-                  <Insets left="5.0" />
-               </StackPane.margin>
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Nombre de Usuario" />
-                        <TextField fx:id="txfNombreUsuario" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Dirección IP del servidor" />
-                        <TextField fx:id="txfDireccionIp" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Puerto del servidor" />
-                        <TextField fx:id="txfPuerto" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-               </children></VBox>
             <VBox fx:id="panelUnirsePartida" spacing="30.0" styleClass="bg-cafeGradient">
                <children>
                   <VBox spacing="10.0">
@@ -220,6 +187,48 @@
                <StackPane.margin>
                   <Insets left="5.0" />
                </StackPane.margin></VBox>
+            <VBox fx:id="panelConfiguraciones" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="bg-cafeGradient">
+               <StackPane.margin>
+                  <Insets left="5.0" />
+               </StackPane.margin>
+               <children>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Label styleClass="txt-standar" text="Nombre de Usuario" />
+                        <TextField fx:id="txfNombreUsuario" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Label styleClass="txt-standar" text="Dirección IP del servidor" />
+                        <TextField fx:id="txfDireccionIp" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Label styleClass="txt-standar" text="Puerto del servidor" />
+                        <TextField fx:id="txfPuerto" />
+                     </children>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#btnConectarServidor" text="Conectar">
+                     <styleClass>
+                        <String fx:value="btn-txt" />
+                        <String fx:value="btn-bg-cafeOscuro" />
+                     </styleClass>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children></VBox>
          </children>
       </StackPane>
    </children>
