@@ -20,7 +20,6 @@ public class Servidor {
     private OutputStream outputStream;
     private DataOutputStream dataOutputStream;
     private final static ObjectMapper JSON = new ObjectMapper();
-    private final static String CONECTAR = "conectar";
 
     public Servidor() {
     }
@@ -53,32 +52,18 @@ public class Servidor {
         }
     }
 
-    public void conectar(String nombre) {
+    public boolean conectar(String nombre) {
         try {
             iniciar();
             //Intento conectar
-            dataOutputStream.writeUTF(CONECTAR + "+" + nombre);
-            Alerta.alerta(leerDatosSinJSON(), "Informacion", Alert.AlertType.INFORMATION);
+            dataOutputStream.writeUTF("conectar" + "+" + nombre);
+            Alerta.alerta(leerDatos(), "Informacion", Alert.AlertType.INFORMATION);
+            return true;
         } catch (IOException ex) {
+
             ex.printStackTrace();
+            return false;
         }
-    }
-
-    public String leerDatosSinJSON() {
-        try {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            bytesRead = socket.getInputStream().read(buffer);//Lee los bytes
-            if (bytesRead != -1) {
-                String message = new String(buffer, 0, bytesRead);//Lo pasa a texto
-                return message;
-            }
-            return "No hay respuesta";
-        } catch (IOException ex) {
-            System.err.println(ex);
-            return ex.toString();
-        }
-
     }
 
     public String leerDatos() {
@@ -88,8 +73,10 @@ public class Servidor {
             bytesRead = socket.getInputStream().read(buffer);//Lee los bytes
             if (bytesRead != -1) {
                 String message = new String(buffer, 0, bytesRead);//Lo pasa a texto
+                System.out.println(message);
                 return message;
             }
+            System.out.println("No hay respuesta");
             return "No hay respuesta";
         } catch (IOException ex) {
             System.err.println(ex);
@@ -104,14 +91,31 @@ public class Servidor {
             //Envia datos
             dataOutputStream.writeUTF("crear+" + nombre + "+" + clave);
             //Leo la respuesta
-            if (leerDatos() == "Hay una partida existente") {
+            String datos = leerDatos();
+            if (datos.equals("\"Hay una partida existente\"")) {
+                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
+                return false;
+            } else {
+                Alerta.alerta("Partida creada correctamente", "Informacion", Alert.AlertType.INFORMATION);
+                return true;
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean salirPartida(String nombre) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("salir+" + nombre);
+            String datos = leerDatos();
+            if(datos.equals("\"Exito\"")) {
+                return true;
+            } else {
                 return false;
             }
-            Alerta.alerta("Partida creada correctamente", "Informacion", Alert.AlertType.INFORMATION);
-            return true;
-        } catch (IOException ex) {
-
-            ex.printStackTrace();
+        } catch (Exception e) {
             return false;
         }
     }
@@ -119,8 +123,12 @@ public class Servidor {
     public Partida getPartida() {
         try {
             iniciar();
-            dataOutputStream.writeUTF("getPartida+");
+            dataOutputStream.writeUTF("getPartida");
             String datos = leerDatos();
+            
+            if(datos.equals("\"error\"")){
+                return null;
+            }
             return JSON.readValue(datos, Partida.class);
         } catch (IOException ex) {
             return null;
@@ -132,12 +140,12 @@ public class Servidor {
             iniciar();
             dataOutputStream.writeUTF("unirse+" + nombre + "+" + nombrePartida + "+" + clave);
             String datos = leerDatos();
-            if (datos == "No se encontro partida") {
+            if (datos.equals("\"No se encontro partida\"")) {
+                Alerta.alerta(datos, "Oh Oh", Alert.AlertType.ERROR);
                 return null;
             } else {
                 return JSON.readValue(datos, Partida.class);
             }
-            //Alerta.alerta(leerDatos(), "Informacion", Alert.AlertType.INFORMATION);
         } catch (IOException ex) {
             return null;
         }

@@ -13,7 +13,8 @@ public class Alerta {
         alerta.setContentText(mensaje);
         alerta.setTitle(titulo);
         alerta.setHeaderText(null);
-        alerta.getDialogPane().setStyle("-fx-font-family: 'Apple Chancery';");
+        alerta.getDialogPane().setStyle("-fx-font-family: 'Apple Chancery';"
+                + "-fx-background-color: linear-gradient(#e6b850,#c48c15);");
         alerta.show();
     }
 }

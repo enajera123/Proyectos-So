@@ -37,8 +37,6 @@ class Servidor:
             conexion.sendall(json.dumps("Conectado Correctamente").encode("utf-8"))
         else:
             conexion.sendall(json.dumps("Ya existe conexion").encode("utf-8"))
-    def getPartida(self):
-        return self.juegoControlador.partida.__dict__
             
     def procesarConsulta(self, message, conn):
         array = message.split("+")
@@ -51,20 +49,42 @@ class Servidor:
             conn.sendall(json.dumps(self.unirsePartida(array[1], array[2], array[3])).encode("utf-8"))
         elif "getPartida" in array[0]:
             conn.sendall(json.dumps(self.getPartida()).encode("utf-8"))
+        elif "salir" in array[0]:
+            conn.sendall(json.dumps(self.salirPartida(array[1])).encode("utf-8"))
         else:
             conn.sendall("Code: 101".encode())
-
+            
+ #=======================
+ #	Funciones Partida
+ #=======================
+    def getPartida(self):
+        if self.juegoControlador.partida !=None:
+            return self.juegoControlador.partida.__dict__
+        return "error"
+    
     def crearPartida(self, nombre, clave):
         partida = self.juegoControlador.partida
-        if  partida == "":
+        if partida == None:
             partida = Partida(nombre, clave)
             self.juegoControlador.partida = partida
             return partida.__dict__
         return "Hay una partida existente"
-        
+    
+    def salirPartida(self,nombre):
+        partida = self.juegoControlador.partida
+        if partida != None:
+            for i in partida.jugadores:
+                if i == nombre:
+                    partida.jugadores.remove(i)
+                    if len(partida.jugadores)==0:
+                        self.juegoControlador.partida = None
+                    return "Exito"
+            return "No se encontro jugador"
+        return "No se encontro partida"
+    
     def unirsePartida(self, nombre, nombrePartida, clave):
         partida = self.juegoControlador.partida
-        if  partida != "" and partida.nombre == nombrePartida and partida.clave == clave:
+        if  partida != None and partida.nombre == nombrePartida and partida.clave == clave:
             for i in self.listaConectados:
                 if i.nombre == nombre:
                     self.juegoControlador.partida.jugadores.append(i.nombre)

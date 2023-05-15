@@ -2,3 +2,4 @@ Para conectar se usa el siguiente formato:
 "conectar+<NombreUsuario>"
 "crear+<nombre>+<clave>"
 "unirse+<nombre>+<nombrePartida>+<clave>"
+"salir+<nombre>"

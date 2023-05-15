@@ -14,222 +14,237 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="panelMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
+
+<StackPane fx:id="contenedor" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
    <children>
-      <VBox fx:id="panelIzquierdo" alignment="CENTER" prefHeight="400.0" prefWidth="0.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
+      <VBox fx:id="panelEsperarJugadores" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" styleClass="bg-cafeGradient">
+         <StackPane.margin>
+            <Insets left="5.0" />
+         </StackPane.margin>
          <children>
-            <Label fx:id="lblTitulo" text="Arboretum" textFill="WHITE" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font name="Apple Chancery" size="30.0" />
-               </font></Label>
-            <Separator prefHeight="98.0" prefWidth="200.0" />
-            <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="SOMETIMES">
+            <HBox>
                <children>
-                  <Button mnemonicParsing="false" onAction="#btnCrearPartida" text="Crear Partida">
+                  <Button mnemonicParsing="false" onAction="#btnCancelarPartida" text="&lt;-">
                      <styleClass>
-                        <String fx:value="btn-bg-cafeOscuro" />
                         <String fx:value="btn-txt" />
-                     </styleClass></Button>
-                  <Button mnemonicParsing="false" onAction="#btnUnirsePartida" text="Unirse a Partida">
-                     <styleClass>
                         <String fx:value="btn-bg-cafeOscuro" />
-                        <String fx:value="btn-txt" />
-                     </styleClass></Button>
-                  <Button mnemonicParsing="false" onAction="#btnConfiguraciones" text="Ajustes">
-                     <styleClass>
-                        <String fx:value="btn-bg-cafeOscuro" />
-                        <String fx:value="btn-txt" />
-                     </styleClass></Button>
+                     </styleClass>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <VBox spacing="20.0">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <children>
+                  <Label fx:id="lblEsperarNombrePartida" styleClass="txt-standar" text="Nombre de Partida: " />
+                  <Label fx:id="lblEsperarClavePartida" styleClass="txt-standar" text="Clave: " />
                </children>
             </VBox>
+            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" spacing="150.0">
+                     <children>
+                        <Label styleClass="txt-standar" text="Lista de Jugadores" />
+                        <Label fx:id="lblCantidadJugadores" styleClass="btn-txt" text="0/4" />
+                     </children>
+                  </HBox>
+                  <ListView fx:id="listViewJugadores" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#btnEmpezarPartida" text="Empezar Partida">
+               <styleClass>
+                  <String fx:value="btn-bg-cafeOscuro" />
+                  <String fx:value="btn-txt" />
+               </styleClass>
+            </Button>
          </children>
       </VBox>
-      <StackPane fx:id="panelDerecho" HBox.hgrow="SOMETIMES">
+      <HBox fx:id="panelMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css">
          <children>
-            <VBox fx:id="panelCrearPartida" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0" styleClass="bg-cafeGradient">
+            <VBox fx:id="panelIzquierdo" alignment="CENTER" prefHeight="400.0" prefWidth="0.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
                <children>
-                  <VBox spacing="10.0">
+                  <Label fx:id="lblTitulo" text="Arboretum" textFill="WHITE" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Apple Chancery" size="30.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="98.0" prefWidth="200.0" />
+                  <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="SOMETIMES">
                      <children>
-                        <Label styleClass="txt-standar" text="Nombre de Partida" textFill="WHITE" />
-                        <TextField fx:id="txfCrearNombrePartida" />
+                        <Button mnemonicParsing="false" onAction="#btnCrearPartida" text="Crear Partida">
+                           <styleClass>
+                              <String fx:value="btn-bg-cafeOscuro" />
+                              <String fx:value="btn-txt" />
+                           </styleClass>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#btnUnirsePartida" text="Unirse a Partida">
+                           <styleClass>
+                              <String fx:value="btn-bg-cafeOscuro" />
+                              <String fx:value="btn-txt" />
+                           </styleClass>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#btnConfiguraciones" text="Ajustes">
+                           <styleClass>
+                              <String fx:value="btn-bg-cafeOscuro" />
+                              <String fx:value="btn-txt" />
+                           </styleClass>
+                        </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
                   </VBox>
-                  <VBox spacing="10.0">
+               </children>
+            </VBox>
+            <StackPane fx:id="panelDerecho" HBox.hgrow="SOMETIMES">
+               <children>
+                  <VBox fx:id="panelCrearPartida" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="40.0" styleClass="bg-cafeGradient">
                      <children>
-                        <Label styleClass="txt-standar" text="Clave de Partida" />
-                        <HBox spacing="20.0">
+                        <VBox spacing="10.0">
                            <children>
-                              <TextField fx:id="txfCrearClavePartida" />
-                              <Button mnemonicParsing="false" onAction="#btnGenerarClave" text="Generar Clave">
+                              <Label styleClass="txt-standar" text="Nombre de Partida" textFill="WHITE" />
+                              <TextField fx:id="txfCrearNombrePartida" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label styleClass="txt-standar" text="Clave de Partida" />
+                              <HBox spacing="20.0">
+                                 <children>
+                                    <TextField fx:id="txfCrearClavePartida" />
+                                    <Button mnemonicParsing="false" onAction="#btnGenerarClave" text="Generar Clave">
+                                       <styleClass>
+                                          <String fx:value="btn-bg-cafeOscuro" />
+                                          <String fx:value="btn-txt" />
+                                       </styleClass>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <HBox>
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#btnCrear_CrearPartida" text="Crear Partida">
                                  <styleClass>
                                     <String fx:value="btn-bg-cafeOscuro" />
                                     <String fx:value="btn-txt" />
-                                 </styleClass></Button>
+                                 </styleClass>
+                              </Button>
                            </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
                         </HBox>
                      </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
+                     <StackPane.margin>
+                        <Insets left="5.0" />
+                     </StackPane.margin>
                   </VBox>
-                  <HBox>
+                  <VBox fx:id="panelUnirsePartida" spacing="30.0" styleClass="bg-cafeGradient">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#btnCrear_CrearPartida" text="Crear Partida">
-                           <styleClass>
-                              <String fx:value="btn-bg-cafeOscuro" />
-                              <String fx:value="btn-txt" />
-                           </styleClass></Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </HBox>
-               </children>
-               <StackPane.margin>
-                  <Insets left="5.0" />
-               </StackPane.margin></VBox>
-            <VBox fx:id="panelEsperarJugadores" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" styleClass="bg-cafeGradient">
-               <StackPane.margin>
-                  <Insets left="5.0" />
-               </StackPane.margin>
-               <children>
-                  <HBox>
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#btnCancelarPartida" text="&lt;-">
-                           <styleClass>
-                              <String fx:value="btn-txt" />
-                              <String fx:value="btn-bg-cafeOscuro" />
-                           </styleClass>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <VBox spacing="20.0">
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                     <children>
-                        <Label fx:id="lblEsperarNombrePartida" styleClass="txt-standar" text="Nombre de Partida: " />
-                        <Label fx:id="lblEsperarClavePartida" styleClass="txt-standar" text="Clave: " />
-                     </children>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="150.0">
+                        <VBox spacing="10.0">
                            <children>
-                              <Label styleClass="txt-standar" text="Lista de Jugadores" />
-                              <Label fx:id="lblCantidadJugadores" styleClass="btn-txt" text="0/4" />
+                              <Label styleClass="txt-standar" text="Nombre de Partida" />
+                              <TextField fx:id="txfUnirseNombrePartida" />
                            </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox spacing="10.0">
+                           <children>
+                              <Label styleClass="txt-standar" text="Clave" />
+                              <TextField fx:id="txfUnirseClavePartida" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <BorderPane prefHeight="200.0" prefWidth="200.0">
+                           <center>
+                              <ProgressIndicator BorderPane.alignment="CENTER" />
+                           </center>
+                           <bottom>
+                              <Label styleClass="txt-standar" text="Esperando..." BorderPane.alignment="CENTER" />
+                           </bottom>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </BorderPane>
+                        <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#btnUnirse" text="Unirse">
+                                 <styleClass>
+                                    <String fx:value="btn-txt" />
+                                    <String fx:value="btn-bg-cafeOscuro" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" />
+                           </VBox.margin>
                         </HBox>
-                        <ListView fx:id="listViewJugadores" prefHeight="200.0" prefWidth="200.0" />
                      </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
+                     <StackPane.margin>
+                        <Insets left="5.0" />
+                     </StackPane.margin>
                   </VBox>
-                  <Button mnemonicParsing="false" onAction="#btnEmpezarPartida" text="Empezar Partida">
-                     <styleClass>
-                        <String fx:value="btn-bg-cafeOscuro" />
-                        <String fx:value="btn-txt" />
-                     </styleClass>
-                  </Button>
-               </children></VBox>
-            <VBox fx:id="panelUnirsePartida" spacing="30.0" styleClass="bg-cafeGradient">
-               <children>
-                  <VBox spacing="10.0">
+                  <VBox fx:id="panelConfiguraciones" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="bg-cafeGradient">
+                     <StackPane.margin>
+                        <Insets left="5.0" />
+                     </StackPane.margin>
                      <children>
-                        <Label styleClass="txt-standar" text="Nombre de Partida" />
-                        <TextField fx:id="txfUnirseNombrePartida" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" top="20.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Clave" />
-                        <TextField fx:id="txfUnirseClavePartida" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <BorderPane prefHeight="200.0" prefWidth="200.0">
-                     <center>
-                        <ProgressIndicator BorderPane.alignment="CENTER" />
-                     </center>
-                     <bottom>
-                        <Label styleClass="txt-standar" text="Esperando..." BorderPane.alignment="CENTER" />
-                     </bottom>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </BorderPane>
-                  <HBox alignment="BOTTOM_RIGHT" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#btnUnirse" text="Unirse">
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="txt-standar" text="Nombre de Usuario" />
+                              <TextField fx:id="txfNombreUsuario" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="txt-standar" text="Dirección IP del servidor" />
+                              <TextField fx:id="txfDireccionIp" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+                           <children>
+                              <Label styleClass="txt-standar" text="Puerto del servidor" />
+                              <TextField fx:id="txfPuerto" />
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </VBox.margin>
+                        </VBox>
+                        <Button mnemonicParsing="false" onAction="#btnConectarServidor" text="Conectar">
                            <styleClass>
                               <String fx:value="btn-txt" />
                               <String fx:value="btn-bg-cafeOscuro" />
                            </styleClass>
+                           <VBox.margin>
+                              <Insets bottom="20.0" />
+                           </VBox.margin>
                         </Button>
                      </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </HBox>
+                  </VBox>
                </children>
-               <StackPane.margin>
-                  <Insets left="5.0" />
-               </StackPane.margin></VBox>
-            <VBox fx:id="panelConfiguraciones" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="bg-cafeGradient">
-               <StackPane.margin>
-                  <Insets left="5.0" />
-               </StackPane.margin>
-               <children>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Nombre de Usuario" />
-                        <TextField fx:id="txfNombreUsuario" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Dirección IP del servidor" />
-                        <TextField fx:id="txfDireccionIp" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
-                     <children>
-                        <Label styleClass="txt-standar" text="Puerto del servidor" />
-                        <TextField fx:id="txfPuerto" />
-                     </children>
-                     <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <Button mnemonicParsing="false" onAction="#btnConectarServidor" text="Conectar">
-                     <styleClass>
-                        <String fx:value="btn-txt" />
-                        <String fx:value="btn-bg-cafeOscuro" />
-                     </styleClass>
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Button>
-               </children></VBox>
+            </StackPane>
          </children>
-      </StackPane>
+      </HBox>
    </children>
-</HBox>
+</StackPane>
