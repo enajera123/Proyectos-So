@@ -53,10 +53,6 @@ namespace Proyecto_2.Modelos
         {
             this.tipoCaja = tipoCaja;
         }
-        public Peticion obtenerPeticiones()
-        {
-            return peticionActual;
-        }
         public void agregarPeticion(Peticion peticion)
         {
             peticionActual = peticion;
@@ -64,6 +60,9 @@ namespace Proyecto_2.Modelos
         public Peticion obtenerPeticion()
         {
             return this.peticionActual;
+        }
+        public void setPeticion(Peticion peticion) {
+            peticionActual = peticion;
         }
     }
 }

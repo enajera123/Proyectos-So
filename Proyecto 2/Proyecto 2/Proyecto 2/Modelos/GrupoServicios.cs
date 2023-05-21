@@ -52,11 +52,28 @@ namespace Proyecto_2.Modelos
             }
             return null;
         }
+        public List<Caja> getCopiaCajas() { 
+            List<Caja> cajasLista = new List<Caja> ();
+            foreach (Caja i in cajas)
+            {
+                cajasLista.Add(i);
+            }
+            return cajasLista;
+        }
         public void agregarCaja(Caja caja)
         {
             //Agrega a la lista y reordena
             this.cajas.Enqueue(caja);
             //ordenarClientes();
+        }
+        public int cantCajasHabilitadas() {
+            int n = 0;
+            foreach (Caja c in cajas) {
+                if (c.getEstado() == true) {
+                    n++;
+                }
+            }
+            return n;
         }
         public Caja obtenerCaja()
         {

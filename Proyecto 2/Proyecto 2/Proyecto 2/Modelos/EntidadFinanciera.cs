@@ -25,6 +25,16 @@ namespace Proyecto_2.Modelos
         {
             return this.gruposServicios;
         }
+        public GrupoServicios identificarPeticion(Peticion peticion) {
+            foreach (GrupoServicios grupo in gruposServicios) {
+                if (grupo.obtenerServicio(peticion.getServicio().getNombre()) != null)
+                {
+                    return grupo;
+                }
+            }
+            return null;
+        }
+        
         public Caja asignarPeticion(Peticion peticion)
         {
             foreach (GrupoServicios grupo in gruposServicios)
@@ -91,6 +101,9 @@ namespace Proyecto_2.Modelos
                 }
             }
             return null;
+        }
+        public void setPeticiones(Queue<Peticion> peticiones) {
+            this.peticiones = peticiones;
         }
         public void moverDeGrupo_actualizar(Caja actualizada)
         {
