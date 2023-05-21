@@ -147,6 +147,7 @@ public class Servidor {
                 return JSON.readValue(datos, Partida.class);
             }
         } catch (IOException ex) {
+            System.out.println(ex.toString());
             return null;
         }
     }
