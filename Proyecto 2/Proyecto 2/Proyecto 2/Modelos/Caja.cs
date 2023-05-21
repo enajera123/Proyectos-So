@@ -13,6 +13,7 @@ namespace Proyecto_2.Modelos
         private int id;
         private string tipoCaja;
         private bool estado;
+        private List<Peticion> peticionesProcesadas;
 
         public Caja(string tipoCaja)
         {
@@ -20,6 +21,7 @@ namespace Proyecto_2.Modelos
             this.tipoCaja = tipoCaja;
             this.estado = true;
             peticionActual = null;
+            peticionesProcesadas = new List<Peticion>();
         }
         public Caja(string tipoCaja, int id)
         {
@@ -27,11 +29,28 @@ namespace Proyecto_2.Modelos
             this.tipoCaja = tipoCaja;
             this.estado = true;
             peticionActual = null;
-
+            peticionesProcesadas = new List<Peticion>();
         }
         public Caja()
         {
             peticionActual = null;
+            peticionesProcesadas = new List<Peticion>();
+        }
+        public void setPeticionProcesada(Peticion peticion)
+        {
+            peticionesProcesadas.Add(peticion);
+        }
+        public void eliminarPeticion()
+        {
+            if (peticionActual != null)
+            {
+                peticionesProcesadas.Add(peticionActual);
+                peticionActual = null;
+            }
+        }
+        public List<Peticion> getPeticionesProcesadas()
+        {
+            return this.peticionesProcesadas;
         }
         public bool getEstado()
         {
@@ -61,7 +80,8 @@ namespace Proyecto_2.Modelos
         {
             return this.peticionActual;
         }
-        public void setPeticion(Peticion peticion) {
+        public void setPeticion(Peticion peticion)
+        {
             peticionActual = peticion;
         }
     }

@@ -1,5 +1,5 @@
-from Mazo import Mazo
-from Carta import Carta
+from modelo import Mazo
+from modelo import Carta
 import random
 
 class Partida:

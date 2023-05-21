@@ -204,6 +204,7 @@ namespace Proyecto_2
 
             }
         }
+        
 
         private void clickImagenes(object sender, EventArgs e)
         {
@@ -502,57 +503,59 @@ namespace Proyecto_2
                         Peticion peticion = caja.obtenerPeticion();
                         if (peticion != null)
                         {
-                            int peso = peticion.getServicio().getPeso();
-                            int progreso = 0;
-                            for (int i = 0; i <= peso; i++)
-                            {
-                                progreso = (100 * i) / peso;
-                                barra.Invoke((MethodInvoker)delegate { barra.Value = progreso; });
-                                while (velocidadHilo == -1)
-                                {
-
-                                }
-                                Thread.Sleep(velocidadHilo);
-                            }
-                            //Finalizacion
+                            ejecutarPeticion(peticion, barra);
+                            ////FINALIZACION////
                             Thread.Sleep(1000);
                             //Elimino la caja
                             barra.Invoke((MethodInvoker)delegate { barra.Value = 0; });
-                            caja.setPeticion(null);
+                            caja.eliminarPeticion();
                             //Evaluar la conversion
-                            //Cuenta peticiones
-                            lock (lockObject)
-                            {
-                                double promedio1 = 0, promedio2 = 0, promedio3 = 0;
-                                int peticionesG1 = 0, peticionesG2 = 0, peticionesG3 = 0;
-                                //contarPeticiones(ref peticionesG1, ref peticionesG2, ref peticionesG3);
-                                //contarPromedios(ref promedio1, ref promedio2, ref promedio3, peticionesG1, peticionesG2, peticionesG3);
-                                //Transformo la actual
-                                //transformarCajas(caja, promedio1, promedio2, promedio3);
-                                //Transformo las desocupadas
+                            transformarCajas();
 
-                                for (int i = 0; i < entidadFinanciera.getGrupoServicios().Count(); i++)
-                                {
-                                    foreach (Caja c in entidadFinanciera.getGrupoServicios().ElementAt(i).getCopiaCajas())
-                                    {
-                                        if (c.obtenerPeticion() == null && c.getEstado())
-                                        {
-                                            contarPeticiones(ref peticionesG1, ref peticionesG2, ref peticionesG3);
-                                            contarPromedios(ref promedio1, ref promedio2, ref promedio3, peticionesG1, peticionesG2, peticionesG3);
-                                            if (promedio1 > 1 || promedio2 > 1 || promedio3 > 1)
-                                            {
-                                                transformarCajas(c, promedio1, promedio2, promedio3);
-                                            }
-                                        }
-                                    }
-
-                                }
-                                ejecutar();
-                            }
                         }
                     }
                 }
             }
+        }
+        private void transformarCajas()
+        {
+            lock (lockObject)
+            {
+                double promedio1 = 0, promedio2 = 0, promedio3 = 0;
+                int peticionesG1 = 0, peticionesG2 = 0, peticionesG3 = 0;
+                //Transformo las desocupadas
+                for (int i = 0; i < entidadFinanciera.getGrupoServicios().Count(); i++)
+                {
+                    foreach (Caja c in entidadFinanciera.getGrupoServicios().ElementAt(i).getCopiaCajas())
+                    {
+                        if (c.obtenerPeticion() == null && c.getEstado())
+                        {
+                            contarPeticiones(ref peticionesG1, ref peticionesG2, ref peticionesG3);
+                            contarPromedios(ref promedio1, ref promedio2, ref promedio3, peticionesG1, peticionesG2, peticionesG3);
+                            if (promedio1 > 1 || promedio2 > 1 || promedio3 > 1)
+                            {
+                                transformarCaja(c, promedio1, promedio2, promedio3);
+                            }
+                        }
+                    }
+                }
+                ejecutar();
+            }
+        }
+        private void ejecutarPeticion(Peticion peticion, ProgressBar barra)
+        {
+            int peso = peticion.getServicio().getPeso();
+            int progreso = 0;
+            for (int i = 0; i <= peso; i++)
+            {
+                progreso = (100 * i) / peso;
+                barra.Invoke((MethodInvoker)delegate { barra.Value = progreso; });
+                while (velocidadHilo == -1)
+                {
+                }
+                Thread.Sleep(velocidadHilo);
+            }
+
         }
         private void contarPromedios(ref double promedio1, ref double promedio2, ref double promedio3, int peticiones1, int peticiones2, int peticiones3)
         {
@@ -572,44 +575,26 @@ namespace Proyecto_2
                 }
             }
         }
-        private void transformarCajas(Caja caja, double promedio1, double promedio2, double promedio3)
+        private void transformarCaja(Caja caja, double promedio1, double promedio2, double promedio3)
         {
             double rangoDiferencia = 1.5;
             //Saca cantidad de cajas habilitadas
             int cantCajas1 = 0, cantCajas2 = 0, cantCajas3 = 0;
-            foreach (GrupoServicios g in entidadFinanciera.getGrupoServicios())
-            {
-
-                if (g.getNombre() == btnGrupo1.Text)
-                {
-                    cantCajas1 = g.cantCajasHabilitadas();
-                }
-                if (g.getNombre() == btnGrupo2.Text)
-                {
-                    cantCajas2 = g.cantCajasHabilitadas();
-                }
-                if (g.getNombre() == btnGrupo3.Text)
-                {
-                    cantCajas3 = g.cantCajasHabilitadas();
-                }
-            }
+            cantCajas1 = entidadFinanciera.getCantCajasHabilitadas(btnGrupo1.Text);
+            cantCajas2 = entidadFinanciera.getCantCajasHabilitadas(btnGrupo2.Text);
+            cantCajas3 = entidadFinanciera.getCantCajasHabilitadas(btnGrupo3.Text);
 
             if (caja.getTipoCaja() == btnGrupo1.Text && cantCajas1 > 1)
             {
                 if (promedio1 * rangoDiferencia < promedio2)
                 { //El 1 es el doble de mayor que el 2
                   //Transforma de 1 a 2
-                    caja.setTipoCaja(btnGrupo2.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
-
+                    actualizarCaja(caja, btnGrupo2.Text);
                 }
                 else if (promedio1 * rangoDiferencia < promedio3)
                 { //El 1 es el doble de mayor que el 3
                   //Transforma de 1 a 3
-                    caja.setTipoCaja(btnGrupo3.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
+                    actualizarCaja(caja, btnGrupo3.Text);
                 }
             }
             if (caja.getTipoCaja() == btnGrupo2.Text && cantCajas2 > 1)
@@ -618,17 +603,13 @@ namespace Proyecto_2
                 {
                     //El 2 es el doble de mayor que el 1
                     //Transforma de 2 a 1
-                    caja.setTipoCaja(btnGrupo1.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
+                    actualizarCaja(caja, btnGrupo1.Text);
                 }
                 else if (promedio2 * rangoDiferencia < promedio3)
                 {
                     //El 2 es el doble de mayor que el 3
                     //Transforma de 2 a 3
-                    caja.setTipoCaja(btnGrupo3.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
+                    actualizarCaja(caja, btnGrupo3.Text);
                 }
             }
             if (caja.getTipoCaja() == btnGrupo3.Text && cantCajas3 > 1)
@@ -637,19 +618,21 @@ namespace Proyecto_2
                 {
                     //El 3 es el doble de mayor que el 1
                     //Transforma de 3 a 1
-                    caja.setTipoCaja(btnGrupo1.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
+                    actualizarCaja(caja, btnGrupo1.Text);
                 }
                 else if (promedio3 * rangoDiferencia < promedio2)
                 {
                     //El 3 es el doble de mayor que el 1
                     //Transforma de 3 a 2
-                    caja.setTipoCaja(btnGrupo2.Text);
-                    actualizarCajaLogica(caja);
-                    actualizarCajaVisual(caja);
+                    actualizarCaja(caja, btnGrupo2.Text);
                 }
             }
+        }
+        private void actualizarCaja(Caja caja, string tipoActualizar)
+        {
+            caja.setTipoCaja(tipoActualizar);
+            actualizarCajaLogica(caja);
+            actualizarCajaVisual(caja);
         }
         private void contarPeticiones(ref int peticiones1, ref int peticiones2, ref int peticiones3)
         {

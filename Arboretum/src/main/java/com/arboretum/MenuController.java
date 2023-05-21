@@ -206,7 +206,6 @@ public class MenuController implements Initializable {
                     if (muerteHiloEsperando == -1) {
                         muerteHiloEsperando = 0;
                         hiloEsperarJugadores.start();
-
                     } else {
                         reanudarHiloEsperando();
                     }

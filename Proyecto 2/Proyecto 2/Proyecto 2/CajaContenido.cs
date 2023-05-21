@@ -41,10 +41,24 @@ namespace Proyecto_2
             cbTipoCaja.Items.Add(grupo3);
             cbTipoCaja.SelectedItem = cajaAModificar.getTipoCaja();
             cbEstado.SelectedItem = cajaAModificar.getEstado() == true ? "Habilitado" : "Inhabilitado";
+            ingresarDatosListView();
+        }
+        private void ingresarDatosListView()
+        {
+            listHistorial.Items.Clear();
+            foreach (Peticion i in cajaAModificar.getPeticionesProcesadas())
+            {
+                ListViewItem item = new ListViewItem(i.getServicio().getNombre());
+                item.SubItems.Add(i.getServicio().getPrioridad().ToString());
+                item.SubItems.Add(i.getServicio().getPeso().ToString());
+                item.SubItems.Add(i.isPrioritario() == true ? "Preferencial" : "No preferencial");
+                listHistorial.Items.Add(item);
+
+            }
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            cajaAModificar.setEstado((cbEstado.SelectedItem.ToString()=="Habilitado")?true:false);
+            cajaAModificar.setEstado((cbEstado.SelectedItem.ToString() == "Habilitado") ? true : false);
             cajaAModificar.setTipoCaja(cbTipoCaja.SelectedItem.ToString());
             Utilidades.Utilidades.setCaja(cajaAModificar);
         }
@@ -92,5 +106,7 @@ namespace Proyecto_2
             }
 
         }
+
+
     }
 }

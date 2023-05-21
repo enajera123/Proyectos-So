@@ -30,6 +30,11 @@
         {
             panelSuperior = new FlowLayoutPanel();
             panelFoto = new TableLayoutPanel();
+            listHistorial = new ListView();
+            col1 = new ColumnHeader();
+            col2 = new ColumnHeader();
+            col3 = new ColumnHeader();
+            col4 = new ColumnHeader();
             cbEstado = new ComboBox();
             cbTipoCaja = new ComboBox();
             panelInferior = new Panel();
@@ -43,12 +48,13 @@
             // 
             panelSuperior.BackColor = Color.FromArgb(84, 189, 218);
             panelSuperior.Controls.Add(panelFoto);
+            panelSuperior.Controls.Add(listHistorial);
             panelSuperior.Controls.Add(cbEstado);
             panelSuperior.Controls.Add(cbTipoCaja);
             panelSuperior.Dock = DockStyle.Fill;
             panelSuperior.Location = new Point(0, 0);
             panelSuperior.Name = "panelSuperior";
-            panelSuperior.Size = new Size(467, 322);
+            panelSuperior.Size = new Size(537, 308);
             panelSuperior.TabIndex = 0;
             // 
             // panelFoto
@@ -62,13 +68,43 @@
             panelFoto.Size = new Size(186, 176);
             panelFoto.TabIndex = 3;
             // 
+            // listHistorial
+            // 
+            listHistorial.Columns.AddRange(new ColumnHeader[] { col1, col2, col3, col4 });
+            listHistorial.GridLines = true;
+            listHistorial.Location = new Point(195, 3);
+            listHistorial.Name = "listHistorial";
+            listHistorial.Size = new Size(339, 176);
+            listHistorial.TabIndex = 4;
+            listHistorial.UseCompatibleStateImageBehavior = false;
+            listHistorial.View = View.Details;
+            // 
+            // col1
+            // 
+            col1.Text = "Servicio";
+            col1.Width = 120;
+            // 
+            // col2
+            // 
+            col2.Text = "Prioridad";
+            // 
+            // col3
+            // 
+            col3.Text = "Peso";
+            col3.Width = 50;
+            // 
+            // col4
+            // 
+            col4.Text = "Tipo";
+            col4.Width = 100;
+            // 
             // cbEstado
             // 
             cbEstado.DropDownStyle = ComboBoxStyle.DropDownList;
             cbEstado.FormattingEnabled = true;
-            cbEstado.Location = new Point(195, 3);
+            cbEstado.Location = new Point(3, 185);
             cbEstado.Name = "cbEstado";
-            cbEstado.Size = new Size(112, 23);
+            cbEstado.Size = new Size(186, 23);
             cbEstado.TabIndex = 1;
             cbEstado.SelectedIndexChanged += cbEstado_SelectedIndexChanged;
             // 
@@ -76,9 +112,9 @@
             // 
             cbTipoCaja.DropDownStyle = ComboBoxStyle.DropDownList;
             cbTipoCaja.FormattingEnabled = true;
-            cbTipoCaja.Location = new Point(313, 3);
+            cbTipoCaja.Location = new Point(195, 185);
             cbTipoCaja.Name = "cbTipoCaja";
-            cbTipoCaja.Size = new Size(144, 23);
+            cbTipoCaja.Size = new Size(152, 23);
             cbTipoCaja.TabIndex = 2;
             cbTipoCaja.SelectedIndexChanged += cbTipoCaja_SelectedIndexChanged;
             // 
@@ -88,9 +124,9 @@
             panelInferior.Controls.Add(btnCancelar);
             panelInferior.Controls.Add(btnAceptar);
             panelInferior.Dock = DockStyle.Bottom;
-            panelInferior.Location = new Point(0, 256);
+            panelInferior.Location = new Point(0, 242);
             panelInferior.Name = "panelInferior";
-            panelInferior.Size = new Size(467, 66);
+            panelInferior.Size = new Size(537, 66);
             panelInferior.TabIndex = 1;
             // 
             // btnCancelar
@@ -125,7 +161,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(467, 322);
+            ClientSize = new Size(537, 308);
             Controls.Add(panelInferior);
             Controls.Add(panelSuperior);
             Name = "CajaContenido";
@@ -144,5 +180,10 @@
         private ComboBox cbEstado;
         private ComboBox cbTipoCaja;
         private TableLayoutPanel panelFoto;
+        private ListView listHistorial;
+        private ColumnHeader col1;
+        private ColumnHeader col2;
+        private ColumnHeader col3;
+        private ColumnHeader col4;
     }
 }

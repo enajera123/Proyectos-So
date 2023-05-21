@@ -105,9 +105,17 @@ namespace Proyecto_2.Modelos
         public void setPeticiones(Queue<Peticion> peticiones) {
             this.peticiones = peticiones;
         }
+        public int getCantCajasHabilitadas(String grupo) {
+            int n = 0;
+            foreach (GrupoServicios g in gruposServicios) {
+                if (g.getNombre() == grupo) {
+                    n = g.cantCajasHabilitadas();
+                }
+            }
+            return n;
+        }
         public void moverDeGrupo_actualizar(Caja actualizada)
         {
-
             //Mueve
             Caja? caja = obtenerCaja(actualizada.getId(), 1);
             if (caja != null)
