@@ -13,14 +13,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import animatefx.animation.BounceIn;
-import java.io.IOException;
-import java.net.Socket;
 
 import java.util.Random;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import model.Partida;
+import utilidades.Alerta;
+
 import utilidades.Servidor;
 
-//import javafx.scene.media.MediaPlayer;
-//import javafx.scene.media.Media;
 /**
  * FXML Controller class
  *
@@ -47,7 +48,7 @@ public class MenuController implements Initializable {
     @FXML
     private Label lblCantidadJugadores;
     @FXML
-    private ListView<?> listViewJugadores;
+    private ListView<String> listViewJugadores;
     @FXML
     private VBox panelUnirsePartida;
     @FXML
@@ -69,28 +70,79 @@ public class MenuController implements Initializable {
 
     private Servidor servidor;
 
+    private Partida partida;
+
+    private Thread hiloEsperarJugadores;
+
+    private String nombreUsuario = null;
+
+    private int muerteHiloEsperando = -1;
+
+    private final Object lock = new Object();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        servidor = new Servidor();
+        servidor = null;
+
+        hiloEsperarJugadores = new Thread(() -> {
+
+            if (partida != null) {
+                while (muerteHiloEsperando != -1) {
+                    partida = servidor.getPartida();
+                    if (muerteHiloEsperando == 1) {
+                        synchronized (lock) {
+                            try {
+                                lock.wait();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } else if (partida != null) {
+                        Platform.runLater(() -> {
+
+                            lblCantidadJugadores.setText(partida.getJugadores().size() + "/4");
+                            listViewJugadores.getItems().clear();
+                            partida.getJugadores().forEach((t) -> {
+                                listViewJugadores.getItems().add(t);
+                            });
+
+                        });
+                    }
+
+                }
+
+            }
+        });
+    }
+
+    private void reanudarHiloEsperando() {
+        synchronized (lock) {
+            lock.notify();
+        }
+        muerteHiloEsperando = 0;
     }
 
     @FXML
     private void btnCrearPartida(ActionEvent event) {
-
-        panelCrearPartida.toFront();
-        new BounceIn(panelCrearPartida).play();
-//        Media media = new Media(getClass().getResource("leaf.mp3").toString());
-//        MediaPlayer mediaplayer = new MediaPlayer(media);
-
+        if (servidor != null) {
+            panelCrearPartida.toFront();
+            new BounceIn(panelCrearPartida).play();
+        } else {
+            Alerta.alerta("Debe crear una conexion primero", "No te apresures", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML
     private void btnUnirsePartida(ActionEvent event) {
-        panelUnirsePartida.toFront();
-        new BounceIn(panelUnirsePartida).play();
+        if (servidor != null) {
+            panelUnirsePartida.toFront();
+            new BounceIn(panelUnirsePartida).play();
+        } else {
+            Alerta.alerta("Debe crear una conexion primero", "No te apresures", Alert.AlertType.WARNING);
+        }
     }
 
     @FXML
@@ -101,17 +153,37 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnCancelarPartida(ActionEvent event) {
+
+        if (servidor.salirPartida(nombreUsuario)) {
+            muerteHiloEsperando = 1;
+            panelMenu.toFront();
+        }
     }
 
     @FXML
     private void btnEmpezarPartida(ActionEvent event) {
-        
+
     }
 
     @FXML
     private void btnUnirse(ActionEvent event) {
-        panelEsperarJugadores.toFront();
-        new BounceIn(panelEsperarJugadores).play();
+        if (servidor != null) {
+            partida = servidor.unirsePartida(nombreUsuario, txfUnirseNombrePartida.getText(), txfUnirseClavePartida.getText());
+            if (partida != null) {
+                panelEsperarJugadores.toFront();
+                lblEsperarNombrePartida.setText("Nombre de partida: " + partida.getNombre());
+                lblEsperarClavePartida.setText("Clave: " + partida.getClave());
+                if (muerteHiloEsperando == -1) {
+                    muerteHiloEsperando = 0;
+                    hiloEsperarJugadores.start();
+                } else {
+                    reanudarHiloEsperando();
+                }
+                panelEsperarJugadores.toFront();
+                new BounceIn(panelEsperarJugadores).play();
+            }
+        }
+
     }
 
     @FXML
@@ -121,16 +193,42 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnCrear_CrearPartida(ActionEvent event) {
-        panelEsperarJugadores.toFront();
-        if (verificaCofiguraciones()) {
-            try {
-                servidor = new Servidor(new Socket(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText())));
-                //servidor.setSocket(new Socket(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText())));
-                servidor.conectar(txfNombreUsuario.getText());
-                servidor.crearPartida(txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
-            } catch (IOException ex) {
-                ex.printStackTrace();
+
+        if (servidor != null) {
+            if (servidor.crearPartida(txfCrearNombrePartida.getText(), txfCrearClavePartida.getText())) {
+                partida = servidor.unirsePartida(nombreUsuario, txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
+                if (partida != null) {
+                    lblEsperarNombrePartida.setText("Nombre de partida: " + partida.getNombre());
+                    lblEsperarClavePartida.setText("Clave: " + partida.getClave());
+                    txfCrearNombrePartida.setText(null);
+                    txfCrearClavePartida.setText(null);
+                    panelEsperarJugadores.toFront();
+                    if (muerteHiloEsperando == -1) {
+                        muerteHiloEsperando = 0;
+                        hiloEsperarJugadores.start();
+
+                    } else {
+                        reanudarHiloEsperando();
+                    }
+                }
             }
+
+        }
+    }
+
+    @FXML
+    private void btnConectarServidor(ActionEvent event) {
+        try {
+            servidor = new Servidor(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText()));
+            if (servidor.conectar(txfNombreUsuario.getText())) {
+                nombreUsuario = txfNombreUsuario.getText();
+                txfDireccionIp.setText(null);
+                txfPuerto.setText(null);
+                txfNombreUsuario.setText(null);
+                new BounceIn(panelUnirsePartida).play();
+                panelUnirsePartida.toFront();
+            }
+        } catch (Exception e) {
         }
     }
 
@@ -145,12 +243,4 @@ public class MenuController implements Initializable {
         }
         return password;
     }
-
-    public boolean verificaCofiguraciones() {
-        if (txfDireccionIp.getText().isBlank() || txfPuerto.getText().isBlank() || txfNombreUsuario.getText().isBlank()) {
-            return false;
-        }
-        return true;
-    }
-
 }
