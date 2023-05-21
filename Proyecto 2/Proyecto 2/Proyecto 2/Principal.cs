@@ -457,7 +457,6 @@ namespace Proyecto_2
             while (entidadFinanciera.getPeticiones().Count() > 0)
             {
                 asignarPeticion(entidadFinanciera.getPeticiones().Dequeue());
-                //ingresarDatosListView(listaPeticiones);
             }
         }
         private void asignarPeticion(Peticion peticion)
@@ -519,6 +518,12 @@ namespace Proyecto_2
         {
             modificarVelocidad("desacelerar");
         }
+
+
+        private void btnAcelerar_Click(object sender, EventArgs e)
+        {
+            modificarVelocidad("acelerar");
+        }
         private void modificarVelocidad(String opcion)
         {
             switch (lblVelocidad.Text)
@@ -565,11 +570,6 @@ namespace Proyecto_2
                 velocidadHilo = lblVelocidad.Text == "X1" ? 1000 : lblVelocidad.Text == "X2" ? 500 : lblVelocidad.Text == "X3" ? 250 : 125;
 
             }
-        }
-
-        private void btnAcelerar_Click(object sender, EventArgs e)
-        {
-            modificarVelocidad("acelerar");
         }
     }
 }
