@@ -24,6 +24,9 @@ class Utilidades:
             return []
         with open(ruta, 'r') as f:
             return json.load(f)
+    def limpiarDatos(ruta):
+        with open(ruta, 'r') as f:
+            json.dump({}, f)
     
 
 

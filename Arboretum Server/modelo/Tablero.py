@@ -1,8 +1,5 @@
 from utilidades.Utilidades import Utilidades
-#En esta clase se pueden hacer los metodos que involucran la obtencion de caminos y el conteo de puntos
-#Luego otro metodo que decifre el Json y examine camino por camino si cumplen las condiciones para que cuenten como
-#camino valido (lo de que tienen que ser numeros asendentes y eso) luego estos se escriben en otro Json
-#y ya en otro metodo se lee el Json con los caminos validos y se las condicones para contar los puntos de cada camino
+
 class Tablero:
     def __init__(self,nombre):
         self.nombre = nombre
@@ -65,6 +62,7 @@ class Tablero:
         puntuacion_Total = 0
         #Como ya se tiene la lista de caminos que se pueden puntuar en el tablero se puntuan y se suman
         #las puntuaciones para retornarlas 
+        Utilidades.limpiarDatos(self.rutaCaminos)
         for camino in caminos:
             puntuacion_Total += Tablero.puntuarCaminos(camino)
         return puntuacion_Total
