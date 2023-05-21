@@ -8,12 +8,19 @@ class Mazo:
     #append() agrega al final de la lista
     def agregarCarta(self,carta):
         self.cartas.append(carta)
+        
     def agregarCartas(self,cartas):
         for carta in cartas:
             self.cartas.append(carta)
-    #Saca y elimina la ultima carata ingresada
-    def sacarCarta(self):
+            
+    def popCarta(self):
+        '''Elimina la ultima carta ingresada'''
         if (len(self.cartas)!=0):
-            return self.cartas.pop()
+            self.cartas.pop()
+            
+    def topCarta(self):
+        '''Obtiene la ultima carta ingresada'''
+        if (len(self.cartas)!=0):
+            return self.cartas[-1]
         else:
             return None

@@ -1,4 +1,4 @@
-from utilidades.ManejoJson import ManejoJson
+from utilidades.Utilidades import Utilidades
 
 class Carta:
     # =======================
@@ -16,7 +16,11 @@ class Carta:
         #asi cuando se envia y comparte cartas con el cliente se usan estos id para ubicar la posicion
         self.idCartasAdyacentes = [None,None,None,None] #Lados: (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
     def obtenerId(self):
-         return self.id   
+         return self.id
+    def obtenerNumero(self):
+         return self.numero   
+    def obtenerArbol(self):
+         return self.arbol   
     def agregarCartaAdyacente(self,carta,lado):
         '''Lado: Izquierda, Derecha, Arriba, Abajo '''
         if (lado == "Izquierda"):
@@ -44,7 +48,7 @@ class Carta:
         else:
             return None
     #Este metodo busca cada posible camino que comienza y termina con el mismo tipo de arbol y lo escribe en un Json
-    #Con el formato n:arbol/n:arbol/n:arbol siendo n el numero de carta arbol el tipo de arbol el / separando cada carta
+    #Con el formato arbol:n/arbol:n/arbol:n siendo n el numero de carta arbol el tipo de arbol el / separando cada carta
     #del camino y : separando el numero del tipo de arbol
     def buscarCaminos(self,camino,ruta):
         '''Lado: Izquierda, Derecha, Arriba, Abajo  Ruta: ruta del Json donde se guardan los caminos'''
@@ -56,16 +60,21 @@ class Carta:
                     #se obtienen las cartas de carta separadas por /
                     partes = camino.split('/')
                     #se obtinen los datos de la primera carta separada por :
-                    partes = partes[0].split(':')
+                    primerCarta = partes[0].split(':')
                     #Se revisa si son el mismo tipo de carta pero diferente numero caminos en bucle
                     #y si son del mismo tipo se actualiza y guarda el camino
-                    if partes[0] == self.arbol and partes[1] != self.numero:
+                    if primerCarta[0] == self.arbol and primerCarta[1] != self.numero:
                         camino += "/" + self.arbol + ":" + self.numero #Actualiza agregando la carta
-                        ManejoJson.guardarDato(camino,ruta)#Se guarda
+                        Utilidades.guardarDato(camino,ruta)#Se guarda
                     break
         #Se verifica que la carta de inicio del camino y l actual no sean la misma para no generar bucles
         #Si no son la misma se vuelve a ejecutar el metodo en todas las cartas adyacentes
-        if not (partes[0] == self.arbol and partes[1] == self.numero):
+        partes = camino.split('/')
+        if not (primerCarta[0] == self.arbol and primerCarta[1] == self.numero):
             for carta in self.cartasAdyacentes:
                 if not carta is None:
-                    carta.buscarCaminos(camino,ruta)
+                    #se obtinen los datos de la ultima carta separada por :
+                    ultimaCarta = partes[-1].split(':')
+                    #Si la carta adyacente actual es igual a la ultima no se ejecuta el metodo para no generar bucles
+                    if not ultimaCarta[0] == carta.obtenerArbol() and ultimaCarta[1] == carta.obtenerNumero():
+                        carta.buscarCaminos(camino,ruta)
