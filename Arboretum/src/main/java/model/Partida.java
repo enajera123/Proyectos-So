@@ -11,6 +11,15 @@ public class Partida {
     private String nombre;
     private String clave;
     private List<String> jugadores;
+    private List<String> tableros;
+    private List<String> mazos;
+    private List<String> barajas;
+    
+    /*
+    self.tableros = [] #Cuando se crea el tablero se le da un nombre el del jugador asi se identifican facil
+        self.mazos = [] #Tambien se les da un nombre para idenficarlos mas facil puede ser el del jugador tambien
+        self.barajas = [] #Tambien se les da un nombre para idenficarlos mas facil puede ser el del jugador tambien
+    */
 
     public Partida() {
     }
@@ -20,6 +29,31 @@ public class Partida {
         this.clave = clave;
         this.jugadores = jugadores;
     }
+
+    public List<String> getBarajas() {
+        return barajas;
+    }
+
+    public List<String> getMazos() {
+        return mazos;
+    }
+
+    public List<String> getTableros() {
+        return tableros;
+    }
+
+    public void setBarajas(List<String> barajas) {
+        this.barajas = barajas;
+    }
+
+    public void setMazos(List<String> mazos) {
+        this.mazos = mazos;
+    }
+
+    public void setTableros(List<String> tableros) {
+        this.tableros = tableros;
+    }
+    
 
     public List<String> getJugadores() {
         return jugadores;
