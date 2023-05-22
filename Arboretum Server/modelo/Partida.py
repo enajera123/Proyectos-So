@@ -3,9 +3,7 @@ from Carta import Carta
 import random
 
 class Partida:
-    
     Arboles = ["Rojo","Verde","Azul","Naranja","Amarillo","Celeste","Marron","Morado","Blanco","Gris",]
-    
     def __init__(self,nombre,clave):
         self.nombre = nombre
         self.clave = clave
