@@ -5,8 +5,7 @@ class Carta:
     # Constantes que se usa temporalmente
     # para indicar donde guardarde el Json con los caminos
     # =======================
-    rutaJson = "bin/caminos.Json"
-    
+    rutaJson = "bin/caminos.Json"  
     def __init__(self,id,arbol,numero):
         self.id = id
         self.arbol = arbol
