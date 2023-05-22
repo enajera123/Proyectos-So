@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Random;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import model.Jugador;
 import model.Partida;
 import utilidades.Alerta;
 
@@ -76,7 +77,7 @@ public class MenuController implements Initializable {
 
     private Thread hiloEsperarJugadores;
 
-    private String nombreUsuario = null;
+    private Jugador jugador = null;
 
     private int muerteHiloEsperando = -1;
 
@@ -88,9 +89,7 @@ public class MenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         servidor = null;
-
         hiloEsperarJugadores = new Thread(() -> {
-
             if (partida != null) {
                 while (muerteHiloEsperando != -1) {
                     partida = servidor.getPartida();
@@ -104,12 +103,20 @@ public class MenuController implements Initializable {
                         }
                     } else if (partida != null) {
                         Platform.runLater(() -> {
-
+                            
                             lblCantidadJugadores.setText(partida.getJugadores().size() + "/4");
                             listViewJugadores.getItems().clear();
                             partida.getJugadores().forEach((t) -> {
-                                listViewJugadores.getItems().add(t);
+                                listViewJugadores.getItems().add(t.getNombre());
                             });
+                            if(partida.isIniciado()){
+                                try {
+                                    App.setRoot("tablero");
+                                    return;
+                                } catch (IOException ex) {
+                                    System.out.println(ex.toString());
+                                }
+                            }
 
                         });
                     }
@@ -156,7 +163,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnCancelarPartida(ActionEvent event) {
 
-        if (servidor.salirPartida(nombreUsuario)) {
+        if (servidor.salirPartida(jugador.getNombre())) {
             muerteHiloEsperando = 1;
             panelMenu.toFront();
         }
@@ -165,6 +172,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnEmpezarPartida(ActionEvent event) throws IOException {
         if(partida!=null && partida.getJugadores().size()>1){
+            servidor.empezarPartida();
             App.setRoot("tablero");
         }else{
             new Bounce(lblCantidadJugadores).play();
@@ -175,7 +183,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnUnirse(ActionEvent event) {
         if (servidor != null) {
-            partida = servidor.unirsePartida(nombreUsuario, txfUnirseNombrePartida.getText(), txfUnirseClavePartida.getText());
+            partida = servidor.unirsePartida(jugador.getNombre(), txfUnirseNombrePartida.getText(), txfUnirseClavePartida.getText());
             if (partida != null) {
                 panelEsperarJugadores.toFront();
                 lblEsperarNombrePartida.setText("Nombre de partida: " + partida.getNombre());
@@ -190,6 +198,7 @@ public class MenuController implements Initializable {
                 new BounceIn(panelEsperarJugadores).play();
             }
         }
+    //servidor.partida();
 
     }
 
@@ -203,7 +212,7 @@ public class MenuController implements Initializable {
 
         if (servidor != null) {
             if (servidor.crearPartida(txfCrearNombrePartida.getText(), txfCrearClavePartida.getText())) {
-                partida = servidor.unirsePartida(nombreUsuario, txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
+                partida = servidor.unirsePartida(jugador.getNombre(), txfCrearNombrePartida.getText(), txfCrearClavePartida.getText());
                 if (partida != null) {
                     lblEsperarNombrePartida.setText("Nombre de partida: " + partida.getNombre());
                     lblEsperarClavePartida.setText("Clave: " + partida.getClave());
@@ -227,7 +236,7 @@ public class MenuController implements Initializable {
         try {
             servidor = new Servidor(txfDireccionIp.getText(), Integer.parseInt(txfPuerto.getText()));
             if (servidor.conectar(txfNombreUsuario.getText())) {
-                nombreUsuario = txfNombreUsuario.getText();
+                jugador = new Jugador(txfNombreUsuario.getText());
                 txfDireccionIp.setText(null);
                 txfPuerto.setText(null);
                 txfNombreUsuario.setText(null);

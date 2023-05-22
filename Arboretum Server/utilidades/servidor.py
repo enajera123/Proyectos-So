@@ -4,6 +4,9 @@ import json
 from modelo.Partida import Partida
 from modelo.Usuario import Usuario
 from controlador.juegoControlador import juegoControlador
+from modelo.Jugador import Jugador
+from modelo.Carta import Carta
+from utilidades.Utilidades import Utilidades
 
 
 class Servidor:
@@ -28,70 +31,115 @@ class Servidor:
         while True:
             conn, addr = s.accept()
             if (conn and addr):
-                cliente = threading.Thread(target=self.hilo_cliente, args=(conn,))  # Se crea el hilo
+                cliente = threading.Thread(
+                    target=self.hilo_cliente, args=(conn,))  # Se crea el hilo
                 cliente.start()
 
     def conectarUsuario(self, usuario, ip, conexion):
         if not self.exists(self.listaConectados, usuario):
             self.listaConectados.append(Usuario(usuario, ip, conexion))
-            conexion.sendall(json.dumps("Conectado Correctamente").encode("utf-8"))
+            conexion.sendall(json.dumps(
+                "Conectado Correctamente").encode("utf-8"))
         else:
             conexion.sendall(json.dumps("Ya existe conexion").encode("utf-8"))
-            
+
     def procesarConsulta(self, message, conn):
         array = message.split("+")
         print(message)
         if "conectar" in array[0]:
             self.conectarUsuario(array[1], conn.getpeername()[0], conn)
         elif "crear" in array[0]:
-            conn.sendall(json.dumps(self.crearPartida(array[1], array[2])).encode("utf-8"))
+            conn.sendall(self.crearPartida(array[1], array[2]))
         elif "unirse" in array[0]:
-            conn.sendall(json.dumps(self.unirsePartida(array[1], array[2], array[3])).encode("utf-8"))
+            conn.sendall(self.unirsePartida(array[1], array[2], array[3]))
+        elif "empezar" in array[0]:
+            conn.sendall(self.empezarPartida())
+        # elif "carta" in array[0]:
+        #     conn.sendall(self.getCarta())
+        # elif "mazo" in array[0]:
+        #     conn.sendall(self.getMazo())
+        # elif "jugador" in array[0]:
+        #     conn.sendall(self.getJugador())
+        # elif "partida" in array[0]:
+        #     conn.sendall(self.Partida())
         elif "getPartida" in array[0]:
-            conn.sendall(json.dumps(self.getPartida()).encode("utf-8"))
+            conn.sendall(self.getPartida())
         elif "salir" in array[0]:
             conn.sendall(json.dumps(self.salirPartida(array[1])).encode("utf-8"))
         else:
             conn.sendall("Code: 101".encode())
-            
- #=======================
- #	Funciones Partida
- #=======================
+
+ # =======================
+ # Funciones Partida
+ # =======================
+    def empezarPartida(self):
+        self.juegoControlador.asignarCartasToJugadores()
+        self.juegoControlador.partida.iniciado = True
+        #return json.dumps(self.juegoControlador.partida,default=lambda o: o.__dict__)
+        return json.dumps("Empezado")
+    # def getCarta(self):
+    #     return json.dumps(Carta(1,"a",20), default=lambda o:o.__dict__).encode("utf-8")
+    # def Partida(self):
+    #     self.juegoControlador.partida = Partida("a", "a")
+    #     self.juegoControlador.partida.mazo.generarMazo(4)
+    #     jugador = Jugador("nombre")
+    #     self.juegoControlador.partida.jugadores.append(jugador)
+    #     self.juegoControlador.asignarCartasToJugadores()
+
+    #     return json.dumps(self.juegoControlador.partida, default=lambda o:o.__dict__).encode("utf-8")
+
+    # def getMazo(self):
+    #     self.juegoControlador.mazo.generarMazo(4)
+    #     return json.dumps(self.juegoControlador.mazo, default=lambda o:o.__dict__).encode("utf-8")
+    # def getJugador(self):
+    #     self.juegoControlador.mazo.generarMazo(4)
+    #     self.juegoControlador.partida = Partida("a", "a")
+    #     jugador = Jugador("nombre")
+
+    #     self.juegoControlador.partida.jugadores.append(jugador)
+    #     self.juegoControlador.asignarCartasToJugadores()
+    #     return json.dumps(self.juegoControlador.partida.jugadores[0], default=lambda o:o.__dict__).encode("utf-8")
+
+    #     #return json.dumps(Carta(1,"a",20).__dict__).encode("utf-8")
+
     def getPartida(self):
-        if self.juegoControlador.partida !=None:
-            return self.juegoControlador.partida.__dict__
-        return "error"
-    
+        if self.juegoControlador.partida != None:
+            return json.dumps(self.juegoControlador.partida,default=lambda o:o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
+
     def crearPartida(self, nombre, clave):
         partida = self.juegoControlador.partida
         if partida == None:
             partida = Partida(nombre, clave)
+            #partida.mazo.generarMazo(cantidadJugadores)
             self.juegoControlador.partida = partida
-            return partida.__dict__
-        return "Hay una partida existente"
-    
-    def salirPartida(self,nombre):
+           
+            return json.dumps(partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("Hay una partida existente").encode("utf")
+
+    def salirPartida(self, nombre):
         partida = self.juegoControlador.partida
         if partida != None:
             for i in partida.jugadores:
-                if i == nombre:
+                if i.nombre == nombre:
                     partida.jugadores.remove(i)
-                    if len(partida.jugadores)==0:
+                    if len(partida.jugadores) == 0:
                         self.juegoControlador.partida = None
                     return "Exito"
             return "No se encontro jugador"
         return "No se encontro partida"
-    
-    def unirsePartida(self, nombre, nombrePartida, clave):
+
+    def unirsePartida(self, nombreJugador, nombrePartida, clave):
+        # jugador = Utilidades.deserializarJugador(jugador)
         partida = self.juegoControlador.partida
-        if  partida != None and partida.nombre == nombrePartida and partida.clave == clave:
+        if partida != None and partida.nombre == nombrePartida and partida.clave == clave:
             for i in self.listaConectados:
-                if i.nombre == nombre:
-                    self.juegoControlador.partida.jugadores.append(i.nombre)
-                    return self.juegoControlador.partida.__dict__
-            return "No se pudo unir"
-        return "No se encontro partida"
-                
+                if i.nombre == nombreJugador:
+                    self.juegoControlador.partida.jugadores.append(Jugador(nombreJugador))
+                    return json.dumps(self.juegoControlador.partida, default=lambda o:o.__dict__).encode("utf-8")
+            return json.dumps("No se pudo unir").encode("utf-8")
+        return json.dumps("No se encontro partida").encode("utf-8")
+
     def exists(self, array, value):
         for i in array:
             if i.nombre == value:

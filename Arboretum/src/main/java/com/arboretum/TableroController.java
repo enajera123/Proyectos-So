@@ -15,7 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import model.Carta;
+import model.CartaDto;
 import utilidades.GridDinamico;
 
 /**
@@ -38,7 +38,7 @@ public class TableroController implements Initializable {
     //GridPane dinamico
     private GridPane gridTablero = new GridPane();
     //Lista de cartas dentro del grid logicamente
-    private final List<Carta> cartas = new ArrayList();
+    private final List<CartaDto> cartas = new ArrayList();
 
     private final int COLUM = 17;
     private final int ROW = 6;
@@ -53,6 +53,9 @@ public class TableroController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /**Inicia las cartas**/
+        
+        /**GRID**/
         gridTablero = gridDinamico.crearTablero(ROW, COLUM);
         for (int i = 0; i < ROW; i++) {
             for (int j = 0; j < COLUM; j++) {
@@ -74,7 +77,7 @@ public class TableroController implements Initializable {
         int indexColum = GridPane.getColumnIndex((Node) event.getSource());
         int indexRow = GridPane.getRowIndex((Node) event.getSource());
         //Agrega un boton y elimina el pane
-        cartas.add(new Carta(indexColum, indexRow));
+        cartas.add(new CartaDto(indexColum, indexRow));
         gridTablero.getChildren().remove((Node) event.getSource());
         gridTablero.add(new Button(), indexColum, indexRow);
         //Verifica si es esquina
@@ -97,11 +100,11 @@ public class TableroController implements Initializable {
 
     }
 
-    public GridPane crearFila_Columna(int desplazamientoX, int desplazamientoY, int cantRow, int cantColum, List<Carta> cartas) {
+    public GridPane crearFila_Columna(int desplazamientoX, int desplazamientoY, int cantRow, int cantColum, List<CartaDto> cartas) {
         //Se crea un nuevo grid con la cantidad de filas y columnas adicionales
         GridPane tableroNuevo = gridDinamico.crearTablero(gridTablero.getRowCount() + cantRow, gridTablero.getColumnCount() + cantColum);
         //Se desplazan las cartas en x,y
-        for (Carta carta : cartas) {
+        for (CartaDto carta : cartas) {
             //Se agrega al nuevo tablero en la nueva posicion
             tableroNuevo.add(new Button(), carta.getPosX() + desplazamientoX, carta.getPosY() + desplazamientoY);
             //Desplazamiento
@@ -113,7 +116,7 @@ public class TableroController implements Initializable {
         for (int i = 0; i < tableroNuevo.getRowCount(); i++) {
             for (int j = 0; j < tableroNuevo.getColumnCount(); j++) {
                 //Se verifica que no haya cartas en esa posicion
-                if (!Carta.buscarCarta(i, j, cartas)) {
+                if (!CartaDto.buscarCarta(i, j, cartas)) {
                     //Se agrega un pane para simular el hover
                     tableroNuevo.add(crearPane(), j, i);
                 }

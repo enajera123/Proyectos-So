@@ -2,6 +2,7 @@ import os
 # Manejo Archivos
 import json
 # path funciones de rutas
+from modelo.Jugador import Jugador
 from os import path, listdir
 
 class Utilidades:
@@ -27,7 +28,12 @@ class Utilidades:
     def limpiarDatos(ruta):
         with open(ruta, 'r') as f:
             json.dump({}, f)
-    
+            
+    def deserializarJugador(jugador):
+        jugador_dict = json.loads(jugador)
+        jugador = Jugador(jugador_dict['nombre'])
+        jugador.cartas = jugador_dict['cartas']
+        return jugador
 
 
 

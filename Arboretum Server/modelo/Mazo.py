@@ -11,16 +11,18 @@ class Mazo:
         self.cartas = []
 
     def generarMazo(self, cantidadJugadores):
+        """Genera el mazo principal de acuerdo a la cantidad de jugadores"""
         #Se tiene una lista con los colores, revueltos con la funcion shuffle
         colores = ["blossom cherry", "celestial magnolia", "exotic tree", "giant sequoia",
                    "golden mapple", "moonlit willow","quivering aspen", "purple fir", "tree of love", "whispering willow"]
         random.shuffle(colores)
+        #El comando ":" obtiene las primeras n posiciones definidas del arreglo
         coloresFiltrados = colores[:cantidadJugadores*2 + 2]
         id = 0
         for color in coloresFiltrados:
             for j in range(1, 9):
                 self.cartas.append(Carta(id, color, j))
-            id += 1
+                id += 1
         #Se vuelve a llamar la funcion para revolver todas las cartas generadas
         random.shuffle(self.cartas)
 

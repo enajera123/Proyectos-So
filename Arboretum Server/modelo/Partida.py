@@ -1,41 +1,20 @@
-from Mazo import Mazo
-from Carta import Carta
+from modelo.Mazo import Mazo
+from modelo.Carta import Carta
+import json
 import random
 
 class Partida:
-    Arboles = ["Rojo","Verde","Azul","Naranja","Amarillo","Celeste","Marron","Morado","Blanco","Gris",]
+   # Arboles = ["Rojo","Verde","Azul","Naranja","Amarillo","Celeste","Marron","Morado","Blanco","Gris",]
     def __init__(self,nombre,clave):
         self.nombre = nombre
         self.clave = clave
         self.jugadores = [] #Se guardan objetos Usuario
-        self.jugadorActual = None #Se guarda objeto Usuario
-        self.mazo = Mazo("MazoPrincipal")
+        self.iniciado = False
+    #   self.jugadorActual = None #Se guarda objeto Usuario
+        self.mazo = Mazo("principal")
         
     def agregarJugador(self,jugador):
         self.jugadores.append(jugador)
-        
-    def generarMazo(self):
-        numJugadores = len(self.jugadores)
-        numColorDescart = 10-(2+(2*numJugadores)) #Calcula el numero de tipos de arbole a descartar y se guarda
-        colorDescart = [] #Guarda los tipos de arbol descartados
-        cartas = [] #Guarda las cartas que se van generando
-        #Se hace un ciclo hasta que se descarten la cantidad de tipos necesaria
-        while len(colorDescart) == numColorDescart:
-            color = random.choice(Partida.Arboles) #Se saca un tipo Random de los tipos de arbol
-            if color not in colorDescart: #Se comprueba que no este descartado ya ese tipo
-                colorDescart.append(color) # Se descarta
-        #Se recorren todos los tipos genrando las 8 cartas de cada tipo que no este descartado
-        numId = 0
-        #Se remueven los tipos de arboles descartados de la lista de tipos de aboles
-        for arbol in colorDescart:
-            Partida.Arboles.remove(arbol)
-        #Se recorren los tipos de arbol generando las cartas
-        for arbol in Partida.Arboles:
-            for i in range(1,9): #Se hace un ciclo de 8 vueltas para generar las cartas
-                cartas.append(Carta(numId,arbol,i))#Se crea y guarda la carta
-                numId += 1
-        random.shuffle(cartas)#Se mesclan las cartas
-        self.mazo.setCartas(cartas)#Se setean al mazo principal
                 
     def repartirCartas(self):
         cartas = []

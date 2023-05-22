@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import javafx.scene.control.Alert;
+
 import model.Partida;
 
 /**
@@ -68,7 +69,7 @@ public class Servidor {
 
     public String leerDatos() {
         try {
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[10000];
             int bytesRead;
             bytesRead = socket.getInputStream().read(buffer);//Lee los bytes
             if (bytesRead != -1) {
@@ -82,7 +83,19 @@ public class Servidor {
             System.err.println(ex);
             return "";
         }
+    }
 
+    public void empezarPartida() {
+        try {
+            iniciar();
+            //Envia datos
+            dataOutputStream.writeUTF("empezar+");
+            //Leo la respuesta
+            String datos = leerDatos();
+            System.out.println(datos);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public boolean crearPartida(String nombre, String clave) {
@@ -104,13 +117,98 @@ public class Servidor {
             return false;
         }
     }
+//    public boolean getCarta() {
+//        try {
+//            iniciar();
+//            //Envia datos
+//            dataOutputStream.writeUTF("carta+");
+//            //Leo la respuesta
+//            String datos = leerDatos();
+//            //datos = datos.replace("\'", "");
+//            if (datos.equals("\"Hay una partida existente\"")) {
+//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
+//                return false;
+//            } else {
+//                 Carta carta = JSON.readValue(datos, Carta.class);
+//                 System.out.println(carta);
+//                return true;
+//            }
+//        } catch (IOException ex) {
+//            System.out.println(ex.toString());
+//            return false;
+//        }
+//    }
+//    public boolean getMazo() {
+//        try {
+//            iniciar();
+//            //Envia datos
+//            dataOutputStream.writeUTF("mazo+");
+//            //Leo la respuesta
+//            String datos = leerDatos();
+//            //datos = datos.replace("\'", "");
+//            if (datos.equals("\"Hay una partida existente\"")) {
+//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
+//                return false;
+//            } else {
+//                 Mazo mazo = JSON.readValue(datos, Mazo.class);
+//                 System.out.println(mazo);
+//                return true;
+//            }
+//        } catch (IOException ex) {
+//            System.out.println(ex.toString());
+//            return false;
+//        }
+//    }
 
+//    public boolean getJugador() {
+//        try {
+//            iniciar();
+//            //Envia datos
+//            dataOutputStream.writeUTF("jugador+");
+//            //Leo la respuesta
+//            String datos = leerDatos();
+//            //datos = datos.replace("\'", "");
+//            if (datos.equals("\"Hay una partida existente\"")) {
+//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
+//                return false;
+//            } else {
+//                Jugador mazo = JSON.readValue(datos, Jugador.class);
+//                System.out.println(mazo);
+//                return true;
+//            }
+//        } catch (IOException ex) {
+//            System.out.println(ex.toString());
+//            return false;
+//        }
+//    }
+//
+//    public boolean partida() {
+//        try {
+//            iniciar();
+//            //Envia datos
+//            dataOutputStream.writeUTF("partida+");
+//            //Leo la respuesta
+//            String datos = leerDatos();
+//            //datos = datos.replace("\'", "");
+//            if (datos.equals("\"Hay una partida existente\"")) {
+//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
+//                return false;
+//            } else {
+//                Partida mazo = JSON.readValue(datos, Partida.class);
+//                System.out.println(mazo);
+//                return true;
+//            }
+//        } catch (IOException ex) {
+//            System.out.println(ex.toString());
+//            return false;
+//        }
+//    }
     public boolean salirPartida(String nombre) {
         try {
             iniciar();
             dataOutputStream.writeUTF("salir+" + nombre);
             String datos = leerDatos();
-            if(datos.equals("\"Exito\"")) {
+            if (datos.equals("\"Exito\"")) {
                 return true;
             } else {
                 return false;
@@ -125,8 +223,8 @@ public class Servidor {
             iniciar();
             dataOutputStream.writeUTF("getPartida");
             String datos = leerDatos();
-            
-            if(datos.equals("\"error\"")){
+
+            if (datos.equals("\"error\"")) {
                 return null;
             }
             return JSON.readValue(datos, Partida.class);
@@ -140,6 +238,7 @@ public class Servidor {
             iniciar();
             dataOutputStream.writeUTF("unirse+" + nombre + "+" + nombrePartida + "+" + clave);
             String datos = leerDatos();
+
             if (datos.equals("\"No se encontro partida\"")) {
                 Alerta.alerta(datos, "Oh Oh", Alert.AlertType.ERROR);
                 return null;
