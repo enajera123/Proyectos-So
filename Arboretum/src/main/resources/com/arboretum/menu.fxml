@@ -14,10 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane fx:id="contenedor" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
+<StackPane fx:id="contenedor" prefHeight="561.0" prefWidth="709.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
    <children>
-      <VBox fx:id="panelEsperarJugadores" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="10.0" styleClass="bg-cafeGradient">
+      <VBox fx:id="panelEsperarJugadores" alignment="CENTER" spacing="10.0" styleClass="bg-cafeGradient">
          <StackPane.margin>
             <Insets left="5.0" />
          </StackPane.margin>
@@ -44,7 +43,7 @@
                   <Label fx:id="lblEsperarClavePartida" styleClass="txt-standar" text="Clave: " />
                </children>
             </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
+            <VBox alignment="CENTER" spacing="10.0">
                <children>
                   <HBox alignment="CENTER_LEFT" spacing="150.0">
                      <children>
@@ -66,9 +65,9 @@
             </Button>
          </children>
       </VBox>
-      <HBox fx:id="panelMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css">
+      <HBox fx:id="panelMenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" StackPane.alignment="CENTER">
          <children>
-            <VBox fx:id="panelIzquierdo" alignment="CENTER" prefHeight="400.0" prefWidth="0.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
+            <VBox fx:id="panelIzquierdo" alignment="CENTER" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
                <children>
                   <Label fx:id="lblTitulo" text="Arboretum" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <font>

@@ -1,5 +1,6 @@
 package com.arboretum;
 
+import animatefx.animation.Bounce;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import animatefx.animation.BounceIn;
+import java.io.IOException;
 
 import java.util.Random;
 import javafx.application.Platform;
@@ -139,7 +141,7 @@ public class MenuController implements Initializable {
     private void btnUnirsePartida(ActionEvent event) {
         if (servidor != null) {
             panelUnirsePartida.toFront();
-            new BounceIn(panelUnirsePartida).play();
+            new BounceIn(panelUnirsePartida).play();            
         } else {
             Alerta.alerta("Debe crear una conexion primero", "No te apresures", Alert.AlertType.WARNING);
         }
@@ -161,8 +163,13 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void btnEmpezarPartida(ActionEvent event) {
-
+    private void btnEmpezarPartida(ActionEvent event) throws IOException {
+        if(partida!=null && partida.getJugadores().size()>1){
+            App.setRoot("tablero");
+        }else{
+            new Bounce(lblCantidadJugadores).play();
+            
+        }
     }
 
     @FXML
