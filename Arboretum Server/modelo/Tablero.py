@@ -5,11 +5,11 @@ class Tablero:
         self.nombre = nombre
         self.cartas = []
         self.rutaCaminos = "/bin/Tablero_"+nombre+".json"
-    #Busca las cartas que sean de los colores permitidos a contar y ejecuta el metodo buscar caminos de lal cartas
-    #ingresando "" vacio el camino para que se genere y se escriba en el documento del atributo rutaCaminos
     def encontrarCaminos(self,tiposArboles):
+        #Busca las cartas que sean de los colores permitidos a contar y ejecuta el metodo buscar caminos de lal cartas
+        #ingresando "" vacio el camino para que se genere y se escriba en el documento del atributo rutaCaminos
         for carta in self.cartas:
-            if tiposArboles.count(carta.ObtenerArbol) != 0:
+            if carta.obtenerArbol() in tiposArboles:
                 carta.buscarCaminos("",self.rutaCaminos)
     def obtenerPuntuacionTablero(self):
         caminos = Utilidades.leerDatos(self.rutaCaminos)
@@ -18,9 +18,10 @@ class Tablero:
         #Hacemos un ciclo que recorra todos los cominos y elimine los que no son de numeros acendentes de la lista
         for camino in caminos:
             cartas = camino.split("/")
+            numCartas = []
             #Hacemos un ciclo que recorre todas las cartas obteniendo los numeros y los guarde en un vector
             for carta in cartas:
-                numCartas.append(carta.split(":")[1])
+                numCartas.append(int(carta.split(":")[1]))
             valido = True #Guarda true si es acendente y false si es desendente
             #Recorremos el vector de numeros comprobando que se una secuencia acendente
             for i in range(0,len(numCartas)-1):
@@ -40,10 +41,11 @@ class Tablero:
         #Recorremos los caminos
         for camino in caminos:
             #Se comprueba que no sea un camino descartado
-            if caminosDescartados.count(camino) == 0:
+            if camino not in caminosDescartados:
                 valido = camino #Se guarda el camino como valido
                 puntuacion_Valido = Tablero.puntuarCaminos(valido) #se guarda la puntuacion del camino valido
-                extremos.append(valido.split("/")[0],valido.split("/")[-1]) #se guardan los extremos del camino
+                extremos.append(valido.split("/")[0]) #se guardan los extremos del camino
+                extremos.append(valido.split("/")[-1])
                 #Se vuelven a recorrer los caminos comparando los extremos y la puntuacion para guardar
                 #en valido el de mayor putuacion
                 for opcion in caminos:
@@ -52,11 +54,11 @@ class Tablero:
                         puntuacion = Tablero.puntuarCaminos(opcion) #Se saca la puntuacion del camino
                         #Se compara con las puntuaciones del valido
                         if puntuacion > puntuacion_Valido: #si es mayor se actualiza el valido y la puntuacion del valido
-                            caminosDescartados.appendI(valido)
+                            caminosDescartados.append(valido)
                             valido = opcion
                             puntuacion_Valido = puntuacion
                         else:#Si no se descarta
-                            caminosDescartados.appendI(opcion)
+                            caminosDescartados.append(opcion)
                 caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
         caminos = caminosValidos#Se actualiza la lista de caminos
         puntuacion_Total = 0
@@ -67,8 +69,50 @@ class Tablero:
             puntuacion_Total += Tablero.puntuarCaminos(camino)
         return puntuacion_Total
     def puntuarCaminos(self,camino):
-        #Hay que hacer la logica de si es uno al principio o 8 al final y todo eso
         cartas = camino.split("/")
+        #Primero se agrega un punto por cada carta que forma el camino
+        puntos = len(cartas) 
+        #Se hace una lista de listas donde la primer lista continene una lista con el numero y tipo de arbol de cada carta
+        for i in range(len(cartas)):
+            cartas[i] = cartas[i].split(":")
+        #Segundo se agregan los puntos extra por carta si son del mismo tipo todas las cartas y tiene al menos 4 cartas
+        arbolCamino = cartas[0][0] #Se obtiene el tipo de arbol que es el camino
+        mismoTipo = True #Si todas las cartas son del mismo tipo es true para contar los puntos adicionales
+        for carta in cartas:
+            if carta[0] != arbolCamino:
+                mismoTipo = False
+                break
+        if mismoTipo and len(cartas) >= 4:
+            puntos += len(cartas) #Un punto extra por carta si son del mismo tipo y tiene almenos 4 cartas
+        #Tercero si inicia en 1 se le agrega un punto adicional
+        if cartas[0][1] == "1":
+            puntos += 1
+        #Cuarto si termina en 8 se le agrega dos puntos adicionales
+        if cartas[-1][1] == "8":
+            puntos += 2
+        return puntos
+    def agregarCarta(self,cartaNueva):
+        #Obtiene las id de las cartas adyacentes de la nueva carta y las busca en la lista de cartas del tablero
+        #Y actualiza las adyacentes ejemplo a la carta de arriba se agrega a si mismo como la de abajo
+        #El formato del vector que devuelve obtenerIdCartasAdyacentes es (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
+        #El formato de agregarCartaAdyacente(carta,Lado) Lado: Izquierda, Derecha, Arriba, Abajo
+        for carta in self.cartas:
+            cartasAdyacentesId = cartaNueva.obtenerIdCartasAdyacentes()
+            if carta.obtenerId() == cartasAdyacentesId[0]:
+                carta.agregarCartaAdyacente(cartaNueva,"Derecha")
+            elif carta.obtenerId() == cartasAdyacentesId[1]:
+                carta.agregarCartaAdyacente(cartaNueva,"Izquierda")
+            elif carta.obtenerId() == cartasAdyacentesId[2]:
+                carta.agregarCartaAdyacente(cartaNueva,"Abajo")
+            elif carta.obtenerId() == cartasAdyacentesId[3]:
+                carta.agregarCartaAdyacente(cartaNueva,"Arriba")
+        self.cartas.append(cartaNueva)# Se agrega la carta nueva a las cartas
+        
+        
+        
+                
+
+        
                             
                 
             

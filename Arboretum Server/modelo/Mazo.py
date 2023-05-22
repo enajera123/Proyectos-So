@@ -9,10 +9,15 @@ class Mazo:
     def agregarCarta(self,carta):
         self.cartas.append(carta)
         
-    def agregarCartas(self,cartas):
-        for carta in cartas:
-            self.cartas.append(carta)
+    def setCartas(self,cartas):
+        self.cartas = cartas
             
+    def getNombre(self):
+        return self.nombre
+    
+    def getCartas(self):
+        return self.cartas
+        
     def popCarta(self):
         '''Elimina la ultima carta ingresada'''
         if (len(self.cartas)!=0):
