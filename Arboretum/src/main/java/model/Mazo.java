@@ -1,6 +1,9 @@
 
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,10 +14,12 @@ public class Mazo {
     private String nombre;
     private List<Carta> cartas;
 
-    public Mazo() {
+    public Mazo(String nombre) {
+        this.nombre = nombre;
+        cartas = new ArrayList<Carta>();
     }
-
-    public Mazo(String nombre, List<Carta> cartas) {
+    @JsonCreator
+    public Mazo(@JsonProperty("nombre") String nombre, @JsonProperty("cartas")List<Carta> cartas) {
         this.nombre = nombre;
         this.cartas = cartas;
     }

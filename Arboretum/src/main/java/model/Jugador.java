@@ -1,6 +1,8 @@
 
 package model;
-
+//import model.Mazo;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,35 +12,71 @@ import java.util.List;
  */
 public class Jugador {
    private String nombre;
-   private List<Carta> cartas;
+   private Tablero tablero ;
+   private Mazo descartes;
+   private Mazo baraja;
+   private List<String> tiposArbolPuntuable;
 
     public Jugador() {
+        this.nombre = "";
+        this.baraja = new Mazo(nombre);
+        this.descartes = new Mazo(nombre);
+        this.tablero = new Tablero(nombre);
+        this.tiposArbolPuntuable = new ArrayList<String>();
     }
-
-    public Jugador(String nombre, List<Carta> cartas) {
+    @JsonCreator
+    public Jugador(
+        @JsonProperty("nombre")String nombre,@JsonProperty("tablero")Tablero tablero,
+        @JsonProperty("descartes")Mazo descartes,@JsonProperty("baraja")Mazo baraja,
+        @JsonProperty("tiposArbolPuntuable")List<String>tiposArbolPuntuable) 
+    {
         this.nombre = nombre;
-        this.cartas = cartas;
+        this.baraja = baraja;
+        this.descartes = descartes;
+        this.tablero = tablero;
+        this.tiposArbolPuntuable = tiposArbolPuntuable;
     }
 
     public Jugador(String nombre) {
         this.nombre = nombre;
-        this.cartas = new ArrayList<Carta>();
+        this.baraja = new Mazo(nombre);
+        this.descartes = new Mazo(nombre);
+        this.tablero = new Tablero(nombre);
+        this.tiposArbolPuntuable = new ArrayList<String>();
     }
 
-    public List<Carta> getCartas() {
-        return cartas;
+    public Mazo getBaraja() {
+        return this.baraja;
+    }
+    public Mazo getDescartes() {
+        return this.descartes;
+    }
+    
+    public Tablero getTablero() {
+        return this.tablero;
     }
 
     public String getNombre() {
         return nombre;
     }
-
-    public void setCartas(List<Carta> cartas) {
-        this.cartas = cartas;
+    
+    public List<String> getTiposArbolPuntuable(){
+        return this.tiposArbolPuntuable;
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    
+    public void setTiposArbolPuntuable(List<String> tiposArbolPuntuable){
+        this.tiposArbolPuntuable = tiposArbolPuntuable;
+    }
+    
+    public void setBaraja(Mazo baraja) {
+        this.baraja = baraja;
+    }
+    public void setDescartes(Mazo descartes) {
+        this.descartes = descartes;
+    }
+    
+    public void setTablero(Tablero tablero) {
+        this.tablero = tablero;
     }
     
 }

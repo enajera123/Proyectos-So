@@ -33,6 +33,7 @@ class Servidor:
             if (conn and addr):
                 cliente = threading.Thread(
                     target=self.hilo_cliente, args=(conn,))  # Se crea el hilo
+                cliente.daemon = True
                 cliente.start()
 
     def conectarUsuario(self, usuario, ip, conexion):
