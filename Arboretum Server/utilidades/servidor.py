@@ -76,7 +76,7 @@ class Servidor:
         self.juegoControlador.asignarCartasToJugadores()
         self.juegoControlador.partida.iniciado = True
         #return json.dumps(self.juegoControlador.partida,default=lambda o: o.__dict__)
-        return json.dumps("Empezado")
+        return json.dumps("Empezado").encode("utf-8")
     # def getCarta(self):
     #     return json.dumps(Carta(1,"a",20), default=lambda o:o.__dict__).encode("utf-8")
     # def Partida(self):

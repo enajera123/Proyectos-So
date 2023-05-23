@@ -1,12 +1,13 @@
-from Tablero import Tablero
-from Mazo import Mazo
+from modelo.Tablero import Tablero
+# from modelo.Mazo import Mazo
 class Jugador:
     def __init__(self,nombre):
         self.nombre = nombre
+        self.cartas = []
         self.tablero = Tablero(nombre)
-        self.descartes = Mazo(nombre)
-        self.baraja = Mazo(nombre)
-        self.tiposArbolPuntuable = []
+        self.descartes = []
+        # self.baraja = Mazo(nombre)
+        # self.tiposArbolPuntuable = []
         
     def agregarArbolePuntuable(self,tiposArbol):
         self.tiposArbolPuntuable.append(tiposArbol)

@@ -1,10 +1,10 @@
-from utilidades.Utilidades import Utilidades
+#from utilidades.Utilidades import Utilidades
 
 class Tablero:
     def __init__(self,nombre):
         self.nombre = nombre
         self.cartas = []
-        self.rutaCaminos = "/bin/Tablero_"+nombre+".json"
+        #self.rutaCaminos = "/bin/Tablero_"+nombre+".json"
     def encontrarCaminos(self,tiposArboles):
         #Busca las cartas que sean de los colores permitidos a contar y ejecuta el metodo buscar caminos de lal cartas
         #ingresando "" vacio el camino para que se genere y se escriba en el documento del atributo rutaCaminos

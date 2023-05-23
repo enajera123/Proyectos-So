@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  *
  * @author estebannajera
@@ -12,7 +14,7 @@ public class Carta{
     private int id;
     private String arbol;
     private int numero;
-    //private List<Carta> cartasAdyacentes; 
+    private List<Carta> cartasAdyacentes; 
 
     public Carta() {
     }
@@ -21,6 +23,21 @@ public class Carta{
         this.id = id;
         this.arbol = arbol;
         this.numero = numero;
+    }
+
+    public Carta(int id, String arbol, int numero, List<Carta> cartasAdyacentes) {
+        this.id = id;
+        this.arbol = arbol;
+        this.numero = numero;
+        this.cartasAdyacentes = cartasAdyacentes;
+    }
+
+    public void setCartasAdyacentes(List<Carta> cartasAdyacentes) {
+        this.cartasAdyacentes = cartasAdyacentes;
+    }
+
+    public List<Carta> getCartasAdyacentes() {
+        return cartasAdyacentes;
     }
 
     public void setNumero(int numero) {

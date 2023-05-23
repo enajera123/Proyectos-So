@@ -33,13 +33,13 @@ public class GridDinamico {
     }
 
     public RowConstraints crearFila() {
-        RowConstraints row = new RowConstraints(75);
+        RowConstraints row = new RowConstraints(115);
         row.setValignment(VPos.CENTER);
         return row;
     }
 
     public ColumnConstraints crearColumna() {
-        ColumnConstraints column = new ColumnConstraints(50);
+        ColumnConstraints column = new ColumnConstraints(75);
         column.setHalignment(HPos.CENTER);
         return column;
     }

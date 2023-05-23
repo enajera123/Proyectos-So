@@ -19,9 +19,11 @@ import java.io.IOException;
 import java.util.Random;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+
 import model.Jugador;
 import model.Partida;
 import utilidades.Alerta;
+import utilidades.Data;
 
 import utilidades.Servidor;
 
@@ -82,6 +84,7 @@ public class MenuController implements Initializable {
     private int muerteHiloEsperando = -1;
 
     private final Object lock = new Object();
+    private final Object lockEmpezar = new Object();
 
     /**
      * Initializes the controller class.
@@ -103,28 +106,37 @@ public class MenuController implements Initializable {
                         }
                     } else if (partida != null) {
                         Platform.runLater(() -> {
-                            
                             lblCantidadJugadores.setText(partida.getJugadores().size() + "/4");
                             listViewJugadores.getItems().clear();
                             partida.getJugadores().forEach((t) -> {
                                 listViewJugadores.getItems().add(t.getNombre());
                             });
-                            if(partida.isIniciado()){
-                                try {
-                                    App.setRoot("tablero");
-                                    return;
-                                } catch (IOException ex) {
-                                    System.out.println(ex.toString());
-                                }
-                            }
 
                         });
+                        if (partida.isIniciado()) {
+                    //        synchronized (lockEmpezar) {
+                      //          lockEmpezar.notify();
+                                muerteHiloEsperando = -1;
+                        //    }
+                        }
+
                     }
 
                 }
 
             }
         });
+    }
+
+    private void bindData() {
+        partida.getJugadores().forEach((t) -> {
+            if (t.getNombre().equals(jugador.getNombre())) {
+                jugador = t;
+            }
+        });
+        Data.setJugador(jugador);
+
+        Data.setPartida(partida);
     }
 
     private void reanudarHiloEsperando() {
@@ -148,7 +160,7 @@ public class MenuController implements Initializable {
     private void btnUnirsePartida(ActionEvent event) {
         if (servidor != null) {
             panelUnirsePartida.toFront();
-            new BounceIn(panelUnirsePartida).play();            
+            new BounceIn(panelUnirsePartida).play();
         } else {
             Alerta.alerta("Debe crear una conexion primero", "No te apresures", Alert.AlertType.WARNING);
         }
@@ -170,13 +182,19 @@ public class MenuController implements Initializable {
     }
 
     @FXML
-    private void btnEmpezarPartida(ActionEvent event) throws IOException {
-        if(partida!=null && partida.getJugadores().size()>1){
+    private void btnEmpezarPartida(ActionEvent event) throws IOException, InterruptedException {
+        if (partida != null && partida.getJugadores().size() > 0) {
             servidor.empezarPartida();
-            App.setRoot("tablero");
-        }else{
+            //synchronized (lockEmpezar) {
+               // lockEmpezar.wait();
+               partida = servidor.getPartida();
+                bindData();
+                App.setRoot("tablero");
+            //}
+
+        } else {
             new Bounce(lblCantidadJugadores).play();
-            
+
         }
     }
 
@@ -198,7 +216,7 @@ public class MenuController implements Initializable {
                 new BounceIn(panelEsperarJugadores).play();
             }
         }
-    //servidor.partida();
+        //servidor.partida();
 
     }
 

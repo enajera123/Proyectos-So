@@ -1,26 +1,25 @@
-
 package model;
 
-
-import java.util.Stack;
+import java.util.List;
 
 /**
  *
  * @author estebannajera
  */
-public class Mazo {
-    private String nombre;
-    private Stack<Carta> cartas;
+public class Tablero {
 
-    public Mazo() {
+    private String nombre;
+    private List<Carta> cartas;
+
+    public Tablero() {
     }
 
-    public Mazo(String nombre, Stack<Carta> cartas) {
+    public Tablero(String nombre, List<Carta> cartas) {
         this.nombre = nombre;
         this.cartas = cartas;
     }
 
-    public Stack<Carta> getCartas() {
+    public List<Carta> getCartas() {
         return cartas;
     }
 
@@ -28,12 +27,12 @@ public class Mazo {
         return nombre;
     }
 
+    public void setCartas(List<Carta> cartas) {
+        this.cartas = cartas;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public void setCartas(Stack<Carta> cartas) {
-        this.cartas = cartas;
-    }
-    
 }
