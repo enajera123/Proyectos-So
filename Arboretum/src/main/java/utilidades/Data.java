@@ -11,13 +11,21 @@ import model.Partida;
 public class Data {
     private static Jugador jugador;
     private static Partida partida;
-
+    private static Servidor sevidor;
     public static Jugador getJugador() {
         return jugador;
     }
 
     public static Partida getPartida() {
         return partida;
+    }
+
+    public static void setSevidor(Servidor sevidor) {
+        Data.sevidor = sevidor;
+    }
+
+    public static Servidor getSevidor() {
+        return sevidor;
     }
 
     public static void setJugador(Jugador jugador) {

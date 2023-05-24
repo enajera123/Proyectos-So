@@ -13,16 +13,15 @@ public class Partida {
     private List<Jugador> jugadores;
     private Mazo mazo;
     private boolean iniciado;
-  //  private List<String> tableros;
+    //  private List<String> tableros;
     //private List<String> mazo;
     //private List<String> barajas;
-    
+
     /*
     self.tableros = [] #Cuando se crea el tablero se le da un nombre el del jugador asi se identifican facil
         self.mazos = [] #Tambien se les da un nombre para idenficarlos mas facil puede ser el del jugador tambien
         self.barajas = [] #Tambien se les da un nombre para idenficarlos mas facil puede ser el del jugador tambien
-    */
-
+     */
     public Partida() {
     }
 
@@ -42,8 +41,6 @@ public class Partida {
         this.iniciado = iniciado;
     }
 
-
-
     public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo) {
         this.nombre = nombre;
         this.clave = clave;
@@ -58,7 +55,6 @@ public class Partida {
     public Mazo getMazo() {
         return mazo;
     }
-    
 
     public List<Jugador> getJugadores() {
         return jugadores;
@@ -67,8 +63,6 @@ public class Partida {
     public void setJugadores(List<Jugador> jugadores) {
         this.jugadores = jugadores;
     }
-
-    
 
 //    public List<String> getBarajas() {
 //        return barajas;
@@ -93,7 +87,6 @@ public class Partida {
 //    public void setTableros(List<String> tableros) {
 //        this.tableros = tableros;
 //    }
-
     public String getClave() {
         return clave;
     }
@@ -113,6 +106,22 @@ public class Partida {
     @Override
     public String toString() {
         return "nombre: " + nombre + ", clave: " + clave;
+    }
+
+    public void actualizarJugador(Jugador jugador) {
+        for (Jugador j : jugadores) {
+            if (j.getNombre() == jugador.getNombre()) {
+                j = jugador;
+                return;
+            }
+        }
+    }
+    public void setCartaJugador(String nombreJugador, Carta carta){
+        for(Jugador j: jugadores){
+            if(j.getNombre().equals(nombreJugador)){
+                j.getCartas().add(carta);
+            }
+        }
     }
 
 }

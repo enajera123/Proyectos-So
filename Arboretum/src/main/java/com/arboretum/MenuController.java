@@ -105,7 +105,7 @@ public class MenuController implements Initializable {
                             }
                         }
                     } else if (partida != null) {
-                        Platform.runLater(() -> {
+                        Platform.runLater(() -> {//Se actualiza la lista de jugadores
                             lblCantidadJugadores.setText(partida.getJugadores().size() + "/4");
                             listViewJugadores.getItems().clear();
                             partida.getJugadores().forEach((t) -> {
@@ -114,10 +114,10 @@ public class MenuController implements Initializable {
 
                         });
                         if (partida.isIniciado()) {
-                    //        synchronized (lockEmpezar) {
-                      //          lockEmpezar.notify();
-                                muerteHiloEsperando = -1;
-                        //    }
+                            //        synchronized (lockEmpezar) {
+                            //          lockEmpezar.notify();
+                            muerteHiloEsperando = -1;
+                            //    }
                         }
 
                     }
@@ -135,7 +135,7 @@ public class MenuController implements Initializable {
             }
         });
         Data.setJugador(jugador);
-
+        Data.setSevidor(servidor);
         Data.setPartida(partida);
     }
 
@@ -174,7 +174,6 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnCancelarPartida(ActionEvent event) {
-
         if (servidor.salirPartida(jugador.getNombre())) {
             muerteHiloEsperando = 1;
             panelMenu.toFront();
@@ -184,13 +183,18 @@ public class MenuController implements Initializable {
     @FXML
     private void btnEmpezarPartida(ActionEvent event) throws IOException, InterruptedException {
         if (partida != null && partida.getJugadores().size() > 0) {
-            servidor.empezarPartida();
-            //synchronized (lockEmpezar) {
-               // lockEmpezar.wait();
-               partida = servidor.getPartida();
-                bindData();
-                App.setRoot("tablero");
-            //}
+            if (servidor.empezarPartida()) {
+                //synchronized (lockEmpezar) {
+                // lockEmpezar.wait();
+                partida = servidor.getPartida();
+                if (partida != null) {
+                    bindData();
+                    App.setRoot("tablero");
+                }else{
+                    Alerta.alerta("Error al empezar partida", "error", Alert.AlertType.ERROR);
+                }
+                //}
+            }
 
         } else {
             new Bounce(lblCantidadJugadores).play();

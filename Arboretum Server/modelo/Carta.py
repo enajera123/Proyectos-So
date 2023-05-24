@@ -8,6 +8,8 @@ class Carta:
     #rutaJson = "bin/caminos.Json"  
     def __init__(self,id,arbol,numero):
         self.id = id
+        self.posX = -1;
+        self.posY = -1;
         self.arbol = arbol
         self.numero = numero
         self.cartasAdyacentes = [None,None,None,None] #Lados: (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
@@ -16,10 +18,13 @@ class Carta:
         #self.idCartasAdyacentes = [None,None,None,None] #Lados: (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
     def obtenerId(self):
          return self.id
+     
     def obtenerNumero(self):
-         return self.numero   
+         return self.numero 
+       
     def obtenerArbol(self):
          return self.arbol   
+     
     def agregarCartaAdyacente(self,carta,lado):
         '''Lado: Izquierda, Derecha, Arriba, Abajo '''
         if (lado == "Izquierda"):

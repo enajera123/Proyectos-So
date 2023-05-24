@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import javafx.scene.control.Alert;
+import model.Carta;
 
 import model.Partida;
 
@@ -77,6 +78,7 @@ public class Servidor {
                 System.out.println(message);
                 return message;
             }
+            Alerta.alerta("No hay respuesta por parte del servidor", "Error", Alert.AlertType.WARNING);
             System.out.println("No hay respuesta");
             return "No hay respuesta";
         } catch (IOException ex) {
@@ -85,7 +87,7 @@ public class Servidor {
         }
     }
 
-    public void empezarPartida() {
+    public boolean empezarPartida() {
         try {
             iniciar();
             //Envia datos
@@ -93,8 +95,14 @@ public class Servidor {
             //Leo la respuesta
             String datos = leerDatos();
             System.out.println(datos);
+            if(datos == "No hay respuesta"){
+                return false;
+            }
+            
+            return true;
         } catch (IOException ex) {
             ex.printStackTrace();
+            return false;
         }
     }
 
@@ -117,92 +125,87 @@ public class Servidor {
             return false;
         }
     }
-//    public boolean getCarta() {
-//        try {
+//    public Partida actualizarPartida(Partida partida){
+//    try {
 //            iniciar();
-//            //Envia datos
-//            dataOutputStream.writeUTF("carta+");
-//            //Leo la respuesta
+//            dataOutputStream.writeUTF("actualizarPartida+"+JSON.writeValueAsString(partida));
 //            String datos = leerDatos();
-//            //datos = datos.replace("\'", "");
-//            if (datos.equals("\"Hay una partida existente\"")) {
-//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
-//                return false;
-//            } else {
-//                 Carta carta = JSON.readValue(datos, Carta.class);
-//                 System.out.println(carta);
-//                return true;
-//            }
+//            return JSON.readValue(datos, Partida.class);
 //        } catch (IOException ex) {
-//            System.out.println(ex.toString());
-//            return false;
+//            return null;
 //        }
+//        
 //    }
-//    public boolean getMazo() {
-//        try {
-//            iniciar();
-//            //Envia datos
-//            dataOutputStream.writeUTF("mazo+");
-//            //Leo la respuesta
-//            String datos = leerDatos();
-//            //datos = datos.replace("\'", "");
-//            if (datos.equals("\"Hay una partida existente\"")) {
-//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
-//                return false;
-//            } else {
-//                 Mazo mazo = JSON.readValue(datos, Mazo.class);
-//                 System.out.println(mazo);
-//                return true;
-//            }
-//        } catch (IOException ex) {
-//            System.out.println(ex.toString());
-//            return false;
-//        }
-//    }
-
-//    public boolean getJugador() {
-//        try {
-//            iniciar();
-//            //Envia datos
-//            dataOutputStream.writeUTF("jugador+");
-//            //Leo la respuesta
-//            String datos = leerDatos();
-//            //datos = datos.replace("\'", "");
-//            if (datos.equals("\"Hay una partida existente\"")) {
-//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
-//                return false;
-//            } else {
-//                Jugador mazo = JSON.readValue(datos, Jugador.class);
-//                System.out.println(mazo);
-//                return true;
-//            }
-//        } catch (IOException ex) {
-//            System.out.println(ex.toString());
-//            return false;
-//        }
-//    }
-//
-//    public boolean partida() {
-//        try {
-//            iniciar();
-//            //Envia datos
-//            dataOutputStream.writeUTF("partida+");
-//            //Leo la respuesta
-//            String datos = leerDatos();
-//            //datos = datos.replace("\'", "");
-//            if (datos.equals("\"Hay una partida existente\"")) {
-//                Alerta.alerta(datos, "Informacion", Alert.AlertType.INFORMATION);
-//                return false;
-//            } else {
-//                Partida mazo = JSON.readValue(datos, Partida.class);
-//                System.out.println(mazo);
-//                return true;
-//            }
-//        } catch (IOException ex) {
-//            System.out.println(ex.toString());
-//            return false;
-//        }
-//    }
+    public Partida agregarCartaTablero(String nombreJugador, int idCarta, int posX, int posY) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("agregarCartaTablero+" + nombreJugador + "+" + idCarta + "+" + posX + "+" + posY);
+            String datos = leerDatos();
+            System.out.println(datos);
+            Partida partida = JSON.readValue(datos, Partida.class);
+            return partida;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Partida agregarCarta(String nombreJugador, int idCarta) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("agregarCartaJugador+" + nombreJugador + "+" + idCarta );
+            String datos = leerDatos();
+            System.out.println(datos);
+            Partida partida = JSON.readValue(datos, Partida.class);
+            return partida;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Partida sacarCartaDescarte(String nombreJugador, int idCarta) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("sacarCartaDescarte+" + nombreJugador + "+" + idCarta );
+            String datos = leerDatos();
+            System.out.println(datos);
+            Partida partida = JSON.readValue(datos, Partida.class);
+            return partida;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Partida descartarCarta(String nombreJugador, int idCarta) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("descartaCarta+" + nombreJugador + "+" + idCarta );
+            String datos = leerDatos();
+            System.out.println(datos);
+            Partida partida = JSON.readValue(datos, Partida.class);
+            return partida;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
+    public Partida modificarCartaTablero(String nombreJugador, int idCarta, int posX, int posY) {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("modificarCartaTablero+" + nombreJugador + "+" + idCarta + "+" + posX + "+" + posY);
+            String datos = leerDatos();
+            System.out.println(datos);
+            Partida partida = JSON.readValue(datos, Partida.class);
+            return partida;
+        } catch (Exception ex) {
+            System.out.println(ex.toString());
+            return null;
+        }
+    }
+    
     public boolean salirPartida(String nombre) {
         try {
             iniciar();

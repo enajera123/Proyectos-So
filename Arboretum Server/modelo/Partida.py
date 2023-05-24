@@ -16,23 +16,6 @@ class Partida:
     def agregarJugador(self,jugador):
         self.jugadores.append(jugador)
                 
-    def repartirCartas(self):
-        cartas = []
-        for jugador in self.jugadores:
-            #Se sacan 7 cartas del mazo principal
-            for i in range(7):
-                cartas.append(self.mazo.topCarta()) #Se saca una carta
-                self.mazo.popCarta() #Se elimina la carta que se saco
-            jugador.setBaraja(cartas) #Se setea la baraja del jugador
-            #Si no es el jugador actual se saca una mas y se le asigna al mazo de descarte
-            if jugador.getNombre() != self.jugadorActual.getNombre():
-                jugador.cartaDescartar(self.mazo.topCarta()) #Se agrega una carta de descarte
-                self.mazo.popCarta() #se elimina la carta sacada del mazo principal
-                
-    def prepararJuego(self):
-        Partida.generarMazo()
-        Partida.repartirCartas()
-        
     def cartaJugada(self,carta):
         #Se asume que ya se filtro y solo se juega cuando es el jugador actual
         self.jugadorActual.cartaJugada(carta)

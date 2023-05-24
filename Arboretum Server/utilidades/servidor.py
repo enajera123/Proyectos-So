@@ -55,29 +55,62 @@ class Servidor:
             conn.sendall(self.unirsePartida(array[1], array[2], array[3]))
         elif "empezar" in array[0]:
             conn.sendall(self.empezarPartida())
-        # elif "carta" in array[0]:
-        #     conn.sendall(self.getCarta())
-        # elif "mazo" in array[0]:
-        #     conn.sendall(self.getMazo())
-        # elif "jugador" in array[0]:
-        #     conn.sendall(self.getJugador())
+        elif "modificarCartaTablero" in array[0]:
+            conn.sendall(self.modificarCartaTablero(
+                array[1], array[2], array[3], array[4]))
+        elif "agregarCartaTablero" in array[0]:
+            conn.sendall(self.agregarCartaTablero(
+                array[1], array[2], array[3], array[4]))
+        elif "agregarCartaJugador" in array[0]:
+            conn.sendall(self.agregarCartaJugador(array[1], array[2]))
+        elif "descartaCarta" in array[0]:
+            conn.sendall(self.descartaCarta(array[1], array[2]))
+        elif "sacarCartaDescarte" in array[0]:
+            conn.sendall(self.sacarCartaDescarte(array[1], array[2]))
         # elif "partida" in array[0]:
         #     conn.sendall(self.Partida())
         elif "getPartida" in array[0]:
             conn.sendall(self.getPartida())
         elif "salir" in array[0]:
-            conn.sendall(json.dumps(self.salirPartida(array[1])).encode("utf-8"))
+            conn.sendall(json.dumps(
+                self.salirPartida(array[1])).encode("utf-8"))
         else:
             conn.sendall("Code: 101".encode())
 
  # =======================
  # Funciones Partida
  # =======================
+    def sacarCartaDescarte(self, nombreJugador, idCarta):
+        if self.juegoControlador.sacarCartaDescarte(nombreJugador, idCarta):
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
+
+    def modificarCartaTablero(self, nombreJugador, idCarta, posx, posy):
+        if self.juegoControlador.modificarPosicionCartaTablero(nombreJugador, idCarta, posx, posy):
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
+
+    def descartaCarta(self, nombreJugador, idCarta):
+        if self.juegoControlador.descartarCarta(nombreJugador, idCarta):
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
+
+    def agregarCartaJugador(self, nombreJugador, idCarta):
+        idCarta = int(idCarta)
+        if self.juegoControlador.agregarCartaJugador(nombreJugador, idCarta):
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
+
     def empezarPartida(self):
         self.juegoControlador.asignarCartasToJugadores()
         self.juegoControlador.partida.iniciado = True
-        #return json.dumps(self.juegoControlador.partida,default=lambda o: o.__dict__)
+        # return json.dumps(self.juegoControlador.partida,default=lambda o: o.__dict__)
         return json.dumps("Empezado").encode("utf-8")
+
+    def agregarCartaTablero(self, nombreJugador, idCarta, posx, posy):
+        if self.juegoControlador.ponerCartaTablero(nombreJugador, idCarta, posx, posy):
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
+        return json.dumps("error").encode("utf-8")
     # def getCarta(self):
     #     return json.dumps(Carta(1,"a",20), default=lambda o:o.__dict__).encode("utf-8")
     # def Partida(self):
@@ -105,16 +138,16 @@ class Servidor:
 
     def getPartida(self):
         if self.juegoControlador.partida != None:
-            return json.dumps(self.juegoControlador.partida,default=lambda o:o.__dict__).encode("utf-8")
+            return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
         return json.dumps("error").encode("utf-8")
 
     def crearPartida(self, nombre, clave):
         partida = self.juegoControlador.partida
         if partida == None:
             partida = Partida(nombre, clave)
-            #partida.mazo.generarMazo(cantidadJugadores)
+            # partida.mazo.generarMazo(cantidadJugadores)
             self.juegoControlador.partida = partida
-           
+
             return json.dumps(partida, default=lambda o: o.__dict__).encode("utf-8")
         return json.dumps("Hay una partida existente").encode("utf")
 
@@ -136,8 +169,9 @@ class Servidor:
         if partida != None and partida.nombre == nombrePartida and partida.clave == clave:
             for i in self.listaConectados:
                 if i.nombre == nombreJugador:
-                    self.juegoControlador.partida.jugadores.append(Jugador(nombreJugador))
-                    return json.dumps(self.juegoControlador.partida, default=lambda o:o.__dict__).encode("utf-8")
+                    self.juegoControlador.partida.jugadores.append(
+                        Jugador(nombreJugador))
+                    return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
             return json.dumps("No se pudo unir").encode("utf-8")
         return json.dumps("No se encontro partida").encode("utf-8")
 

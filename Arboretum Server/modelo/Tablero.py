@@ -11,6 +11,7 @@ class Tablero:
         for carta in self.cartas:
             if carta.obtenerArbol() in tiposArboles:
                 carta.buscarCaminos("",self.rutaCaminos)
+                
     def obtenerPuntuacionTablero(self):
         caminos = Utilidades.leerDatos(self.rutaCaminos)
         caminosValidos = []
@@ -108,6 +109,17 @@ class Tablero:
                 carta.agregarCartaAdyacente(cartaNueva,"Arriba")
         self.cartas.append(cartaNueva)# Se agrega la carta nueva a las cartas
         
+    def modificarPosicionCarta(self, idCarta, posx, posy):
+        idCarta = int(idCarta)
+        posx = int(posx)
+        posy = int(posy)
+        for c in self.cartas:
+          if c.id == idCarta:
+            c.posX = posx
+            c.posY = posy
+            return True
+        return False
+
         
         
                 

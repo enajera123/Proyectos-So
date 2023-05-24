@@ -37,7 +37,13 @@ class Mazo:
     
     def getCartas(self):
         return self.cartas
-
+    #def removeCarta(self, id):
+        #for c in self.cartas:
+         #   if c.id == id:
+          #      self.cartas.remove(c)
+           #     return c
+        #return self.c
+        
     def agregarCartas(self, cartas):
         for carta in cartas:
             self.cartas.append(carta)
@@ -45,7 +51,7 @@ class Mazo:
     def popCarta(self):
         '''Elimina la ultima carta ingresada'''
         if (len(self.cartas) != 0):
-            self.cartas.pop()
+            return self.cartas.pop()
 
     def topCarta(self):
         '''Obtiene la ultima carta ingresada'''
