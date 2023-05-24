@@ -16,6 +16,7 @@ class Carta:
         #Las id son para uso en el lado cliente o esa es la idea lo voy a poner temporalmente sino se quita
         #asi cuando se envia y comparte cartas con el cliente se usan estos id para ubicar la posicion
         #self.idCartasAdyacentes = [None,None,None,None] #Lados: (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
+    
     def obtenerId(self):
          return self.id
      
@@ -29,16 +30,12 @@ class Carta:
         '''Lado: Izquierda, Derecha, Arriba, Abajo '''
         if (lado == "Izquierda"):
             self.cartasAdyacentes[0] = carta
-            self.idCartasAdyacentes[0] = carta.obtenerId()
         elif (lado == "Derecha"):
             self.cartasAdyacentes[1] = carta
-            self.idCartasAdyacentes[0] = carta.obtenerId()
         elif (lado == "Arriba"):
             self.cartasAdyacentes[2] = carta
-            self.idCartasAdyacentes[0] = carta.obtenerId()
         elif (lado == "Abajo"):
             self.cartasAdyacentes[3] = carta
-            self.idCartasAdyacentes[0] = carta.obtenerId()
     
     def obtenerCartaAdyacente(self,lado):
         '''Lado: Izquierda, Derecha, Arriba, Abajo '''
@@ -52,10 +49,6 @@ class Carta:
             return self.cartasAdyacentes[3]
         else:
             return None
-    
-    def obtenerIdCartasAdyacentes(self):
-        '''Lados: (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo'''
-        return self.idCartasAdyacentes
     
     def buscarCaminos(self,camino,ruta):
         #Este metodo busca cada posible camino que comienza y termina con el mismo tipo de arbol y lo escribe en un Json

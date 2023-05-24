@@ -17,6 +17,9 @@ class Jugador:
                 c.posY = posy
                 self.cartas.remove(c)
                 self.tablero.cartas.append(c)
+                #Este es el funcional el que se debe usar para que se haga correctamente pero no se puede probar
+                #sino hasta se agregen los turnos y demas pero deberia estar bien
+                #self.tablero.agregarCarta(c) 
                 return True
         return False
     

@@ -1,4 +1,4 @@
-#from utilidades.Utilidades import Utilidades
+from utilidades.Utilidades import Utilidades
 
 class Tablero:
     def __init__(self,nombre):
@@ -93,20 +93,21 @@ class Tablero:
             puntos += 2
         return puntos
     def agregarCarta(self,cartaNueva):
-        #Obtiene las id de las cartas adyacentes de la nueva carta y las busca en la lista de cartas del tablero
-        #Y actualiza las adyacentes ejemplo a la carta de arriba se agrega a si mismo como la de abajo
         #El formato del vector que devuelve obtenerIdCartasAdyacentes es (0)Izquierda, (1)Derecha, (2)Arriba, (3)Abajo
         #El formato de agregarCartaAdyacente(carta,Lado) Lado: Izquierda, Derecha, Arriba, Abajo
         for carta in self.cartas:
-            cartasAdyacentesId = cartaNueva.obtenerIdCartasAdyacentes()
-            if carta.obtenerId() == cartasAdyacentesId[0]:
+            if carta.posX == cartaNueva.posX-1 and carta.posY == cartaNueva.posY:
+                cartaNueva.agregarCartaAdyacente(carta,"Izquierda")
                 carta.agregarCartaAdyacente(cartaNueva,"Derecha")
-            elif carta.obtenerId() == cartasAdyacentesId[1]:
+            if carta.posX == cartaNueva.posX+1 and carta.posY == cartaNueva.posY:
+                cartaNueva.agregarCartaAdyacente(carta,"Derecha")
                 carta.agregarCartaAdyacente(cartaNueva,"Izquierda")
-            elif carta.obtenerId() == cartasAdyacentesId[2]:
-                carta.agregarCartaAdyacente(cartaNueva,"Abajo")
-            elif carta.obtenerId() == cartasAdyacentesId[3]:
+            if carta.posX == cartaNueva.posX and carta.posY == cartaNueva.posY-1:
+                cartaNueva.agregarCartaAdyacente(carta,"Abajo")
                 carta.agregarCartaAdyacente(cartaNueva,"Arriba")
+            if carta.posX == cartaNueva.posX and carta.posY == cartaNueva.posY+1:
+                cartaNueva.agregarCartaAdyacente(carta,"Arriba")
+                carta.agregarCartaAdyacente(cartaNueva,"Abajo")
         self.cartas.append(cartaNueva)# Se agrega la carta nueva a las cartas
         
     def modificarPosicionCarta(self, idCarta, posx, posy):
