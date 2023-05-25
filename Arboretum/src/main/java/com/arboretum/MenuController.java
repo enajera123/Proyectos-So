@@ -17,6 +17,8 @@ import animatefx.animation.BounceIn;
 import java.io.IOException;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
@@ -114,8 +116,13 @@ public class MenuController implements Initializable {
 
                         });
                         if (partida.isIniciado()) {
-                            //        synchronized (lockEmpezar) {
-                            //          lockEmpezar.notify();
+                            try {
+                                //        synchronized (lockEmpezar) {
+                                //          lockEmpezar.notify();
+                                App.setRoot("tablero");
+                            } catch (IOException ex) {
+                                Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                             muerteHiloEsperando = -1;
                             //    }
                         }
@@ -183,7 +190,7 @@ public class MenuController implements Initializable {
     @FXML
     private void btnEmpezarPartida(ActionEvent event) throws IOException, InterruptedException {
         if (partida != null && partida.getJugadores().size() > 0) {
-            if (servidor.empezarPartida()) {
+            if (servidor.empezarPartida(jugador.getNombre())) {
                 //synchronized (lockEmpezar) {
                 // lockEmpezar.wait();
                 partida = servidor.getPartida();
@@ -212,6 +219,7 @@ public class MenuController implements Initializable {
                 lblEsperarClavePartida.setText("Clave: " + partida.getClave());
                 if (muerteHiloEsperando == -1) {
                     muerteHiloEsperando = 0;
+                    hiloEsperarJugadores.setDaemon(true);
                     hiloEsperarJugadores.start();
                 } else {
                     reanudarHiloEsperando();

@@ -54,7 +54,7 @@ class Servidor:
         elif "unirse" in array[0]:
             conn.sendall(self.unirsePartida(array[1], array[2], array[3]))
         elif "empezar" in array[0]:
-            conn.sendall(self.empezarPartida())
+            conn.sendall(self.empezarPartida(array[1]))
         elif "modificarCartaTablero" in array[0]:
             conn.sendall(self.modificarCartaTablero(
                 array[1], array[2], array[3], array[4]))
@@ -101,8 +101,8 @@ class Servidor:
             return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
         return json.dumps("error").encode("utf-8")
 
-    def empezarPartida(self):
-        self.juegoControlador.asignarCartasToJugadores()
+    def empezarPartida(self,jugadorActual):
+        self.juegoControlador.asignarCartasToJugadores(jugadorActual)
         self.juegoControlador.partida.iniciado = True
         # return json.dumps(self.juegoControlador.partida,default=lambda o: o.__dict__)
         return json.dumps("Empezado").encode("utf-8")

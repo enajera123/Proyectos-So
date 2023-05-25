@@ -6,13 +6,19 @@ import java.util.List;
  *
  * @author estebannajera
  */
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Partida {
 
     private String nombre;
     private String clave;
     private List<Jugador> jugadores;
+    private List<String> arboles;
     private Mazo mazo;
     private boolean iniciado;
+    private Jugador jugadorActual;
     //  private List<String> tableros;
     //private List<String> mazo;
     //private List<String> barajas;
@@ -24,13 +30,23 @@ public class Partida {
      */
     public Partida() {
     }
-
-    public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo, boolean iniciado) {
+    @JsonCreator
+    public Partida(
+        @JsonProperty("nombre") String nombre, 
+        @JsonProperty("clave") String clave, 
+        @JsonProperty("jugadores") List<Jugador> jugadores, 
+        @JsonProperty("mazo") Mazo mazo, 
+        @JsonProperty("iniciado") boolean iniciado, 
+        @JsonProperty("arboles") List<String> arboles,
+        @JsonProperty("jugadorActual") Jugador jugadorActual
+    ) {
         this.nombre = nombre;
         this.clave = clave;
         this.jugadores = jugadores;
+        this.arboles = arboles;
         this.mazo = mazo;
         this.iniciado = iniciado;
+        this.jugadorActual = jugadorActual;
     }
 
     public boolean isIniciado() {
@@ -41,11 +57,12 @@ public class Partida {
         this.iniciado = iniciado;
     }
 
-    public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo) {
+    public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo, List<String> arboles) {
         this.nombre = nombre;
         this.clave = clave;
-        this.jugadores = jugadores;
         this.mazo = mazo;
+        this.jugadores = jugadores;
+        this.arboles = arboles;
     }
 
     public void setMazo(Mazo mazo) {

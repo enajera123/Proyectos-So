@@ -8,14 +8,17 @@ class juegoControlador:
 
         # self.mazo.generarMazo(len(self.partida.jugadores))
 
-    def asignarCartasToJugadores(self):
+    def asignarCartasToJugadores(self,jugadorActual):
         if self.partida != None:
-            self.partida.mazo.generarMazo(
-                len(self.partida.jugadores))  # Se genera el mazo
+            self.partida.generarMazo(len(self.partida.jugadores))  # Se genera el mazo
             for jugador in self.partida.jugadores:
                 # Se asignan 8 cartas por cada jugador y luego se eliminan del mazo
-                jugador.cartas = self.partida.mazo.cartas[:8]
-                del self.partida.mazo.cartas[:8]
+                jugador.cartas = self.partida.mazo.cartas[:7]
+                del self.partida.mazo.cartas[:7]
+                if jugadorActual != jugador.nombre:
+                    jugador.descartes.append(self.partida.mazo.cartas.pop())
+                else:
+                    self.partida.jugadorActual = jugador
 
     def ponerCartaTablero(self, nombreJugador, idCarta, posx, posy):
         for i in self.partida.jugadores:
@@ -34,10 +37,11 @@ class juegoControlador:
         for j in self.partida.jugadores:
             if j.nombre == nombreJugador:
                 carta = self.partida.mazo.popCarta()
-                print(carta.id)
-                print(idCarta)
-                j.cartas.append(carta)
-                return True
+                if carta != None:
+                    print(carta.id)
+                    print(idCarta)
+                    j.cartas.append(carta)
+                    return True
         return False
 
     def descartarCarta(self, nombreJugador, idCarta):
