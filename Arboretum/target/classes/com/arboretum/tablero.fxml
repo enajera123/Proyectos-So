@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.image.Image?>
@@ -19,56 +20,66 @@
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1280.0" prefWidth="1920.0" spacing="20.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/tablero.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.TableroController">
    <children>
-      <VBox alignment="CENTER" prefHeight="1280.0" prefWidth="554.0" spacing="20.0" styleClass="bg-cafeOscuro" HBox.hgrow="SOMETIMES">
+      <StackPane HBox.hgrow="SOMETIMES">
          <children>
-            <Label text="Arboretum" textFill="WHITE">
-               <font>
-                  <Font name="Apple Chancery" size="54.0" />
-               </font>
-            </Label>
-            <Separator prefHeight="355.0" prefWidth="368.0" stylesheets="@../../styles/tablero.css" />
-            <Button fx:id="btnDescartar" mnemonicParsing="false" onAction="#btnDescartar" text="Descartar">
-               <styleClass>
-                  <String fx:value="btn-bg-cafeOscuro" />
-                  <String fx:value="txt-standar" />
-               </styleClass>
-            </Button>
-            <GridPane fx:id="gridMazos" alignment="CENTER" hgap="150.0" onMouseClicked="#clickMazoDescarte" prefHeight="534.0" prefWidth="534.0" vgap="10.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
+            <VBox fx:id="panelMensaje" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" styleClass="bg-cafeGradient">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <ImageView fitHeight="103.0" fitWidth="143.0" onMouseClicked="#clickMazo" pickOnBounds="true" smooth="false" styleClass="drop-shadow">
-                           <image>
-                              <Image url="@../../img/cartas/trasera.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="lblCantidadCartas" alignment="CENTER" disable="true" text="40" textFill="WHITE">
-                           <font>
-                              <Font name="Apple Chancery" size="47.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </StackPane>
+                  <Label fx:id="lblMensaje" styleClass="txt-standar" text="Esperando Turno" />
+                  <ProgressBar prefWidth="200.0" />
                </children>
-            </GridPane>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="1280.0" prefWidth="554.0" spacing="20.0" styleClass="bg-cafeOscuro">
+               <children>
+                  <Label text="Arboretum" textFill="WHITE">
+                     <font>
+                        <Font name="Apple Chancery" size="54.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="204.0" prefWidth="554.0" stylesheets="@../../styles/tablero.css" />
+                  <Button fx:id="btnDescartar" mnemonicParsing="false" onAction="#btnDescartar" text="Descartar">
+                     <styleClass>
+                        <String fx:value="btn-bg-cafeOscuro" />
+                        <String fx:value="txt-standar" />
+                     </styleClass>
+                  </Button>
+                  <GridPane fx:id="gridMazos" alignment="CENTER" hgap="150.0" onMouseClicked="#clickMazoDescarte" prefHeight="534.0" prefWidth="534.0" vgap="10.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="100.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <ImageView fitHeight="103.0" fitWidth="143.0" onMouseClicked="#clickMazo" pickOnBounds="true" smooth="false" styleClass="drop-shadow">
+                                 <image>
+                                    <Image url="@../../img/cartas/trasera.png" />
+                                 </image>
+                              </ImageView>
+                              <Label fx:id="lblCantidadCartas" alignment="CENTER" disable="true" text="40" textFill="WHITE">
+                                 <font>
+                                    <Font name="Apple Chancery" size="47.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
          </children>
-      </VBox>
+      </StackPane>
       <BorderPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
          <top>
-            <HBox fx:id="contenedorUsuarios" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="contenedorUsuarios" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
                   <Label fx:id="lblUsuario" styleClass="txt-standar" text="Usuario" />
                   <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="107.0" />

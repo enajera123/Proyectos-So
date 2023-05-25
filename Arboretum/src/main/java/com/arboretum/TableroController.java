@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import model.Carta;
 import model.Jugador;
@@ -50,6 +52,10 @@ public class TableroController implements Initializable {
     private Label lblCantidadCartas;
     @FXML
     private Button btnDescartar;
+    @FXML
+    private VBox panelMensaje;
+    @FXML
+    private Label lblMensaje;
     //Objeto utilidad
     private final GridDinamico gridDinamico = new GridDinamico();
     //GridPane dinamico
@@ -63,13 +69,17 @@ public class TableroController implements Initializable {
     private final int ROW = 6;
     private Stack<CartaVisual> cartasDescarteVisual = new Stack<>();
     private CartaVisual cartaSeleccionada = null;
-
     //Banderas
-    private boolean recogeCartaDescarte = false;
+
     private boolean recogeMazoPrincipal = false;
     private boolean primeraCarta = true;
     private int cantidadCartasRecogidas = 2;
     private int cartasPorPoner = 1;
+
+    //Hilos
+    private int muerteHilo = -1;
+    Thread hiloEsperar;
+    private final Object lock = new Object();
 
     /**
      * Initializes the controller class.
@@ -80,9 +90,48 @@ public class TableroController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         /**
+         * Inicia los hilos
+         */
+
+        hiloEsperar = new Thread(() -> {
+            try {
+                Partida p;
+                while (muerteHilo != -1) {
+                    p = servidor.getPartida();
+                    System.out.println(p.getJugadorActual().getNombre());
+                    if (p.getJugadorActual().getNombre().equals(jugador.getNombre())) {
+                        System.out.println("Entra");
+                        partida = p;
+                        Platform.runLater(() -> {
+                            System.out.println("Quita Mensaje");
+
+                            quitarMensajeEsperar();
+
+                        });
+                        synchronized (lock) {
+                            try {
+                                System.out.println("esperaHilo");
+                                lock.wait();
+                                System.out.println("libera");
+                            } catch (Exception ex) {
+                                System.out.println(ex.toString());
+
+                            }
+                        }
+                        //        });
+                    }
+                }
+
+            } catch (Exception ex) {
+                System.out.println(ex.toString());
+            }
+        });
+
+        /**
          * Inicia las cartas*
          */
         iniciarComponentes();
+
         /**
          * GRID*
          */
@@ -103,6 +152,10 @@ public class TableroController implements Initializable {
             return true;
         }
         return false;
+    }
+
+    private void actualizarCantidadCartas() {
+        lblCantidadCartas.setText(String.valueOf(partida.getMazo().getCartas().size()));
     }
 
     private CartaVisual buscarCartaVisual(int id) {
@@ -214,7 +267,6 @@ public class TableroController implements Initializable {
                 cartasDescarteVisual.add(carta);
                 redimensionarCarta(carta, 75, 90, 15);
                 gridMazos.add(carta.getContenedor(), colum, row);
-
             }
             if (colum == 1) {//Verificacion del grid para agregar en cruz
                 row++;
@@ -264,6 +316,7 @@ public class TableroController implements Initializable {
                     verificaEsquinasGrid(indexRow, indexColum);
                     //Se limpia el buffer
                     cartaSeleccionada = null;
+                    verificarFinTurno();
                 } else {
                     Alerta.alerta("Error al modificar la partida", "error", Alert.AlertType.ERROR);
                 }
@@ -280,6 +333,32 @@ public class TableroController implements Initializable {
             cartaSeleccionada = cartaVisual;
             cartaSeleccionada.getContenedor().setId(String.valueOf(cartaVisual.getId()));
             selectCard();
+        }
+    }
+
+    @FXML
+    private void clickMazo(MouseEvent event) {
+        if (!partida.getMazo().getCartas().isEmpty() && cantidadCartasRecogidas > 0) {
+            cantidadCartasRecogidas--;
+            recogeMazoPrincipal = true;
+            Carta carta = partida.getMazo().getCartas().pop();
+            partida.setCartaJugador(jugador.getNombre(), carta);
+            servidor.agregarCarta(jugador.getNombre(), carta.getId());
+            contenedorMano.getChildren().add(crearCartaVisual(carta).getContenedor());
+            actualizarCantidadCartas();
+            verificarFinTurno();
+        }
+    }
+
+    @FXML
+    private void clickMazoDescarte(MouseEvent event) {
+        if (!cartasDescarteVisual.isEmpty() && !recogeMazoPrincipal && cantidadCartasRecogidas > 0) {
+            CartaVisual ultima = cartasDescarteVisual.pop();
+            actualizarPartida(servidor.sacarCartaDescarte(jugador.getNombre(), ultima.getId()));
+            cantidadCartasRecogidas--;
+            verificarFinTurno();
+        } else {
+            recogeMazoPrincipal = false;
         }
     }
 
@@ -336,6 +415,7 @@ public class TableroController implements Initializable {
             deselectCard();
             btnDescartar.setDisable(true);
             actualizarPartida(servidor.descartarCarta(jugador.getNombre(), cartaSeleccionada.getId()));
+            verificarFinTurno();
         }
     }
 
@@ -349,15 +429,47 @@ public class TableroController implements Initializable {
         servidor = Data.getSevidor();
         if (partida != null /*&& jugador != null*/) {
 
+            if (partida.getJugadorActual() != null && !jugador.getNombre().equals(partida.getJugadorActual().getNombre())) {
+                mostrarMensajeEsperar();
+            }
             actualizarPartida(partida);
             lblUsuario.setText(jugador.getNombre());
+            lblUsuario.setOnMouseClicked(t -> clickLabelUsuario(lblUsuario));
+            lblUsuario.getStyleClass().add("labelHover");
             partida.getJugadores().forEach((t) -> {
                 if (!t.getNombre().equals(jugador.getNombre())) {
-                    contenedorUsuarios.getChildren().add(new Label(t.getNombre()));
+                    Label label = new Label(t.getNombre());//Se crea el label del jugador
+                    label.setFont(new Font("Apple Chancery", 20));
+                    label.setOnMouseClicked(event -> clickLabelUsuario(label));
+                    label.getStyleClass().add("labelHover");
+                    contenedorUsuarios.getChildren().add(label);
                 }
             });
             crearLabelesDescarte();
         }
+    }
+
+    private void clickLabelUsuario(Label label) {
+        partida = servidor.getPartida();
+        Jugador jugadorACargar = null;
+        if (partida != null) {
+            for (Jugador j : partida.getJugadores()) {
+                if (j.getNombre().equals(label.getText())) {
+                    jugadorACargar = j;
+                }
+            }
+        }
+        if (jugadorACargar.getNombre().equals(jugador.getNombre())) {
+            actualizarPartida(partida);
+            gridMazos.setDisable(false);
+        } else {
+            //cargarMano(jugadorACargar);
+            contenedorMano.getChildren().clear();
+            cargarTablero(jugadorACargar);
+            cargarMazosDescarte();
+            gridMazos.setDisable(true);
+        }
+
     }
 
     private boolean reglas(int posX, int posY) {
@@ -421,32 +533,41 @@ public class TableroController implements Initializable {
         }
     }
 
-    @FXML
-    private void clickMazo(MouseEvent event) {
-        if (!partida.getMazo().getCartas().isEmpty() && cantidadCartasRecogidas > 0) {
-            cantidadCartasRecogidas--;
-            recogeMazoPrincipal = true;
-            Carta carta = partida.getMazo().getCartas().pop();
-            partida.setCartaJugador(jugador.getNombre(), carta);
-            servidor.agregarCarta(jugador.getNombre(), carta.getId());
-            contenedorMano.getChildren().add(crearCartaVisual(carta).getContenedor());
-            actualizarCantidadCartas();
+    private void verificarFinTurno() {
+        if (cantidadCartasRecogidas == 0 && cartasPorPoner == 0 && btnDescartar.isDisable()) {
+            partida = servidor.cambiarTurno();
+
+            mostrarMensajeEsperar();
+
         }
     }
 
-    @FXML
-    private void clickMazoDescarte(MouseEvent event) {
-        if (!cartasDescarteVisual.isEmpty() && !recogeMazoPrincipal && cantidadCartasRecogidas > 0) {
-            CartaVisual ultima = cartasDescarteVisual.pop();
-            actualizarPartida(servidor.sacarCartaDescarte(jugador.getNombre(), ultima.getId()));
-            cantidadCartasRecogidas--;
+    private void mostrarMensajeEsperar() {
+        if (muerteHilo == -1) {
+            hiloEsperar.start();
+            muerteHilo = 1;
         } else {
-            recogeMazoPrincipal = false;
+            synchronized (lock) {
+                try {
+                    lock.notify();
+                } catch (Exception ex) {
+                    System.out.println(ex.toString());
+                }
+
+            }
         }
+        lblMensaje.setText("Esperando Turno");
+        panelMensaje.toFront();
+        contenedorMano.setDisable(true);
     }
 
-    private void actualizarCantidadCartas() {
-        lblCantidadCartas.setText(String.valueOf(partida.getMazo().getCartas().size()));
+    private void quitarMensajeEsperar() {
+        actualizarPartida(partida);//Se actualiza la partida una vez que se inicia el turno
+        panelMensaje.toBack();
+        contenedorMano.setDisable(false);
+        cantidadCartasRecogidas = 2;//Se actualizan los contadores
+        cartasPorPoner = 1;
+        btnDescartar.setDisable(false);
     }
 
 }

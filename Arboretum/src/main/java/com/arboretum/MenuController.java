@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.Random;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 
 import model.Jugador;
 import model.Partida;
@@ -72,6 +73,10 @@ public class MenuController implements Initializable {
     private StackPane panelDerecho;
     @FXML
     private VBox panelIzquierdo;
+    @FXML
+    private StackPane contenedor;
+    @FXML
+    private Button btnEmpezarPartida;
 
     private Servidor servidor;
 
@@ -82,7 +87,7 @@ public class MenuController implements Initializable {
     private Jugador jugador = null;
 
     private int muerteHiloEsperando = -1;
-
+    private boolean creadorPartida = false;
     private final Object lock = new Object();
     private final Object lockEmpezar = new Object();
 
@@ -93,10 +98,11 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         servidor = null;
         hiloEsperarJugadores = new Thread(() -> {
+
             if (partida != null) {
                 while (muerteHiloEsperando != -1) {
                     partida = servidor.getPartida();
-                    if (muerteHiloEsperando == 1) {
+                    if (muerteHiloEsperando == 1) {//Se pone el hilo en espera en 1
                         synchronized (lock) {
                             try {
                                 lock.wait();
@@ -114,10 +120,10 @@ public class MenuController implements Initializable {
 
                         });
                         if (partida.isIniciado()) {
-                            //        synchronized (lockEmpezar) {
-                            //          lockEmpezar.notify();
                             muerteHiloEsperando = -1;
-                            //    }
+                            Platform.runLater(() -> {
+                                btnEmpezarPartida.setDisable(false);
+                            });
                         }
 
                     }
@@ -182,28 +188,29 @@ public class MenuController implements Initializable {
 
     @FXML
     private void btnEmpezarPartida(ActionEvent event) throws IOException, InterruptedException {
-        if (partida != null && partida.getJugadores().size() > 0) {
-            if (servidor.empezarPartida()) {
-                //synchronized (lockEmpezar) {
-                // lockEmpezar.wait();
-                partida = servidor.getPartida();
-                if (partida != null) {
-                    bindData();
-                    App.setRoot("tablero");
-                }else{
-                    Alerta.alerta("Error al empezar partida", "error", Alert.AlertType.ERROR);
-                }
-                //}
-            }
-
+        if (btnEmpezarPartida.getText().equals("Iniciar")) {
+            partida = servidor.getPartida();
+            bindData();
+            App.setRoot("tablero");
         } else {
-            new Bounce(lblCantidadJugadores).play();
-
+            if (partida != null && !partida.getJugadores().isEmpty()) {
+                if (servidor.empezarPartida()) {
+                    partida = servidor.cambiarTurno();
+                    if (partida != null) {
+                        bindData();
+                        App.setRoot("tablero");
+                    } else {
+                        Alerta.alerta("Error al empezar partida", "error", Alert.AlertType.ERROR);
+                    }
+                }
+            } else {
+                new Bounce(lblCantidadJugadores).play();
+            }
         }
     }
 
     @FXML
-    private void btnUnirse(ActionEvent event) {
+    private void btnUnirse(ActionEvent event) throws IOException, InterruptedException {
         if (servidor != null) {
             partida = servidor.unirsePartida(jugador.getNombre(), txfUnirseNombrePartida.getText(), txfUnirseClavePartida.getText());
             if (partida != null) {
@@ -218,10 +225,12 @@ public class MenuController implements Initializable {
                 }
                 panelEsperarJugadores.toFront();
                 new BounceIn(panelEsperarJugadores).play();
+                if (!creadorPartida) {
+                    btnEmpezarPartida.setText("Iniciar");
+                    btnEmpezarPartida.setDisable(true);
+                }
             }
         }
-        //servidor.partida();
-
     }
 
     @FXML
@@ -241,6 +250,8 @@ public class MenuController implements Initializable {
                     txfCrearNombrePartida.setText(null);
                     txfCrearClavePartida.setText(null);
                     panelEsperarJugadores.toFront();
+                    creadorPartida = true;
+
                     if (muerteHiloEsperando == -1) {
                         muerteHiloEsperando = 0;
                         hiloEsperarJugadores.start();

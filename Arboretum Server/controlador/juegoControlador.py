@@ -6,12 +6,15 @@ class juegoControlador:
     def __init__(self):
         self.partida = None
 
-        # self.mazo.generarMazo(len(self.partida.jugadores))
-
+    def cambiarTurno(self):
+        if self.partida.cambiarJugador():
+            return True
+        return False
+        
+        
     def asignarCartasToJugadores(self):
         if self.partida != None:
-            self.partida.mazo.generarMazo(
-                len(self.partida.jugadores))  # Se genera el mazo
+            self.partida.mazo.generarMazo(len(self.partida.jugadores))  # Se genera el mazo
             for jugador in self.partida.jugadores:
                 # Se asignan 8 cartas por cada jugador y luego se eliminan del mazo
                 jugador.cartas = self.partida.mazo.cartas[:8]

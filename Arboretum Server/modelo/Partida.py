@@ -10,11 +10,15 @@ class Partida:
         self.clave = clave
         self.jugadores = [] #Se guardan objetos Usuario
         self.iniciado = False
-    #   self.jugadorActual = None #Se guarda objeto Usuario
+        self.jugadorActual = None #Se guarda objeto Usuario
         self.mazo = Mazo("principal")
         
     def agregarJugador(self,jugador):
+        for j in self.jugadores:
+            if j.nombre == jugador.nombre:
+                return False
         self.jugadores.append(jugador)
+        return True
                 
     def cartaJugada(self,carta):
         #Se asume que ya se filtro y solo se juega cuando es el jugador actual
@@ -45,11 +49,11 @@ class Partida:
             if j.getNombre() == jugador.getNombre():
                 j.cartaDescartadaPop()
                 
-    def cambiarJugadorActual(self,jugador):
-        for j in self.jugadores:
-            if j.getNombre() == jugador.getNombre():
-                self.jugadorActual = j
-                
+    def cambiarJugador(self):
+        self.jugadorActual = self.jugadores.pop(0)
+        self.jugadores.append(self.jugadorActual)
+        return True
+            
     def asignarDerechosApuntuar(self):
         barajas = []
         #Se obtinen las barajas de los jugadores

@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 import javafx.scene.control.Alert;
-import model.Carta;
-
 import model.Partida;
 
 /**
@@ -70,7 +68,7 @@ public class Servidor {
 
     public String leerDatos() {
         try {
-            byte[] buffer = new byte[10000];
+            byte[] buffer = new byte[20000];
             int bytesRead;
             bytesRead = socket.getInputStream().read(buffer);//Lee los bytes
             if (bytesRead != -1) {
@@ -95,10 +93,10 @@ public class Servidor {
             //Leo la respuesta
             String datos = leerDatos();
             System.out.println(datos);
-            if(datos == "No hay respuesta"){
+            if (datos == "No hay respuesta") {
                 return false;
             }
-            
+
             return true;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -125,17 +123,19 @@ public class Servidor {
             return false;
         }
     }
-//    public Partida actualizarPartida(Partida partida){
-//    try {
-//            iniciar();
-//            dataOutputStream.writeUTF("actualizarPartida+"+JSON.writeValueAsString(partida));
-//            String datos = leerDatos();
-//            return JSON.readValue(datos, Partida.class);
-//        } catch (IOException ex) {
-//            return null;
-//        }
-//        
-//    }
+
+    public Partida cambiarTurno() {
+        try {
+            iniciar();
+            dataOutputStream.writeUTF("cambiarTurno+");
+            String datos = leerDatos();
+            System.out.println(datos);
+            return JSON.readValue(datos, Partida.class);
+        } catch (IOException ex) {
+            return null;
+        }
+    }
+
     public Partida agregarCartaTablero(String nombreJugador, int idCarta, int posX, int posY) {
         try {
             iniciar();
@@ -149,11 +149,11 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public Partida agregarCarta(String nombreJugador, int idCarta) {
         try {
             iniciar();
-            dataOutputStream.writeUTF("agregarCartaJugador+" + nombreJugador + "+" + idCarta );
+            dataOutputStream.writeUTF("agregarCartaJugador+" + nombreJugador + "+" + idCarta);
             String datos = leerDatos();
             System.out.println(datos);
             Partida partida = JSON.readValue(datos, Partida.class);
@@ -163,11 +163,11 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public Partida sacarCartaDescarte(String nombreJugador, int idCarta) {
         try {
             iniciar();
-            dataOutputStream.writeUTF("sacarCartaDescarte+" + nombreJugador + "+" + idCarta );
+            dataOutputStream.writeUTF("sacarCartaDescarte+" + nombreJugador + "+" + idCarta);
             String datos = leerDatos();
             System.out.println(datos);
             Partida partida = JSON.readValue(datos, Partida.class);
@@ -177,11 +177,11 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public Partida descartarCarta(String nombreJugador, int idCarta) {
         try {
             iniciar();
-            dataOutputStream.writeUTF("descartaCarta+" + nombreJugador + "+" + idCarta );
+            dataOutputStream.writeUTF("descartaCarta+" + nombreJugador + "+" + idCarta);
             String datos = leerDatos();
             System.out.println(datos);
             Partida partida = JSON.readValue(datos, Partida.class);
@@ -191,7 +191,7 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public Partida modificarCartaTablero(String nombreJugador, int idCarta, int posX, int posY) {
         try {
             iniciar();
@@ -205,17 +205,13 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public boolean salirPartida(String nombre) {
         try {
             iniciar();
             dataOutputStream.writeUTF("salir+" + nombre);
             String datos = leerDatos();
-            if (datos.equals("\"Exito\"")) {
-                return true;
-            } else {
-                return false;
-            }
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -237,19 +233,14 @@ public class Servidor {
     }
 
     public Partida unirsePartida(String nombre, String nombrePartida, String clave) {
+        String datos = "";
         try {
             iniciar();
             dataOutputStream.writeUTF("unirse+" + nombre + "+" + nombrePartida + "+" + clave);
-            String datos = leerDatos();
-
-            if (datos.equals("\"No se encontro partida\"")) {
-                Alerta.alerta(datos, "Oh Oh", Alert.AlertType.ERROR);
-                return null;
-            } else {
-                return JSON.readValue(datos, Partida.class);
-            }
+            datos = leerDatos();
+            return JSON.readValue(datos, Partida.class);
         } catch (IOException ex) {
-            System.out.println(ex.toString());
+            Alerta.alerta(datos, "Ups", Alert.AlertType.ERROR);
             return null;
         }
     }

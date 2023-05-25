@@ -12,6 +12,7 @@ public class Partida {
     private String clave;
     private List<Jugador> jugadores;
     private Mazo mazo;
+    private Jugador jugadorActual;
     private boolean iniciado;
     //  private List<String> tableros;
     //private List<String> mazo;
@@ -25,12 +26,21 @@ public class Partida {
     public Partida() {
     }
 
-    public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo, boolean iniciado) {
+    public Partida(String nombre, String clave, List<Jugador> jugadores, Mazo mazo, Jugador jugadorActual, boolean iniciado) {
         this.nombre = nombre;
         this.clave = clave;
         this.jugadores = jugadores;
         this.mazo = mazo;
+        this.jugadorActual = jugadorActual;
         this.iniciado = iniciado;
+    }
+
+    public Jugador getJugadorActual() {
+        return jugadorActual;
+    }
+
+    public void setJugadorActual(Jugador jugadorActual) {
+        this.jugadorActual = jugadorActual;
     }
 
     public boolean isIniciado() {
@@ -116,9 +126,10 @@ public class Partida {
             }
         }
     }
-    public void setCartaJugador(String nombreJugador, Carta carta){
-        for(Jugador j: jugadores){
-            if(j.getNombre().equals(nombreJugador)){
+
+    public void setCartaJugador(String nombreJugador, Carta carta) {
+        for (Jugador j : jugadores) {
+            if (j.getNombre().equals(nombreJugador)) {
                 j.getCartas().add(carta);
             }
         }

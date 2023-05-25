@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="contenedor" prefHeight="561.0" prefWidth="709.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
+<StackPane fx:id="contenedor" prefHeight="561.0" prefWidth="709.0" styleClass="bg-cafeGradient" stylesheets="@../../styles/menu.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.arboretum.MenuController">
    <children>
       <VBox fx:id="panelEsperarJugadores" alignment="CENTER" spacing="10.0" styleClass="bg-cafeGradient">
          <StackPane.margin>
@@ -57,7 +57,7 @@
                   <Insets left="10.0" right="10.0" />
                </VBox.margin>
             </VBox>
-            <Button mnemonicParsing="false" onAction="#btnEmpezarPartida" text="Empezar Partida">
+            <Button fx:id="btnEmpezarPartida" mnemonicParsing="false" onAction="#btnEmpezarPartida" text="Empezar Partida">
                <styleClass>
                   <String fx:value="btn-bg-cafeOscuro" />
                   <String fx:value="btn-txt" />
