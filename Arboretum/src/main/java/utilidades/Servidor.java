@@ -85,11 +85,11 @@ public class Servidor {
         }
     }
 
-    public boolean empezarPartida() {
+    public boolean empezarPartida(String jugador) {
         try {
             iniciar();
             //Envia datos
-            dataOutputStream.writeUTF("empezar+");
+            dataOutputStream.writeUTF("empezar+" + jugador);
             //Leo la respuesta
             String datos = leerDatos();
             System.out.println(datos);

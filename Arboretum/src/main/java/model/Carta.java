@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 /**
@@ -7,7 +10,6 @@ import java.util.List;
  * @author estebannajera
  */
 public class Carta{
-
     
     private int id;
     private int posX;
@@ -18,16 +20,23 @@ public class Carta{
 
     public Carta() {
     }
-
-    public Carta(int id, String arbol, int numero) {
+    public Carta( int id, String arbol, int numero) {
         this.posX = -1;
         this.posY = -1;
         this.id = id;
         this.arbol = arbol;
         this.numero = numero;
     }
-
-    public Carta(int posX, int posY, int id, String arbol, int numero, List<Carta> cartasAdyacentes) {
+    
+    @JsonCreator
+    public Carta(
+            @JsonProperty("posX") int posX, 
+            @JsonProperty("posY") int posY,
+            @JsonProperty("id") int id, 
+            @JsonProperty("arbol") String arbol, 
+            @JsonProperty("numero") int numero,
+            @JsonProperty("cartasAdyacentes") List<Carta> cartasAdyacentes
+    ) {
         this.posX = posX;
         this.posY = posY;
         this.id = id;

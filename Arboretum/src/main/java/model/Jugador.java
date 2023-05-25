@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import utilidades.CartaVisual;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author estebannajera
@@ -14,15 +17,31 @@ public class Jugador {
     private List<Carta> cartas;
     private Tablero tablero;
     private List<Carta> descartes;
+    private List<String> arbolesPuntuables;
     
     public Jugador() {
     }
-    
-    public Jugador(String nombre, List<Carta> cartas, Tablero tablero, List<Carta> descartes) {
+    @JsonCreator
+    public Jugador(
+        @JsonProperty("nombre")String nombre, 
+        @JsonProperty("cartas") List<Carta> cartas,
+        @JsonProperty("tablero")Tablero tablero, 
+        @JsonProperty("descartes")List<Carta> descartes,
+        @JsonProperty("arbolesPuntuables")List<String> arbolesPuntuables
+    ) {
         this.nombre = nombre;
         this.cartas = cartas;
         this.tablero = tablero;
         this.descartes = descartes;
+        this.arbolesPuntuables = arbolesPuntuables;
+    }
+    
+    public void setArbolesPuntuables(List<String> arbolesPuntuables) {
+        this.arbolesPuntuables = arbolesPuntuables;
+    }
+    
+    public List<String> getArbolesPuntuables() {
+        return this.arbolesPuntuables;
     }
     
     public List<Carta> getDescartes() {
