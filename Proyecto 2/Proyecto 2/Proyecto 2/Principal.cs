@@ -1,6 +1,7 @@
 using Proyecto_2.Modelos;
 using Proyecto_2.Utilidades;
 using System.Collections;
+using System.Drawing.Printing;
 using System.Windows.Forms.VisualStyles;
 
 namespace Proyecto_2
@@ -12,6 +13,9 @@ namespace Proyecto_2
         private List<PictureBox> fotosVisual = new List<PictureBox> { };
         private int velocidadHilo = -1;
         private object lockObject = new object();
+        private object lockTiempo = new object();
+        private DateTime horaArranque = DateTime.Now;
+        private int intervaloTiempo = 1;
         public Principal()
         {
             alerta = new alertaInformacion();
@@ -186,7 +190,10 @@ namespace Proyecto_2
         }
         private void registrarPeticion(Peticion peticion)
         {
-
+            DateTime horaPeticion = DateTime.Now;
+            TimeSpan diferenciaTiempo = horaPeticion - horaArranque;
+            int grupoIntervalo = diferenciaTiempo.Minutes / intervaloTiempo;
+            peticion.setGrupoIntervalo(grupoIntervalo);
             entidadFinanciera.agregarPeticion(peticion);
             entidadFinanciera.ordernarPeticiones();
             ingresarDatosListView(entidadFinanciera.getPeticiones());
@@ -199,12 +206,12 @@ namespace Proyecto_2
                 ListViewItem item = new ListViewItem(i.getServicio().getNombre());
                 item.SubItems.Add(i.getServicio().getPrioridad().ToString());
                 item.SubItems.Add(i.getServicio().getPeso().ToString());
-                item.SubItems.Add(i.getNombre());
+                item.SubItems.Add(i.getGrupoIntervalo().ToString());
                 listProcesos.Items.Add(item);
 
             }
         }
-        
+
 
         private void clickImagenes(object sender, EventArgs e)
         {
@@ -458,23 +465,36 @@ namespace Proyecto_2
             entidadFinanciera.agregarGrupoServicio(new GrupoServicios(nombreGrupo, servicios, cajas));
         }
 
+        private void subirPrioridad()
+        {
+            
+                foreach (Peticion i in entidadFinanciera.getPeticiones())
+                {
+                    i.subirPrioridad(DateTime.Now, horaArranque, intervaloTiempo);
+                }
+                entidadFinanciera.ordernarPeticiones();
+            
+        }
         private void ejecutar()
         {
-
-            Queue<Peticion> peticionesNoAsignadas = new Queue<Peticion> { };
-            while (entidadFinanciera.getPeticiones().Count() > 0)
+            lock (lockTiempo)
             {
-                if (asignarPeticion(entidadFinanciera.getPeticiones().Peek()))
+                Queue<Peticion> peticionesNoAsignadas = new Queue<Peticion> { };
+                subirPrioridad();
+                while (entidadFinanciera.getPeticiones().Count() > 0)
                 {
-                    entidadFinanciera.getPeticiones().Dequeue();
+                    if (asignarPeticion(entidadFinanciera.getPeticiones().Peek()))
+                    {
+                        entidadFinanciera.getPeticiones().Dequeue();
+                    }
+                    else
+                    {
+                        peticionesNoAsignadas.Enqueue(entidadFinanciera.getPeticiones().Dequeue());
+                    }
                 }
-                else
-                {
-                    peticionesNoAsignadas.Enqueue(entidadFinanciera.getPeticiones().Dequeue());
-                }
+                entidadFinanciera.setPeticiones(peticionesNoAsignadas);
+                ingresarDatosListView(entidadFinanciera.getPeticiones());
             }
-            entidadFinanciera.setPeticiones(peticionesNoAsignadas);
-            ingresarDatosListView(entidadFinanciera.getPeticiones());
         }
         private bool asignarPeticion(Peticion peticion)
         {
@@ -665,7 +685,9 @@ namespace Proyecto_2
             {
                 velocidadHilo = lblVelocidad.Text == "X1" ? 1000 : lblVelocidad.Text == "X2" ? 500 : lblVelocidad.Text == "X3" ? 250 : 125;
             }
-
+            //Thread hiloTiempo = new Thread(subirPrioridad);
+            //hiloTiempo.IsBackground = true;
+            //hiloTiempo.Start();
             ejecutar();
         }
 
