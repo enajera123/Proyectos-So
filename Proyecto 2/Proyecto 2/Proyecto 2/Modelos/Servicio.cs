@@ -21,8 +21,10 @@ namespace Proyecto_2.Modelos
             this.prioridad = rand.Next(1, 6);
             this.peso = rand.Next(1, 40);
         }
-        public Servicio()
-        {
+        public Servicio(String nombre, int prioridad, int peso) {
+            this.nombre = nombre;
+            this.prioridad = prioridad;
+            this.peso = peso;
         }
         public string getNombre()
         {

@@ -14,6 +14,7 @@ namespace Proyecto_2
         private int velocidadHilo = -1;
         private object lockObject = new object();
         private object lockTiempo = new object();
+        private object lockEjecutar = new object();
         private DateTime horaArranque = DateTime.Now;
         private int intervaloTiempo = 1;
         public Principal()
@@ -165,7 +166,7 @@ namespace Proyecto_2
                         Servicio? servicio = entidadFinanciera.buscarServicio(nombreServicio);
                         if (servicio != null)
                         {
-                            registrarPeticion(new Peticion(nombre, servicio, check == "preferencial" ? true : false));
+                            registrarPeticion(new Peticion(nombre, new Servicio(servicio.getNombre(), servicio.getPrioridad(), servicio.getPeso()), check == "preferencial" ? true : false));
                         }
                         alerta.limpiarAlerta();
                         bucle = false;
@@ -183,7 +184,11 @@ namespace Proyecto_2
             } while (bucle);
             if (velocidadHilo != -1)
             {
-                ejecutar();
+                lock (lockEjecutar) {
+                    ejecutar();
+                }
+
+                
             }
 
 
@@ -467,40 +472,39 @@ namespace Proyecto_2
 
         private void subirPrioridad()
         {
-            
-                foreach (Peticion i in entidadFinanciera.getPeticiones())
-                {
-                    i.subirPrioridad(DateTime.Now, horaArranque, intervaloTiempo);
-                }
-                entidadFinanciera.ordernarPeticiones();
-            
+            foreach (Peticion i in entidadFinanciera.getPeticiones())
+            {
+                i.subirPrioridad(DateTime.Now, horaArranque, intervaloTiempo);
+            }
+            entidadFinanciera.ordernarPeticiones();
         }
         private void ejecutar()
         {
+            Queue<Peticion> peticionesNoAsignadas = new Queue<Peticion> { };
             lock (lockTiempo)
             {
-                Queue<Peticion> peticionesNoAsignadas = new Queue<Peticion> { };
                 subirPrioridad();
-                while (entidadFinanciera.getPeticiones().Count() > 0)
-                {
-                    if (asignarPeticion(entidadFinanciera.getPeticiones().Peek()))
-                    {
-                        entidadFinanciera.getPeticiones().Dequeue();
-                    }
-                    else
-                    {
-                        peticionesNoAsignadas.Enqueue(entidadFinanciera.getPeticiones().Dequeue());
-                    }
-                }
-                entidadFinanciera.setPeticiones(peticionesNoAsignadas);
-                ingresarDatosListView(entidadFinanciera.getPeticiones());
             }
+            while (entidadFinanciera.getPeticiones().Count() > 0)
+            {
+                if (asignarPeticion(entidadFinanciera.getPeticiones().Peek()))
+                {
+                    entidadFinanciera.getPeticiones().Dequeue();
+                }
+                else
+                {
+                    peticionesNoAsignadas.Enqueue(entidadFinanciera.getPeticiones().Dequeue());
+                }
+            }
+            entidadFinanciera.setPeticiones(peticionesNoAsignadas);
+            ingresarDatosListView(entidadFinanciera.getPeticiones());
         }
         private bool asignarPeticion(Peticion peticion)
         {
             Caja caja = entidadFinanciera.asignarPeticion(peticion);
             if (caja != null)
             {
+                //subirPrioridad();
                 Thread hilo = new Thread(new ParameterizedThreadStart(hilo_caja));
                 hilo.Start(caja);
                 return true;
@@ -559,7 +563,10 @@ namespace Proyecto_2
                         }
                     }
                 }
-                ejecutar();
+                lock (lockEjecutar) {
+                    ejecutar();
+                }
+                
             }
         }
         private void ejecutarPeticion(Peticion peticion, ProgressBar barra)
@@ -606,12 +613,12 @@ namespace Proyecto_2
 
             if (caja.getTipoCaja() == btnGrupo1.Text && cantCajas1 > 1)
             {
-                if (promedio1 * rangoDiferencia < promedio2)
+                if (cantCajas2 > 0 && promedio1 * rangoDiferencia < promedio2)
                 { //El 1 es el doble de mayor que el 2
                   //Transforma de 1 a 2
                     actualizarCaja(caja, btnGrupo2.Text);
                 }
-                else if (promedio1 * rangoDiferencia < promedio3)
+                else if (cantCajas3 > 0 && promedio1 * rangoDiferencia < promedio3)
                 { //El 1 es el doble de mayor que el 3
                   //Transforma de 1 a 3
                     actualizarCaja(caja, btnGrupo3.Text);
@@ -619,13 +626,13 @@ namespace Proyecto_2
             }
             if (caja.getTipoCaja() == btnGrupo2.Text && cantCajas2 > 1)
             {
-                if (promedio2 * rangoDiferencia < promedio1)
+                if (cantCajas1 > 0 && promedio2 * rangoDiferencia < promedio1)
                 {
                     //El 2 es el doble de mayor que el 1
                     //Transforma de 2 a 1
                     actualizarCaja(caja, btnGrupo1.Text);
                 }
-                else if (promedio2 * rangoDiferencia < promedio3)
+                else if (cantCajas3 > 0 && promedio2 * rangoDiferencia < promedio3)
                 {
                     //El 2 es el doble de mayor que el 3
                     //Transforma de 2 a 3
@@ -634,13 +641,13 @@ namespace Proyecto_2
             }
             if (caja.getTipoCaja() == btnGrupo3.Text && cantCajas3 > 1)
             {
-                if (promedio3 * rangoDiferencia < promedio1)
+                if (cantCajas1 > 0 && promedio3 * rangoDiferencia < promedio1)
                 {
                     //El 3 es el doble de mayor que el 1
                     //Transforma de 3 a 1
                     actualizarCaja(caja, btnGrupo1.Text);
                 }
-                else if (promedio3 * rangoDiferencia < promedio2)
+                else if (cantCajas2 > 0 && promedio3 * rangoDiferencia < promedio2)
                 {
                     //El 3 es el doble de mayor que el 1
                     //Transforma de 3 a 2
@@ -685,10 +692,14 @@ namespace Proyecto_2
             {
                 velocidadHilo = lblVelocidad.Text == "X1" ? 1000 : lblVelocidad.Text == "X2" ? 500 : lblVelocidad.Text == "X3" ? 250 : 125;
             }
+
             //Thread hiloTiempo = new Thread(subirPrioridad);
             //hiloTiempo.IsBackground = true;
             //hiloTiempo.Start();
-            ejecutar();
+            lock (lockEjecutar)
+            {
+                ejecutar();
+            }
         }
 
         private void btnStop_Click(object sender, EventArgs e)

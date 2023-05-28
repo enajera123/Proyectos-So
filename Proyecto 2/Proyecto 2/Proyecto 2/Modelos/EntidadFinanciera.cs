@@ -19,7 +19,7 @@ namespace Proyecto_2.Modelos
         }
         public Queue<Peticion> getPeticiones()
         {
-            return peticiones;
+            return this.peticiones;
         }
         public Queue<GrupoServicios> getGrupoServicios()
         {

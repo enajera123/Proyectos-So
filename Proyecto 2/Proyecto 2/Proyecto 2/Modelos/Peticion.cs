@@ -13,7 +13,7 @@ namespace Proyecto_2.Modelos
         private Servicio servicio;
         // private TimeSpan tiempoLlegada;
         private bool prioritario;
-        private bool cambiado;
+        //private bool cambiado;
         private String subioProridad;
         public Peticion()
         {
@@ -21,7 +21,7 @@ namespace Proyecto_2.Modelos
 
         public Peticion(string nombre, Servicio servicio, bool prioritario)
         {
-            cambiado = false;
+            //cambiado = false;
             subioProridad = "0:0";
             this.nombre = nombre;
             //this.tiempoLlegada = TimeSpan.FromMinutes(5);
@@ -75,21 +75,21 @@ namespace Proyecto_2.Modelos
             //RESAGO
             TimeSpan diferencia = horaActual - horaSistema;
             int resago = diferencia.Minutes / intervaloTiempo;
-           // String[] array = subioProridad.Split(":");
+            String[] array = subioProridad.Split(":");
             resago = resago - grupoIntervalo;
-            //if ((resago / 2).ToString() == array[0] && array[1] == "0")
-            ///{
-                if (!cambiado && (resago / 2) > 0 && this.servicio.getPrioridad() != 1)
+            if ((resago / 2).ToString() == array[0] && array[1] == "0")
+            {
+                if (/*!cambiado &&*/ (resago / 2) > 0 && servicio.getPrioridad() != 1)
                 {
-                    this.servicio.setPrioridad(servicio.getPrioridad() - 1);
-             //       subioProridad = resago / 2 + ":" + 1;
-                    cambiado = true;
+                    servicio.setPrioridad(servicio.getPrioridad() - 1);
+                    subioProridad = resago / 2 + ":" + 1;
+                    //    cambiado = true;
                 }
-          //  }
-          //  else if ((resago / 2).ToString() != array[0])
-          //  {
-                //subioProridad = resago / 2 + ":" + 0;
-          //  }
+            }
+            else if ((resago / 2).ToString() != array[0])
+            {
+                subioProridad = resago / 2 + ":" + 0;
+            }
         }
 
     }
