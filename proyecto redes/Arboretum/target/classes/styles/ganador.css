@@ -1,0 +1,18 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.tabla{
+       -fx-background-color: transparent;
+       -fx-font-size:20px;
+}
+.tabla .column-header{
+        -fx-text-fill:#ffffff;
+       -fx-font-family:"Arial Black";
+}
+.column-header{
+       -fx-background-color: #94690d;
+}
