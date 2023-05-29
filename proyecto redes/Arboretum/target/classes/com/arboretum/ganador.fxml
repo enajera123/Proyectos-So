@@ -26,8 +26,8 @@
             <Separator prefHeight="204.0" prefWidth="554.0" stylesheets="@../../styles/tablero.css" />
             <TableView fx:id="tbPuntaje" prefHeight="795.0" prefWidth="554.0" styleClass="tabla" stylesheets="@../../styles/ganador.css">
               <columns>
-                <TableColumn fx:id="cArbol" prefWidth="75.0" text="Arbol" />
-                <TableColumn fx:id="cPuntos" prefWidth="75.0" text="Puntos" />
+                <TableColumn fx:id="cArbol" prefWidth="443.59888541698456" text="Arbol" />
+                <TableColumn fx:id="cPuntos" prefWidth="108.40106201171875" text="Puntos" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

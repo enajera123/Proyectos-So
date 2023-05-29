@@ -8,6 +8,7 @@
 .tabla{
        -fx-background-color: transparent;
        -fx-font-size:20px;
+       -fx-font-family:"Apple Chancery";
 }
 .tabla .column-header{
         -fx-text-fill:#ffffff;

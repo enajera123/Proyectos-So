@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -18,6 +20,7 @@ import javafx.scene.text.Font;
 import model.Carta;
 import model.Jugador;
 import model.Partida;
+import model.Puntuacion;
 import utilidades.CartaVisual;
 import utilidades.Data;
 import utilidades.GridDinamico;
@@ -31,7 +34,7 @@ import utilidades.Servidor;
 public class GanadorController implements Initializable {
 
     @FXML
-    private TableView<String> tbPuntaje;
+    private TableView<Puntuacion> tbPuntaje;
     @FXML
     private TableColumn<String, String> cArbol;
     @FXML
@@ -87,24 +90,25 @@ public class GanadorController implements Initializable {
         servidor = Data.getSevidor();
         jugador = Data.getJugador();
         puntuaciones = Data.getPuntuaciones();
-        puntuaciones.forEach((t) -> {System.out.println(t);});
+        bindListPuntaje(puntuaciones);
     }
 
     private void clickLabelUsuario(Label label) {
         partida = servidor.getPartida();//Se actualiza la partida
-        Jugador jugadorACargar = null;
         if (partida != null) {
             for (Jugador j : partida.getJugadores()) {//Se busca el jugador a cargar
                 if (j.getNombre().equals(label.getText())) {
-                    jugadorACargar = j;
+                    jugador = j;
                 }
             }
         }
+
         actualizarPartida(partida);//Simplemente se actualiza la partida
     }
 
     private boolean actualizarPartida(Partida partidaActualizada) {
         if (partidaActualizada != null) {
+            
             partida = partidaActualizada;
             partida.getJugadores().forEach((t) -> {
                 if (t.getNombre().equals(jugador.getNombre())) {
@@ -113,6 +117,7 @@ public class GanadorController implements Initializable {
             });
             cargarTablero(jugador);
             cargarMano(jugador);
+            bindListPuntaje(puntuaciones);
             return true;
         }
         return false;
@@ -210,7 +215,33 @@ public class GanadorController implements Initializable {
         return pane;
     }
 
-    private void bindListPuntaje(ObservableList listaVisual) {
+    private List<Puntuacion> getPuntuacionesList(List<String> lista) {
+        List<Puntuacion> puntuaciones = new ArrayList<>();
+        String[] array;
+        for (String i : lista) {
+            array = i.split(";");
+            String nombre = array[0];
+            if (nombre.equals(jugador.getNombre())) {
+                String camino = array[1].split("=")[0];
+                String puntaje = array[1].split("=")[1];
+                puntuaciones.add(new Puntuacion(nombre, camino, puntaje));
+            }
+        }
+
+        return puntuaciones;
+    }
+
+    private void bindListPuntaje(List<String> lista) {
+        List<Puntuacion> puntuacionesList = getPuntuacionesList(lista);
+        ObservableList<Puntuacion> listaVisual = FXCollections.observableArrayList();
+        int totalPuntos = 0;
+        for (Puntuacion i : puntuacionesList) {
+            listaVisual.add(i);
+            totalPuntos += Integer.valueOf(i.getPuntos());
+        }
+        lblTotalPuntos.setText("Total de puntos: " + totalPuntos);
+        cArbol.setCellValueFactory(new PropertyValueFactory<>("camino"));
+        cPuntos.setCellValueFactory(new PropertyValueFactory<>("puntos"));
         tbPuntaje.setItems(listaVisual);
     }
 }

@@ -96,13 +96,22 @@ public class TableroController implements Initializable {
             try {
                 Partida p;
                 while (muerteHilo != -1) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException ex) {
+                        System.out.println(ex.toString());
+                    }
                     p = servidor.getPartida();
                     if (p != null) {
-                        System.out.println(p.getJugadorActual().getNombre());
+                        System.out.println("Actual: " + p.getJugadorActual().getNombre());
+                        System.out.println("Jugador: " + jugador.getNombre());
                         if (p.getJugadorActual().getNombre().equals(jugador.getNombre())) {
+                            System.out.println("Actualiza");
                             partida = p;
                             Platform.runLater(() -> {
+                                System.out.println("Actualiza visual");
                                 quitarMensajeEsperar();
+                                verificaFinPartida();
                             });
                             synchronized (lock) {
                                 try {
@@ -617,11 +626,18 @@ public class TableroController implements Initializable {
         //FIN
         if (partida.getMazo().getCartas().isEmpty()) {
             try {
-                Data.setJugador(jugador);
-                Data.setPartida(partida);
-                Data.setPuntuaciones(servidor.terminarPartida());
-                Data.setSevidor(servidor);
-                App.setRoot("ganador");
+                List<String> puntuaciones = servidor.terminarPartida();
+                if (puntuaciones != null) {
+                    Data.setJugador(jugador);
+                    Data.setPartida(partida);
+                    Data.setPuntuaciones(puntuaciones);
+                    Data.setSevidor(servidor);
+                    muerteHilo = -1;
+                    App.setRoot("ganador");
+                } else {
+                    Alerta.alerta("Error al cargar las puntuaciones", "Error", Alert.AlertType.ERROR);
+                }
+
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
