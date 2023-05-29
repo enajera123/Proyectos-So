@@ -73,7 +73,7 @@ namespace Proyecto_2
             columNombre = new ColumnHeader();
             columPrioridad = new ColumnHeader();
             columPeso = new ColumnHeader();
-            columnCliente = new ColumnHeader();
+            columnGrupo = new ColumnHeader();
             panelContenedor3 = new TableLayoutPanel();
             panelMenu.SuspendLayout();
             panelSubMenuServicioCliente.SuspendLayout();
@@ -645,7 +645,7 @@ namespace Proyecto_2
             // 
             // listProcesos
             // 
-            listProcesos.Columns.AddRange(new ColumnHeader[] { columNombre, columPrioridad, columPeso, columnCliente });
+            listProcesos.Columns.AddRange(new ColumnHeader[] { columNombre, columPrioridad, columPeso, columnGrupo });
             listProcesos.Dock = DockStyle.Fill;
             listProcesos.Location = new Point(501, 3);
             listProcesos.Name = "listProcesos";
@@ -667,10 +667,10 @@ namespace Proyecto_2
             // 
             columPeso.Text = "Peso";
             // 
-            // columnCliente
+            // columnGrupo
             // 
-            columnCliente.Text = "Nombre de Cliente";
-            columnCliente.Width = 120;
+            columnGrupo.Text = "Grupo Intervalo";
+            columnGrupo.Width = 120;
             // 
             // panelContenedor3
             // 
@@ -763,7 +763,7 @@ namespace Proyecto_2
         private ColumnHeader columNombre;
         private ColumnHeader columPeso;
         private ColumnHeader columPrioridad;
-        private ColumnHeader columnCliente;//
+        private ColumnHeader columnGrupo;//
         private ListView listProcesos;
         private TableLayoutPanel tableLayoutPanel1;
         private PictureBox btnPlay;

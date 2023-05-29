@@ -19,7 +19,7 @@ namespace Proyecto_2.Modelos
         }
         public Queue<Peticion> getPeticiones()
         {
-            return peticiones;
+            return this.peticiones;
         }
         public Queue<GrupoServicios> getGrupoServicios()
         {
@@ -56,8 +56,7 @@ namespace Proyecto_2.Modelos
         }
         public void ordernarPeticiones()
         {
-            List<Peticion> lista = peticiones.OrderByDescending(o => o.isPrioritario()).ThenBy(o => o.getServicio().getPrioridad()).ThenBy(o => o.getServicio().getPeso()).ToList();
-
+            List<Peticion> lista = peticiones.OrderBy(o=>o.getGrupoIntervalo()).ThenByDescending(o => o.isPrioritario()).ThenBy(o => o.getServicio().getPrioridad()).ThenBy(o => o.getServicio().getPeso()).ToList();
             peticiones.Clear();
             foreach (Peticion p in lista)
             {
