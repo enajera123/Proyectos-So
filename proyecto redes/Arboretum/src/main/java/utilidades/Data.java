@@ -1,6 +1,7 @@
 
 package utilidades;
 
+import java.util.List;
 import model.Jugador;
 import model.Partida;
 
@@ -12,6 +13,16 @@ public class Data {
     private static Jugador jugador;
     private static Partida partida;
     private static Servidor sevidor;
+    private static List<String> puntuaciones;
+
+    public static List<String> getPuntuaciones() {
+        return puntuaciones;
+    }
+
+    public static void setPuntuaciones(List<String> puntuaciones) {
+        Data.puntuaciones = puntuaciones;
+    }
+    
     public static Jugador getJugador() {
         return jugador;
     }

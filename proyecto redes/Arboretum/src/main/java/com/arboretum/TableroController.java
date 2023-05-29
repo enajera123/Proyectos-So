@@ -39,6 +39,7 @@ import utilidades.Servidor;
  */
 public class TableroController implements Initializable {
 
+    @FXML
     private GridPane gridMazos;
     @FXML
     private Label lblUsuario;
@@ -48,9 +49,13 @@ public class TableroController implements Initializable {
     private HBox contenedorMano;
     @FXML
     private ScrollPane contenedorTablero;
+    @FXML
     private Label lblCantidadCartas;
+    @FXML
     private Button btnDescartar;
+    @FXML
     private VBox panelMensaje;
+    @FXML
     private Label lblMensaje;
     //OBJETOS UTILIDADES
     private final GridDinamico gridDinamico = new GridDinamico();
@@ -129,6 +134,7 @@ public class TableroController implements Initializable {
         crearTableroDinamico();
     }
 
+    @FXML
     private void clickMazo(MouseEvent event) {
         if (!partida.getMazo().getCartas().isEmpty() && cantidadCartasRecogidas > 0) {
             cantidadCartasRecogidas--;
@@ -141,6 +147,7 @@ public class TableroController implements Initializable {
         }
     }
 
+    @FXML
     private void btnDescartar(ActionEvent event) {
         if (cartaSeleccionada != null) {
             deselectCard();
@@ -608,8 +615,16 @@ public class TableroController implements Initializable {
         //Se determina quien puede puntuar
         //Se determina el ganador
         //FIN
-        if(partida.getMazo().getCartas().isEmpty()){
-            servidor.terminarPartida();
+        if (partida.getMazo().getCartas().isEmpty()) {
+            try {
+                Data.setJugador(jugador);
+                Data.setPartida(partida);
+                Data.setPuntuaciones(servidor.terminarPartida());
+                Data.setSevidor(servidor);
+                App.setRoot("ganador");
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
         }
     }
 }

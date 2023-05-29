@@ -1,10 +1,13 @@
 package utilidades;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.control.Alert;
 import model.Partida;
 
@@ -237,13 +240,20 @@ public class Servidor {
         }
     }
     
-    public void terminarPartida() {
+    public List<String> terminarPartida() {
         try {
             iniciar();
             dataOutputStream.writeUTF("terminar+");
-            leerDatos();
+//            List<String>informacion = new ArrayList<String>();
+
+            String datos = leerDatos();
+            
+            List<String> informacion = JSON.readValue(datos, new TypeReference<List<String>>(){});
+            return informacion;
+            //System.out.println(datos);
         } catch (IOException ex) {
             System.out.println(ex.toString());
+            return null;
         }
     }
 

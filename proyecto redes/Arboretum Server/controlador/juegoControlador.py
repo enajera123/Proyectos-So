@@ -70,4 +70,5 @@ class juegoControlador:
             for camino in jugador.tablero.obtenerPuntuacionTablero(jugador.tiposArbolPuntuable):
                 puntuacion = jugador.nombre + ":" + camino
                 puntuaciones.append(puntuacion)
-        print(puntuaciones)
+        return puntuaciones
+        

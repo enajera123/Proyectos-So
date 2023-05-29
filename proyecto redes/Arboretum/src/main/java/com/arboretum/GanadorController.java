@@ -55,11 +55,12 @@ public class GanadorController implements Initializable {
     private Partida partida;
     private Servidor servidor;
     private Jugador jugador;
+    private List<String> puntuaciones;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarComponentes();
-        crearTableroDinamico();
+        //actualizarPartida(partida);
     }
 
     private void iniciarComponentes() {
@@ -85,6 +86,8 @@ public class GanadorController implements Initializable {
         partida = Data.getPartida();
         servidor = Data.getSevidor();
         jugador = Data.getJugador();
+        puntuaciones = Data.getPuntuaciones();
+        puntuaciones.forEach((t) -> {System.out.println(t);});
     }
 
     private void clickLabelUsuario(Label label) {
@@ -109,7 +112,6 @@ public class GanadorController implements Initializable {
                 }
             });
             cargarTablero(jugador);
-
             cargarMano(jugador);
             return true;
         }

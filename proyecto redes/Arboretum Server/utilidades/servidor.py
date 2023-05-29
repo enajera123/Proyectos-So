@@ -80,8 +80,8 @@ class Servidor:
             conn.sendall(self.cambiarTurno())
             
         elif "terminar" in array[0]:
-            #conn.sendall(self.)
-            self.terminarPartida()
+            conn.sendall(self.terminarPartida())
+            
             
         elif "salir" in array[0]:
             conn.sendall(json.dumps(self.salirPartida(array[1])).encode("utf-8"))  
@@ -92,7 +92,7 @@ class Servidor:
  # Funciones Partida
  # =======================
     def terminarPartida(self):
-        print(self.juegoControlador.terminarJuego())
+        return json.dumps(self.juegoControlador.terminarJuego()).encode("utf-8")
         
     def cambiarTurno(self):
         if self.juegoControlador.cambiarTurno():
