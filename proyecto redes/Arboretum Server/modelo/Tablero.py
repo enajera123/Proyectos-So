@@ -17,6 +17,9 @@ class Tablero:
         self.encontrarCaminos(arbolesPuntuables,caminos)
         caminosValidos = []
         numCartas = []
+        print("------------------------------------------------------------")
+        print("Caminos sin filtrar:")
+        print("\n".join(caminos))
         #---------Filtra caminos acendentes--------
         for camino in caminos:
             cartas = camino.split("/")
@@ -35,25 +38,27 @@ class Tablero:
                 caminosValidos.append(camino)
         #Remplazamos la lista de caminos por los caminos ya filtrados
         caminos = caminosValidos
+        print("------------------------------------------------------------")
+        print("Filtro secuencia acendente:")
+        print("\n".join(caminos))
         #---------Filtra caminos repetidos--------
         #Hacemos un ciclo que recorra todos los cominos y elimine los que tienen mismo origen y destino
         #Dejando solo uno el mde mayor puntuacion
-        extremos = []
         caminosValidos = []
         caminosDescartados = []
         #Recorremos los caminos
         for camino in caminos:
             #Se comprueba que no sea un camino descartado
-            if camino not in caminosDescartados:
+            if camino not in caminosDescartados and camino not in caminosValidos:
                 valido = camino #Se guarda el camino como valido
                 puntuacion_Valido = self.puntuarCaminos(valido) #se guarda la puntuacion del camino valido
-                extremos.append(valido.split("/")[0]) #se guardan los extremos del camino
-                extremos.append(valido.split("/")[-1])
+                validoOrigen = valido.split("/")[0] #se guardan los extremos del camino
+                validoDestino = valido.split("/")[-1]
                 #Se vuelven a recorrer los caminos comparando los extremos y la puntuacion para guardar
                 #en valido el de mayor putuacion
                 for opcion in caminos:
                     cartas = opcion.split("/")#Se optienen las cartas del camino
-                    if cartas[0] == extremos[0] and cartas[-1] == extremos[1]: #Si tienen mismo origen y destino
+                    if cartas[0] == validoOrigen and cartas[-1] == validoDestino: #Si tienen mismo origen y destino
                         puntuacion = self.puntuarCaminos(opcion) #Se saca la puntuacion del camino
                         #Se compara con las puntuaciones del valido
                         if puntuacion > puntuacion_Valido: #si es mayor se actualiza el valido y la puntuacion del valido
@@ -64,36 +69,35 @@ class Tablero:
                             caminosDescartados.append(opcion)
                 caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
         caminos = caminosValidos#Se actualiza la lista de caminos
-        #---------Filtra caminos que esten dentro de otro camino--------
-        extremos = []
+        print("------------------------------------------------------------")
+        print("Filtro que no se repitan origen y destino:")
+        print("\n".join(caminos))
+        #---------Filtra caminos que estan contenidos en otro camino--------
         caminosValidos = []
         caminosDescartados = []
         for camino in caminos:
-             if camino not in caminosDescartados and camino not in caminosValidos:
-                valido = camino #Se guarda el camino como valido
-                validoOrigen = valido.split("/")[0]
-                validoDestino = valido.split("/")[-1]
-                #Se vuelven a recorrer los caminos comparando si tienen el mismo origen
+            if camino not in caminosDescartados and camino not in caminosValidos:
+                valido = camino
                 for opcion in caminos:
-                    cartasOpcion = opcion.split("/")#Se optienen las cartas del camino
-                    if cartasOpcion[0] == validoOrigen and cartasOpcion[-1] != validoDestino: #Si tienen mismo origen
-                        #Se se revisa cual continen a cual y se descarta el que esta contenido
-                        if cartasOpcion[-1] in valido:
-                            caminosDescartados.append(opcion)
-                        elif validoDestino in opcion:
-                            caminosDescartados.append(valido)
-                            valido = opcion
-                            validoDestino = valido.split("/")[-1]
-                        else:
-                            caminosValidos.append(opcion)
-                caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
-        caminos = caminosValidos#Se actualiza la lista de caminos
+                    if opcion in valido:
+                        caminosDescartados.append(opcion)
+                    elif valido in opcion:
+                        caminosDescartados.append(valido)
+                        valido = opcion
+                caminosValidos.append(valido)
+        caminos = caminosValidos
+        print("------------------------------------------------------------")
+        print("Filtro que no esten contenidos en otro camino:")
+        print("\n".join(caminos))
         #---------Se obtinen las puntuaciones de los caminos--------
         puntuacion_Total = []
         #Como ya se tiene la lista de caminos que se pueden puntuar en el tablero se puntuan y se suman
         #las puntuaciones para retornarlas 
         for camino in caminos:
             puntuacion_Total.append(camino + "=" + str(self.puntuarCaminos(camino))) 
+        print("------------------------------------------------------------")
+        print("Caminos puntuados:")
+        print("\n".join(puntuacion_Total))
         return puntuacion_Total
     
     def puntuarCaminos(self,camino):
@@ -107,7 +111,7 @@ class Tablero:
         arbolCamino = cartas[0][0] #Se obtiene el tipo de arbol que es el camino
         mismoTipo = True #Si todas las cartas son del mismo tipo es true para contar los puntos adicionales
         for carta in cartas:
-            if carta[0][0] != arbolCamino:
+            if carta[0] != arbolCamino:
                 mismoTipo = False
                 break
         if mismoTipo and len(cartas) >= 4:
