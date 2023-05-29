@@ -17,7 +17,7 @@ class Tablero:
         self.encontrarCaminos(arbolesPuntuables,caminos)
         caminosValidos = []
         numCartas = []
-        #Hacemos un ciclo que recorra todos los cominos y elimine los que no son de numeros acendentes de la lista
+        #---------Filtra caminos acendentes--------
         for camino in caminos:
             cartas = camino.split("/")
             numCartas = []
@@ -35,6 +35,7 @@ class Tablero:
                 caminosValidos.append(camino)
         #Remplazamos la lista de caminos por los caminos ya filtrados
         caminos = caminosValidos
+        #---------Filtra caminos repetidos--------
         #Hacemos un ciclo que recorra todos los cominos y elimine los que tienen mismo origen y destino
         #Dejando solo uno el mde mayor puntuacion
         extremos = []
@@ -63,12 +64,36 @@ class Tablero:
                             caminosDescartados.append(opcion)
                 caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
         caminos = caminosValidos#Se actualiza la lista de caminos
-        puntuacion_Total = 0
+        #---------Filtra caminos que esten dentro de otro camino--------
+        extremos = []
+        caminosValidos = []
+        caminosDescartados = []
+        for camino in caminos:
+             if camino not in caminosDescartados and camino not in caminosValidos:
+                valido = camino #Se guarda el camino como valido
+                validoOrigen = valido.split("/")[0]
+                validoDestino = valido.split("/")[-1]
+                #Se vuelven a recorrer los caminos comparando si tienen el mismo origen
+                for opcion in caminos:
+                    cartasOpcion = opcion.split("/")#Se optienen las cartas del camino
+                    if cartasOpcion[0] == validoOrigen and cartasOpcion[-1] != validoDestino: #Si tienen mismo origen
+                        #Se se revisa cual continen a cual y se descarta el que esta contenido
+                        if cartasOpcion[-1] in valido:
+                            caminosDescartados.append(opcion)
+                        elif validoDestino in opcion:
+                            caminosDescartados.append(valido)
+                            valido = opcion
+                            validoDestino = valido.split("/")[-1]
+                        else:
+                            caminosValidos.append(opcion)
+                caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
+        caminos = caminosValidos#Se actualiza la lista de caminos
+        #---------Se obtinen las puntuaciones de los caminos--------
+        puntuacion_Total = []
         #Como ya se tiene la lista de caminos que se pueden puntuar en el tablero se puntuan y se suman
         #las puntuaciones para retornarlas 
-        #Utilidades.limpiarDatos(self.rutaCaminos)
         for camino in caminos:
-            puntuacion_Total += self.puntuarCaminos(camino)
+            puntuacion_Total.append(camino + "=" + str(self.puntuarCaminos(camino))) 
         return puntuacion_Total
     
     def puntuarCaminos(self,camino):

@@ -67,6 +67,7 @@ class juegoControlador:
         #en esta estructura jugador:puntuacion
         puntuaciones = []
         for jugador in self.partida.jugadores:
-            puntuacion = jugador.nombre + ":" + str(jugador.tablero.obtenerPuntuacionTablero(jugador.tiposArbolPuntuable))
-            puntuaciones.append(puntuacion)
-        return puntuaciones
+            for camino in jugador.tablero.obtenerPuntuacionTablero(jugador.tiposArbolPuntuable):
+                puntuacion = jugador.nombre + ":" + camino
+                puntuaciones.append(puntuacion)
+        print(puntuaciones)

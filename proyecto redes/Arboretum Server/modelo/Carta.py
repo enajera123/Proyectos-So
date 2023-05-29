@@ -59,6 +59,9 @@ class Carta:
                     borde = True
                     break
                 
+            if len(camino) == 0 and not borde :
+                return False
+            
             if len(camino) == 0:
                 camino = cartaActual
             else:
@@ -78,3 +81,6 @@ class Carta:
             for carta in listaCartas:
                 if carta.id in self.cartasAdyacentes:
                     carta.buscarCaminos(camino[:],listCaminos, listaCartas)
+            return True
+        else:
+            return False
