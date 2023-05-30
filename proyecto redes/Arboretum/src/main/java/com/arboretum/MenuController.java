@@ -184,7 +184,7 @@ public class MenuController implements Initializable {
             bindData();
             App.setRoot("tablero");
         } else {
-            if (partida != null && !partida.getJugadores().isEmpty()) {
+            if (partida != null && partida.getJugadores().size() >= 2) {
                 if (servidor.empezarPartida(jugador.getNombre())) {
                     partida = servidor.cambiarTurno();
                     if (partida != null) {

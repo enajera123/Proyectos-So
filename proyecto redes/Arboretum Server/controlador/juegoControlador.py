@@ -51,13 +51,13 @@ class juegoControlador:
                 return True
         return False
 
-    def sacarCartaDescarte(self, nombreJugador, idCarta):
-        for j in self.partida.jugadores:
-            if j.nombre == nombreJugador:
-                jugador = j
-            carta = j.sacarCartaDescarte(idCarta)
+    def sacarCartaDescarte(self, descarteJugador, idCarta):
+        for j in self.partida.jugadores:#Se recorren los jugadores
+            if j.nombre == descarteJugador:#Si el nombre es el que viene por parametro
+                jugadorDescarta = j
+            carta = jugadorDescarta.sacarCartaDescarte(idCarta)#Se saca una carta del descarte
             if carta != None:
-                jugador.cartas.append(carta)
+                self.partida.jugadorActual.cartas.append(carta)
                 return True
         return False
     def terminarJuego(self):

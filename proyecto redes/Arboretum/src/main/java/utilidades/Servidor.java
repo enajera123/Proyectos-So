@@ -61,7 +61,7 @@ public class Servidor {
             //Intento conectar
             dataOutputStream.writeUTF("conectar" + "+" + nombre);
             String datos = leerDatos();
-            if(!"\"Conectado Correctamente\"".equals(datos)){
+            if (!"\"Conectado Correctamente\"".equals(datos)) {
                 Alerta.alerta(datos, "Error", Alert.AlertType.ERROR);
                 return false;
             }
@@ -172,10 +172,10 @@ public class Servidor {
         }
     }
 
-    public Partida sacarCartaDescarte(String nombreJugador, int idCarta) {
+    public Partida sacarCartaDescarte(String descarteJugador, int idCarta) {
         try {
             iniciar();
-            dataOutputStream.writeUTF("sacarCartaDescarte+" + nombreJugador + "+" + idCarta);
+            dataOutputStream.writeUTF("sacarCartaDescarte+" + descarteJugador + "+" + idCarta);
             String datos = leerDatos();
             System.out.println(datos);
             Partida partida = JSON.readValue(datos, Partida.class);
@@ -239,7 +239,7 @@ public class Servidor {
             return null;
         }
     }
-    
+
     public List<String> terminarPartida() {
         try {
             iniciar();
@@ -247,8 +247,8 @@ public class Servidor {
 //            List<String>informacion = new ArrayList<String>();
 
             String datos = leerDatos();
-            
-            List<String> informacion = JSON.readValue(datos, new TypeReference<List<String>>(){});
+            List<String> informacion = JSON.readValue(datos, new TypeReference<List<String>>() {
+            });
             return informacion;
             //System.out.println(datos);
         } catch (IOException ex) {

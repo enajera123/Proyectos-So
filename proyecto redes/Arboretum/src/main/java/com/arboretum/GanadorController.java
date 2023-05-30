@@ -2,12 +2,15 @@ package com.arboretum;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
@@ -21,6 +24,7 @@ import model.Carta;
 import model.Jugador;
 import model.Partida;
 import model.Puntuacion;
+import utilidades.Alerta;
 import utilidades.CartaVisual;
 import utilidades.Data;
 import utilidades.GridDinamico;
@@ -63,11 +67,12 @@ public class GanadorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         iniciarComponentes();
-        //actualizarPartida(partida);
     }
 
     private void iniciarComponentes() {
+        System.out.println("Se queda");
         bindData();
+        System.out.println("Pasa");
         if (partida != null && jugador != null) {
             actualizarPartida(partida);
             lblUsuario.setText(jugador.getNombre());
@@ -90,7 +95,10 @@ public class GanadorController implements Initializable {
         servidor = Data.getSevidor();
         jugador = Data.getJugador();
         puntuaciones = Data.getPuntuaciones();
-        bindListPuntaje(puntuaciones);
+        if (puntuaciones != null) {
+            bindListPuntaje(puntuaciones);
+
+        }
     }
 
     private void clickLabelUsuario(Label label) {
@@ -108,7 +116,7 @@ public class GanadorController implements Initializable {
 
     private boolean actualizarPartida(Partida partidaActualizada) {
         if (partidaActualizada != null) {
-            
+
             partida = partidaActualizada;
             partida.getJugadores().forEach((t) -> {
                 if (t.getNombre().equals(jugador.getNombre())) {
@@ -227,7 +235,6 @@ public class GanadorController implements Initializable {
                 puntuaciones.add(new Puntuacion(nombre, camino, puntaje));
             }
         }
-
         return puntuaciones;
     }
 

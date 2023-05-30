@@ -24,7 +24,7 @@ class Partida:
         cartas = []
         id = 0
         for color in self.arboles:
-            for j in range(1, 5):
+            for j in range(1, 9):
                 cartas.append(Carta(id, color, j))
                 id += 1
         #Se vuelve a llamar la funcion para revolver todas las cartas generadas

@@ -557,7 +557,9 @@ public class TableroController implements Initializable {
     private void mostrarMensajeEsperar() {
         if (muerteHilo == -1) {
             hiloEsperar.setDaemon(true);
+            System.out.println("Inicia el hilo");
             hiloEsperar.start();
+            System.out.println("Iniciado");
             muerteHilo = 1;
         } else {
             reanudarHilo();

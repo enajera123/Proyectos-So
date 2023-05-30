@@ -99,8 +99,8 @@ class Servidor:
             return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
         return json.dumps("error").encode("utf-8")
             
-    def sacarCartaDescarte(self, nombreJugador, idCarta):
-        if self.juegoControlador.sacarCartaDescarte(nombreJugador, idCarta):
+    def sacarCartaDescarte(self, descarteJugador, idCarta):
+        if self.juegoControlador.sacarCartaDescarte(descarteJugador, idCarta):
             return json.dumps(self.juegoControlador.partida, default=lambda o: o.__dict__).encode("utf-8")
         return json.dumps("error").encode("utf-8")
 
