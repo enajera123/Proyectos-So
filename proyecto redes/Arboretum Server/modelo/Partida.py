@@ -45,58 +45,52 @@ class Partida:
         return True
             
     def asignarDerechosApuntuar(self):
-        barajas = []
-        #Se obtinen las barajas de los jugadores
-        for jugador in self.jugadores:
-            mazo = Mazo(jugador.nombre)
-            mazo.cartas = jugador.cartas
-            barajas.append(mazo)
-            
-        #Se calculan derechos de arboles
-        for arbol in self.arboles:#Se recorren los tipos de arboles
+        for arbol in self.arboles:
             ganadorTiene1 = False
             ganadorTiene8 = False
             puntosGanador = 0
             ganador = []
-            for baraja in barajas:#Se recorren las barajas
-                cartas = baraja.cartas
+            for jugador in self.jugadores:
+                gano = False
+                empate = False
                 puntos = 0
                 tiene1 = False
                 tiene8 = False
-                for carta in cartas:#Se recorren las cartas de la baraja
+                for carta in jugador.cartas:
                     if carta.arbol == arbol:#Se comprueba si la carta es del tipo de arbol que se evalua
                         puntos += carta.numero
                         if carta.numero == 1:
                             tiene1 = True
                         elif carta.numero == 8:
                             tiene8 = True
-                #Se compara con el ganador
-                if ganadorTiene1 and tiene8: #Si ganador tiene 1 y en la baraja actual hay 8
-                    if puntosGanador < puntos-8: #Se evalua restandole 8 puntos a la baraja actual ya que se anula el 8
-                        ganador = [baraja.nombre] #La baraja tiene el nobre del jugador al que pertenece
-                        ganadorTiene1 = tiene1
-                        ganadorTiene8 = tiene8
+                if ganadorTiene1 and tiene8:
+                    if puntosGanador < puntos-8:
+                        gano = True
                     elif puntosGanador == puntos-8:
-                        ganador.append(baraja.nombre)
-                elif ganadorTiene8 and tiene1: #La inversa del caso anterior
+                        empate = True
+                elif ganadorTiene8 and tiene1:
                     if puntosGanador-8 < puntos:
-                        ganador = [baraja.nombre]
-                        ganadorTiene1 = tiene1
-                        ganadorTiene8 = tiene8
+                        gano = True
                     elif puntosGanador-8 == puntos:
-                        ganador.append(baraja.nombre)
-                elif puntosGanador < puntos: #No se modifican los puntages
-                    ganador = [baraja.nombre]
+                        empate = True
+                elif puntosGanador < puntos:
+                    gano = True
+                elif puntosGanador == puntos:
+                    empate = True
+                if gano:
                     ganadorTiene1 = tiene1
                     ganadorTiene8 = tiene8
-                elif puntosGanador == puntos:
-                    ganador.append(baraja.nombre)
-            if len(ganador) != 0:#Si alguien gano
-                for jugador in self.jugadores: #Se busca al ganador y se le agrega el arbol que gano
-                    if jugador.nombre in ganador:
-                        jugador.tiposArbolPuntuable.append(arbol)
-            else:#Sino 
-                for jugador in self.jugadores: #Se les dan derechos a todos
-                    jugador.tiposArbolPuntuable.append(arbol)
+                    puntosGanador = puntos
+                    ganador = [jugador]
+                elif empate:
+                    ganador.append(jugador)
+            if len(ganador) != 0:
+                for g in ganador:
+                    if arbol not in g.tiposArbolPuntuable:
+                        g.tiposArbolPuntuable.append(arbol)
+            else:
+                for j in self.jugadores:
+                    if arbol not in j.tiposArbolPuntuable:
+                        j.tiposArbolPuntuable.append(arbol)
         
     
