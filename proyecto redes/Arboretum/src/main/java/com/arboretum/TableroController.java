@@ -102,6 +102,7 @@ public class TableroController implements Initializable {
                         System.out.println(ex.toString());
                     }
                     p = servidor.getPartida();
+                    
                     if (p != null) {
                         System.out.println("Actual: " + p.getJugadorActual().getNombre());
                         System.out.println("Jugador: " + jugador.getNombre());
@@ -119,6 +120,7 @@ public class TableroController implements Initializable {
                                     lock.wait();
                                     System.out.println("libera");
                                 } catch (Exception ex) {
+                                    System.out.println("Error al reaundar el hilo");
                                     System.out.println(ex.toString());
 
                                 }
@@ -128,6 +130,7 @@ public class TableroController implements Initializable {
                 }
 
             } catch (Exception ex) {
+                System.out.println("Error al iniciar el hilo");
                 System.out.println(ex.toString());
             }
         });
@@ -283,9 +286,9 @@ public class TableroController implements Initializable {
         servidor = Data.getSevidor();
         if (partida != null && jugador != null) {
 
-            if (partida.getJugadorActual() != null && !jugador.getNombre().equals(partida.getJugadorActual().getNombre())) {
+//            if (partida.getJugadorActual() != null && !jugador.getNombre().equals(partida.getJugadorActual().getNombre())) {
                 mostrarMensajeEsperar();
-            }
+//            }
             actualizarPartida(partida);
             lblUsuario.setText(jugador.getNombre());
             lblUsuario.setOnMouseClicked(t -> clickLabelUsuario(lblUsuario));
