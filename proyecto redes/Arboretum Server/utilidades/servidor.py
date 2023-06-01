@@ -46,6 +46,7 @@ class Servidor:
     def procesarConsulta(self, message, conn):
         array = message.split("+")
         
+        
         if "conectar" in array[0]:
             self.conectarUsuario(array[1], conn.getpeername()[0], conn)
             
@@ -81,7 +82,6 @@ class Servidor:
             
         elif "terminar" in array[0]:
             conn.sendall(self.terminarPartida())
-            
             
         elif "salir" in array[0]:
             conn.sendall(json.dumps(self.salirPartida(array[1])).encode("utf-8"))  

@@ -55,11 +55,12 @@ class juegoControlador:
         for j in self.partida.jugadores:#Se recorren los jugadores
             if j.nombre == descarteJugador:#Si el nombre es el que viene por parametro
                 jugadorDescarta = j
-            carta = jugadorDescarta.sacarCartaDescarte(idCarta)#Se saca una carta del descarte
-            if carta != None:
-                self.partida.jugadorActual.cartas.append(carta)
-                return True
+                carta = jugadorDescarta.sacarCartaDescarte(idCarta)#Se saca una carta del descarte
+                if carta != None:
+                    self.partida.jugadorActual.cartas.append(carta)
+                    return True
         return False
+    
     def terminarJuego(self):
         #Se le asigna a cada jugador que arboles del tablero puede puntuar al comparar barajas
         self.partida.asignarDerechosApuntuar()
