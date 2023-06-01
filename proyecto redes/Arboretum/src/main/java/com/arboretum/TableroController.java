@@ -94,6 +94,7 @@ public class TableroController implements Initializable {
 
         hiloEsperar = new Thread(() -> {
             try {
+                System.out.println("Iniciar hilo");
                 Partida p;
                 while (muerteHilo != -1) {
                     try {
@@ -102,25 +103,25 @@ public class TableroController implements Initializable {
                         System.out.println(ex.toString());
                     }
                     p = servidor.getPartida();
-                    
+                    System.out.println("Partida: " + p);
                     if (p != null) {
                         System.out.println("Actual: " + p.getJugadorActual().getNombre());
                         System.out.println("Jugador: " + jugador.getNombre());
                         if (p.getJugadorActual().getNombre().equals(jugador.getNombre())) {
                             System.out.println("Actualiza");
                             partida = p;
-                            Platform.runLater(() -> {
-                                System.out.println("Actualiza visual");
-                                quitarMensajeEsperar();
-                                verificaFinPartida();
-                            });
                             synchronized (lock) {
                                 try {
+                                    Platform.runLater(() -> {
+                                        System.out.println("Actualiza visual");
+                                        quitarMensajeEsperar();
+                                        verificaFinPartida();
+                                    });
                                     System.out.println("esperaHilo");
                                     lock.wait();
                                     System.out.println("libera");
                                 } catch (Exception ex) {
-                                    System.out.println("Error al reaundar el hilo");
+                                    System.out.println("Error al reanudar el hilo");
                                     System.out.println(ex.toString());
 
                                 }
@@ -286,9 +287,9 @@ public class TableroController implements Initializable {
         servidor = Data.getSevidor();
         if (partida != null && jugador != null) {
 
-//            if (partida.getJugadorActual() != null && !jugador.getNombre().equals(partida.getJugadorActual().getNombre())) {
+            if (partida.getJugadorActual() != null && !jugador.getNombre().equals(partida.getJugadorActual().getNombre())) {
                 mostrarMensajeEsperar();
-//            }
+            }
             actualizarPartida(partida);
             lblUsuario.setText(jugador.getNombre());
             lblUsuario.setOnMouseClicked(t -> clickLabelUsuario(lblUsuario));
@@ -336,7 +337,7 @@ public class TableroController implements Initializable {
     private void cargarTablero(Jugador jugadorCargar) {
         if (jugadorCargar != null) {
             int maxX = getMaxPos(0), maxY = getMaxPos(1);
-            gridTablero = gridDinamico.crearTablero(maxY > ROW ? maxY + 2 : ROW, maxX > COLUM ? maxX + 2 : COLUM);
+            gridTablero = gridDinamico.crearTablero(maxY > ROW ? maxY + 2 : ROW + 2, maxX > COLUM ? maxX + 2 : COLUM + 2);
             cartasVisuales = new ArrayList<>();
             for (Carta c : jugadorCargar.getTablero().getCartas()) {
                 CartaVisual cartaVisual = crearCartaVisual(c);
@@ -459,9 +460,11 @@ public class TableroController implements Initializable {
 
     private void crearTableroDinamico() {
         int maxX = getMaxPos(0), maxY = getMaxPos(1);
-        gridTablero = gridDinamico.crearTablero(maxY > ROW ? maxY + 2 : ROW, maxX > COLUM ? maxX + 2 : COLUM);
-        for (int i = 0; i < ROW; i++) {
-            for (int j = 0; j < COLUM; j++) {
+        int row = maxY > ROW ? maxY + 2 : ROW + 1;
+        int colum = maxX > COLUM ? maxX + 2 : COLUM + 1;
+        gridTablero = gridDinamico.crearTablero(row, colum);
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < colum; j++) {
                 gridTablero.add(crearPane(), j, i);
             }
         }
@@ -596,7 +599,9 @@ public class TableroController implements Initializable {
 
     public GridPane crearFila_Columna(int desplazamientoX, int desplazamientoY, int cantRow, int cantColum, List<CartaVisual> cartas) {
         //Se crea un nuevo grid con la cantidad de filas y columnas adicionales
-        GridPane tableroNuevo = gridDinamico.crearTablero(gridTablero.getRowCount() + cantRow, gridTablero.getColumnCount() + cantColum);
+        int maxX = getMaxPos(0), maxY = getMaxPos(1);
+//        GridPane tableroNuevo = gridDinamico.crearTablero(gridTablero.getRowCount() + cantRow, gridTablero.getColumnCount() + cantColum);
+        GridPane tableroNuevo = gridDinamico.crearTablero(maxY > ROW ? maxY + 2 : ROW + 1, maxX > COLUM ? maxX + 2 : COLUM + 1);
         //Se desplazan las cartas en x,y
         for (CartaVisual carta : cartasVisuales) {
             //Se agrega al nuevo tablero en la nueva posicion

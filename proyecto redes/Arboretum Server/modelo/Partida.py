@@ -58,12 +58,12 @@ class Partida:
                 tiene8 = False
                 for carta in jugador.cartas:
                     if carta.arbol == arbol:#Se comprueba si la carta es del tipo de arbol que se evalua
-                        puntos += carta.numero
+                        puntos += carta.numero#Se suma un punto
                         if carta.numero == 1:
-                            tiene1 = True
+                            tiene1 = True#Si es 1 entonces tiene 1
                         elif carta.numero == 8:
-                            tiene8 = True
-                if ganadorTiene1 and tiene8:
+                            tiene8 = True#Si es 8 entonces tiene 8
+                if ganadorTiene1 and tiene8:#Si tiene un 8 y 1
                     if puntosGanador < puntos-8:
                         gano = True
                     elif puntosGanador == puntos-8:
