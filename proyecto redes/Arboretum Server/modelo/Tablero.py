@@ -85,7 +85,8 @@ class Tablero:
                         caminosDescartados.append(valido)
                         valido = opcion
                 caminosValidos.append(valido)
-        caminos = caminosValidos
+        caminos = list(set(caminosValidos))
+        
         print("------------------------------------------------------------")
         print("Filtro que no esten contenidos en otro camino:")
         print("\n".join(caminos))
