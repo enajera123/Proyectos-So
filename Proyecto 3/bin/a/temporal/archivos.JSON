@@ -1,0 +1,1 @@
+[{"id": 2, "ruta": "bin/a/temporal/mao/mom", "tipoArchivo": "Carpeta", "listaUsuarios": ["a"], "listaPermisos": ["[Lectura][Escritura][Ejecucion]"]}, {"id": 3, "ruta": "bin/a/temporal/mao/mom/ta.txt", "tipoArchivo": "text/plain", "listaUsuarios": ["a"], "listaPermisos": ["[Lectura][Escritura][Ejecucion]"]}]
