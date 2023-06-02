@@ -163,7 +163,7 @@ class ManejoPermisos:
         return rutaNueva
     
     def crearVersion():
-        nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H:%M:%S")+")"
+        nombre = Data.nombre+"("+datetime.now().strftime("%Y-%m-%d %H-%M-%S")+")"
         rutaVersion = "bin/"+Data.nombre+"/versiones"+"/"+nombre
         if(len(listdir(Data.rutaPermanente))>1):
             ManejoArchivo.crearCarpeta_Archivo(rutaVersion)
