@@ -105,18 +105,32 @@ class ManejoPermisos:
         """
         direcciones = [ruta]
         direcciones.extend(ManejoArchivo.obtenerDirecciones(ruta))#Se obtienen las rutas y sub-rutas
+        exito = False
+        archivos = ManejoPermisos.obtenerArchivos(direcciones)
+        ManejoPermisos.modificarRuta(archivos[0].ruta, ManejoPermisos.definirRutaEnPrimerNivel(archivos[0].ruta), archivos)
         for i, direccion in enumerate(direcciones):#Recuperacion de cada ruta contenida
+            #data = ManejoArchivo.leerArchivo(Data.rutaVersionRecuperar+"archivos.JSON", "ruta", ManejoPermisos.tratarRuta(direccion))
+            #if data:
+            if ManejoPermisos.ingresarInformacionJSON(Data.rutaArchivos, archivos[i]):#Se ingresa la informacion leida al JSON
+                ManejoArchivo.sobreescribirArchivo(direccion, archivos[i].ruta)#Borra y elimina fisicamente
+                exito = True
+        return exito
+    
+    def modificarRuta(direccionAModificar, direccionNueva, archivos):
+        for archivo in archivos:
+            archivo.ruta = archivo.ruta.replace(direccionAModificar,direccionNueva)
+            
+    def obtenerArchivos(direcciones):
+        archivos = []
+        for direccion in direcciones:
             data = ManejoArchivo.leerArchivo(Data.rutaVersionRecuperar+"archivos.JSON", "ruta", ManejoPermisos.tratarRuta(direccion))
             if data:
-                if ManejoPermisos.ingresarInformacionJSON(Data.rutaArchivos, data, i):#Se ingresa la informacion leida al JSON
-                    ManejoArchivo.sobreescribirArchivo(direccion, data.ruta)#Borra y elimina fisicamente
-                    return True
-        return False
-                
+                archivos.append(data)
+        return archivos
                 
            
         
-    def ingresarInformacionJSON(JSONDestino, data, i):
+    def ingresarInformacionJSON(JSONDestino, data):
         """Ingresa la informacion al JSON unicamente funciona para JSON con formato de clase Archivo
         Args:
             JSONDestino (_type_): Ruta del archivo.JSON
@@ -125,7 +139,8 @@ class ManejoPermisos:
         archivo = ManejoArchivo.leerArchivo(JSONDestino, "id", data.id)
         
         if archivo:
-            ManejoArchivo.eliminarArchivo(JSONDestino, archivo)
+            ManejoArchivo.eliminar(archivo.ruta, JSONDestino)
+            #ManejoArchivo.eliminarArchivo(JSONDestino, archivo)
       
         elif not  path.exists(data.ruta):
             rutaNueva = ManejoPermisos.definirRutaEnPrimerNivel(data.ruta)

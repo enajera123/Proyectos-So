@@ -354,10 +354,15 @@ class ManejoArchivo:
             if archivoHijo:
                 hijos.append(archivoHijo)
         archivosNuevos = []
+        
         for arch in archivos:
+            estaContenido = False
             for hijo in hijos:
-                if not hijo.id == arch['id']:
-                    archivosNuevos.append(arch)
+                if hijo.id == arch['id']:
+                    estaContenido = True
+                    break
+            if not estaContenido:
+                 archivosNuevos.append(arch)
         ManejoArchivo.guardarArchivos(archivosNuevos, ruta)
         
         
