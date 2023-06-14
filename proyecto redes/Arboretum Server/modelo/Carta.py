@@ -59,8 +59,8 @@ class Carta:
                     borde = True
                     break
                 
-            if len(camino) == 0 and not borde :
-                return False
+            #if len(camino) == 0 and not borde :
+            #    return False
             
             if len(camino) == 0:
                 camino = cartaActual

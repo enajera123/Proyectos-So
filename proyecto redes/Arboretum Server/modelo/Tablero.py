@@ -41,55 +41,78 @@ class Tablero:
         print("------------------------------------------------------------")
         print("Filtro secuencia acendente:")
         print("\n".join(caminos))
-        #---------Filtra caminos repetidos--------
-        #Hacemos un ciclo que recorra todos los cominos y elimine los que tienen mismo origen y destino
-        #Dejando solo uno el mde mayor puntuacion
+        #---------Filtra el camino con mejor puntuacion de cada tipo--------
         caminosValidos = []
         caminosDescartados = []
         #Recorremos los caminos
         for camino in caminos:
-            #Se comprueba que no sea un camino descartado
-            if camino not in caminosDescartados and camino not in caminosValidos:
+            if camino.split("/")[0].split(":")[0] not in caminosDescartados and camino not in caminosValidos:
                 valido = camino #Se guarda el camino como valido
                 puntuacion_Valido = self.puntuarCaminos(valido) #se guarda la puntuacion del camino valido
-                validoOrigen = valido.split("/")[0] #se guardan los extremos del camino
-                validoDestino = valido.split("/")[-1]
-                #Se vuelven a recorrer los caminos comparando los extremos y la puntuacion para guardar
-                #en valido el de mayor putuacion
+                arbolValido = valido.split("/")[0].split(":")[0] #Se guarda el tipo de arbol que se esta comprobando
+                #Se vuelven a recorrer los caminos comparando si es del tipo a evaluar
+                #Se guarda en valido el de mayor putuacion
                 for opcion in caminos:
                     cartas = opcion.split("/")#Se optienen las cartas del camino
-                    if cartas[0] == validoOrigen and cartas[-1] == validoDestino: #Si tienen mismo origen y destino
+                    if cartas[0].split("/")[0].split(":")[0] == arbolValido:
                         puntuacion = self.puntuarCaminos(opcion) #Se saca la puntuacion del camino
                         #Se compara con las puntuaciones del valido
                         if puntuacion > puntuacion_Valido: #si es mayor se actualiza el valido y la puntuacion del valido
-                            caminosDescartados.append(valido)
                             valido = opcion
                             puntuacion_Valido = puntuacion
-                        else:#Si no se descarta
-                            caminosDescartados.append(opcion)
+                caminosDescartados.append(arbolValido)
                 caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
         caminos = caminosValidos#Se actualiza la lista de caminos
-        print("------------------------------------------------------------")
-        print("Filtro que no se repitan origen y destino:")
-        print("\n".join(caminos))
+        #caminos = list(set(caminosValidos))
+        #---------Filtra caminos repetidos--------
+        #Hacemos un ciclo que recorra todos los cominos y elimine los que tienen mismo origen y destino
+        #Dejando solo uno el mde mayor puntuacion
+        #caminosValidos = []
+        #caminosDescartados = []
+        #Recorremos los caminos
+        #for camino in caminos:
+        #    #Se comprueba que no sea un camino descartado
+        #    if camino not in caminosDescartados and camino not in caminosValidos:
+        #        valido = camino #Se guarda el camino como valido
+        #        puntuacion_Valido = self.puntuarCaminos(valido) #se guarda la puntuacion del camino valido
+        #        validoOrigen = valido.split("/")[0] #se guardan los extremos del camino
+        #        validoDestino = valido.split("/")[-1]
+        #        #Se vuelven a recorrer los caminos comparando los extremos y la puntuacion para guardar
+        #        #en valido el de mayor putuacion
+        #        for opcion in caminos:
+        #            cartas = opcion.split("/")#Se optienen las cartas del camino
+        #            if cartas[0] == validoOrigen and cartas[-1] == validoDestino: #Si tienen mismo origen y destino
+        #                puntuacion = self.puntuarCaminos(opcion) #Se saca la puntuacion del camino
+        #                #Se compara con las puntuaciones del valido
+        #                if puntuacion > puntuacion_Valido: #si es mayor se actualiza el valido y la puntuacion del valido
+        #                    caminosDescartados.append(valido)
+        #                    valido = opcion
+        #                    puntuacion_Valido = puntuacion
+        #                else:#Si no se descarta
+        #                    caminosDescartados.append(opcion)
+        #        caminosValidos.append(valido) #Se agrega el camino validado a la lista de caminos validos
+        #caminos = caminosValidos#Se actualiza la lista de caminos
+        #print("------------------------------------------------------------")
+        #print("Filtro que no se repitan origen y destino:")
+        #print("\n".join(caminos))
         #---------Filtra caminos que estan contenidos en otro camino--------
-        caminosValidos = []
-        caminosDescartados = []
-        for camino in caminos:
-            if camino not in caminosDescartados and camino not in caminosValidos:
-                valido = camino
-                for opcion in caminos:
-                    if opcion in valido:
-                        caminosDescartados.append(opcion)
-                    elif valido in opcion:
-                        caminosDescartados.append(valido)
-                        valido = opcion
-                caminosValidos.append(valido)
-        caminos = list(set(caminosValidos))
-        
-        print("------------------------------------------------------------")
-        print("Filtro que no esten contenidos en otro camino:")
-        print("\n".join(caminos))
+        #caminosValidos = []
+        #caminosDescartados = []
+        #for camino in caminos:
+        #    if camino not in caminosDescartados and camino not in caminosValidos:
+        #        valido = camino
+        #        for opcion in caminos:
+        #            if opcion in valido:
+        #                caminosDescartados.append(opcion)
+        #            elif valido in opcion:
+        #                caminosDescartados.append(valido)
+        #                valido = opcion
+        #        caminosValidos.append(valido)
+        #caminos = list(set(caminosValidos))
+        #
+        #print("------------------------------------------------------------")
+        #print("Filtro que no esten contenidos en otro camino:")
+        #print("\n".join(caminos))
         #---------Se obtinen las puntuaciones de los caminos--------
         puntuacion_Total = []
         #Como ya se tiene la lista de caminos que se pueden puntuar en el tablero se puntuan y se suman
